@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">toulouse-0218-java-rateeverything</string>
+    <string name="description_photo">Description photo</string>
+    <string name="modifier_votre_note">Modifier votre note !</string>
+    <string name="_3_6">3.6</string>
+    <string name="user_name">User name</string>
+    <string name="commentaires">Commentaires</string>
+    <string name="_24">24</string>
+    <string name="_34">34</string>
+    <string name="modifier_profil">Modifier Profil</string>
 </resources>
