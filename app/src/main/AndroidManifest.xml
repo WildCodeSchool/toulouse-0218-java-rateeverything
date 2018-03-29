@@ -20,6 +20,7 @@
         </activity>
         <activity android:name=".ProfilUserActivity" />
         <activity android:name=".UserPhoto"></activity>
+        <activity android:name=".FollowersActivity"></activity>
     </application>
 
 </manifest>
