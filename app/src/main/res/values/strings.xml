@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">toulouse-0218-java-rateeverything</string>
+
+    <string name="Date">Date</string>
+    <string name="User">User</string>
     <string name="title_activity_menu">MenuActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
