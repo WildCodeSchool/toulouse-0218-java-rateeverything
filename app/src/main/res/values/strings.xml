@@ -6,4 +6,11 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="user_name">user name</string>
+    <string name="info_user">info user</string>
+    <string name="home">Home</string>
+    <string name="profil">Profil</string>
+    <string name="followers">Followers</string>
+    <string name="setting">Setting</string>
+    <string name="disconnect">Disconnect</string>
 </resources>
