@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">toulouse-0218-java-rateeverything</string>
+    <string name="followers">followers</string>
+    <string name="user_name">User Name</string>
+    <string name="textview">TextView</string>
+    <string name="nb_followers">nb Followers</string>
 </resources>
