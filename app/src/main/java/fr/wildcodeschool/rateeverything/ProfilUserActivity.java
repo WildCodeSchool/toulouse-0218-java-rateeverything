@@ -12,8 +12,8 @@ public class ProfilUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profil_user);
 
 
-        ImageView imageView = (ImageView)findViewById(R.id.profil_photo_user);
-        imageView.setImageResource(R.drawable.photobenbronde);
+        ImageView photoUser = (ImageView)findViewById(R.id.profil_photo_user);
+        photoUser.setImageResource(R.drawable.photobenbronde);
 
         ImageView logoFollower = (ImageView)findViewById(R.id.logo_follower);
         logoFollower.setImageResource(R.drawable.suricate);

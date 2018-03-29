@@ -13,16 +13,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button buttonprofiluser = findViewById(R.id.button_profil_user);
-        buttonprofiluser.setOnClickListener(new View.OnClickListener() {
+        Button buttonProfilUser = findViewById(R.id.button_profil_user);
+        buttonProfilUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this,ProfilUserActivity.class));
             }
         });
 
-        Button buttonphotouser = findViewById(R.id.button_user_photo);
-        buttonphotouser.setOnClickListener(new View.OnClickListener() {
+        Button buttonPhotoUser = findViewById(R.id.button_user_photo);
+        buttonPhotoUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, UserPhoto.class));
