@@ -26,13 +26,13 @@ public class MainPhotoAdapter extends ArrayAdapter<MainPhotoModel> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         MainPhotoModel photoModel = getItem(position);
-        if(convertView==null)
+        if( convertView == null )
         {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_photos, parent, false);
         }
         ImageView photo = convertView.findViewById(R.id.image_photo);
-        Drawable drawablephoto = ContextCompat.getDrawable(getContext(), photoModel.getPhoto());
-        photo.setImageDrawable(drawablephoto);
+        Drawable drawablePhoto = ContextCompat.getDrawable(getContext(), photoModel.getPhoto());
+        photo.setImageDrawable(drawablePhoto);
         TextView textUsername = (TextView) convertView.findViewById(R.id.text_user_name_pub);
         textUsername.setText(photoModel.getUsername());
         TextView textDatePub = (TextView) convertView.findViewById(R.id.text_date_pub);
@@ -41,7 +41,7 @@ public class MainPhotoAdapter extends ArrayAdapter<MainPhotoModel> {
         String dateValue = sdf.format(photoModel.getDate());
         textDatePub.setText(dateValue);
         TextView note = (TextView) convertView.findViewById(R.id.text_note);
-        note.setText(""+photoModel.getNote());
+        note.setText(String.valueOf(photoModel.getNote()));
         return convertView;
     }
 
