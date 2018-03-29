@@ -27,22 +27,6 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button buttonProfilUser = findViewById(R.id.button_profil_user);
-        buttonProfilUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,ProfilUserActivity.class));
-            }
-        });
-
-        Button buttonPhotoUser = findViewById(R.id.button_user_photo);
-        buttonPhotoUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, UserPhoto.class));
-            }
-        });
-
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
         ArrayList<MainPhotoModel> photoList = new ArrayList<>();
