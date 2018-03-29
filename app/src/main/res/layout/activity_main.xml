@@ -9,7 +9,6 @@
     tools:openDrawer="start"
     tools:context="fr.wildcodeschool.rateeverything.MainActivity">
 
-
     <ListView
         android:id="@+id/listview_photo_main"
         android:layout_width="match_parent" android:scaleType="fitXY"
