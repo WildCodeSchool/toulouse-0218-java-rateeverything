@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/imagephoto"
+        android:id="@+id/image_photo"
         android:layout_width="match_parent"
         android:layout_height="300dp"
 
@@ -28,8 +28,8 @@
         android:textColor="@android:color/darker_gray"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imagephoto"
-        tools:text="Date" />
+        app:layout_constraintTop_toBottomOf="@+id/image_photo"
+        tools:text="@string/Date" />
 
     <TextView
         android:id="@+id/text_user_name_pub"
@@ -38,12 +38,12 @@
         android:layout_marginBottom="16dp"
         android:layout_marginStart="64dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
         android:textColor="@android:color/darker_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_date_pub"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="User" />
 
     <TextView
         android:id="@+id/text_note"
@@ -54,11 +54,11 @@
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imagephoto"
+        app:layout_constraintTop_toBottomOf="@+id/image_photo"
         tools:text="3" />
 
     <RatingBar
-        android:id="@+id/ratingBar"
+        android:id="@+id/rating_bar"
         style="?android:attr/ratingBarStyleSmall"
         android:layout_width="81dp"
         android:layout_height="18dp"

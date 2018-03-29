@@ -1,6 +1,5 @@
 package fr.wildcodeschool.rateeverything;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
@@ -20,41 +19,29 @@ import java.util.ArrayList;
 
 public class MainPhotoAdapter extends ArrayAdapter<MainPhotoModel> {
 
-    public MainPhotoAdapter(Context context, ArrayList<MainPhotoModel> items)
-    {
+    public MainPhotoAdapter(Context context, ArrayList<MainPhotoModel> items) {
         super(context, 0, items);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
-    {
+    public View getView(int position, View convertView, ViewGroup parent) {
         MainPhotoModel photoModel = getItem(position);
         if(convertView==null)
         {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_photos, parent, false);
         }
-
-        ImageView photo = convertView.findViewById(R.id.imagephoto);
+        ImageView photo = convertView.findViewById(R.id.image_photo);
         Drawable drawablephoto = ContextCompat.getDrawable(getContext(), photoModel.getPhoto());
         photo.setImageDrawable(drawablephoto);
-
-
-        TextView textusername = (TextView) convertView.findViewById(R.id.text_user_name_pub);
-        textusername.setText(photoModel.getUsername());
-        TextView textdatepub = (TextView) convertView.findViewById(R.id.text_date_pub);
-
-        textdatepub.setText(""+photoModel.getDate());
+        TextView textUsername = (TextView) convertView.findViewById(R.id.text_user_name_pub);
+        textUsername.setText(photoModel.getUsername());
+        TextView textDatePub = (TextView) convertView.findViewById(R.id.text_date_pub);
+        textDatePub.setText(""+photoModel.getDate());
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String dateValue = sdf.format(photoModel.getDate());
-        textdatepub.setText(dateValue);
-
-
+        textDatePub.setText(dateValue);
         TextView note = (TextView) convertView.findViewById(R.id.text_note);
-
-
         note.setText(""+photoModel.getNote());
-
-
         return convertView;
     }
 

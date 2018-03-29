@@ -13,7 +13,7 @@
         tools:layout_editor_absoluteX="2dp" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton_phto"
+        android:id="@+id/faction_button_photo"
         android:layout_width="65dp"
         android:layout_height="62dp"
         android:layout_marginBottom="16dp"

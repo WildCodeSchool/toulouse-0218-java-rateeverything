@@ -12,17 +12,13 @@ public class MainPhotoModel {
     private Date date;
     private float note;
 
-
-
-
     public MainPhotoModel(int photo, String username, Date date, float note) {
         this.username = username;
         this.photo = photo;
         this.date = date;
         this.note = note;
     }
-
-
+    
     public int getPhoto() {
         return photo;
     }

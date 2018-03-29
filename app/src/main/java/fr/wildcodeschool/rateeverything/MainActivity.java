@@ -17,21 +17,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
         ArrayList<MainPhotoModel> photoList = new ArrayList<>();
         try {
 
-        photoList.add(new MainPhotoModel(R.drawable.index,"Coralie",sdf.parse("21/02/2017" ), 4));
-        photoList.add(new MainPhotoModel(R.drawable.moon,"Thomas", sdf.parse("20/02/2017"), 4));
-        photoList.add(new MainPhotoModel(R.drawable.cat,"Benjamin",sdf.parse("19/02/2017"), 4));
-        photoList.add(new MainPhotoModel(R.drawable.whelk,"Thomas",sdf.parse("18/02/2017"), 4));
-        photoList.add(new MainPhotoModel(R.drawable.cat,"Benjamin",sdf.parse("17/02/2017"), 4));
+            photoList.add(new MainPhotoModel(R.drawable.index,"Coralie",sdf.parse("21/02/2017" ), 4));
+            photoList.add(new MainPhotoModel(R.drawable.moon,"Thomas", sdf.parse("20/02/2017"), 4));
+            photoList.add(new MainPhotoModel(R.drawable.cat,"Benjamin",sdf.parse("19/02/2017"), 4));
+            photoList.add(new MainPhotoModel(R.drawable.whelk,"Thomas",sdf.parse("18/02/2017"), 4));
+            photoList.add(new MainPhotoModel(R.drawable.cat,"Benjamin",sdf.parse("17/02/2017"), 4));
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
 
         MainPhotoAdapter adapter = new MainPhotoAdapter(this, photoList);
         ListView photoListView = (ListView)findViewById(R.id.listView_photo_main);
@@ -40,13 +39,3 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 
-
-/*
-if hauteur>largueur alors la
-l=h (= carre) ou taille imposee
-et l = taille imposee
-
-sinon
-l = l ecran
-h = auto
- */
