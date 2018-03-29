@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,15 +14,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Button buttonSignIn = findViewById(R.id.button_signIn);
+        final Button buttonSignIn = findViewById(R.id.button_sign_in);
         final Button buttonCreateAccount = findViewById(R.id.button_create_account);
-        final Button buttonValidLogin = findViewById(R.id.button_validLogin);
+        final Button buttonValidLogin = findViewById(R.id.button_valid_login);
         final Button buttonValidCreate = findViewById(R.id.button_valid_create);
-        final EditText editPseudo = findViewById(R.id.editText_pseudo);
-        final EditText editPassword = findViewById(R.id.editText_password);
-        final TextView textPseudo = findViewById(R.id.textView_pseudo);
-        final TextView textPassword = findViewById(R.id.textView_password);
-        final TextView textChangeAvatar = findViewById(R.id.textView_chose_avatar);
+        final EditText editPseudo = findViewById(R.id.edit_text_pseudo);
+        final EditText editPassword = findViewById(R.id.edit_text_password);
+        final TextView textPseudo = findViewById(R.id.text_view_pseudo);
+        final TextView textPassword = findViewById(R.id.text_view_password);
+        final TextView textChangeAvatar = findViewById(R.id.text_view_chose_avatar);
 
         final Button buttonRetour = findViewById(R.id.button_return);
 

@@ -7,7 +7,7 @@
     tools:context="fr.wildcodeschool.rateeverything.MainActivity">
 
     <ImageView
-        android:id="@+id/imageView_logo"
+        android:id="@+id/image_view_logo"
         android:layout_width="191dp"
         android:layout_height="190dp"
         android:layout_marginEnd="8dp"
@@ -20,17 +20,17 @@
         app:srcCompat="@drawable/ic_launcher_background" />
 
     <Button
-        android:id="@+id/button_signIn"
+        android:id="@+id/button_sign_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
-        android:text="Sign In"
+        android:text="@string/sign_in"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_chose_avatar" />
+        app:layout_constraintTop_toBottomOf="@+id/text_view_chose_avatar" />
 
     <Button
         android:id="@+id/button_create_account"
@@ -39,80 +39,79 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
-        android:text="Create An Account"
+        android:text="@string/create_an_account"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_signIn" />
+        app:layout_constraintTop_toBottomOf="@+id/button_sign_in" />
 
     <EditText
-        android:id="@+id/editText_password"
+        android:id="@+id/edit_text_password"
         android:layout_width="219dp"
         android:layout_height="45dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="Password"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_password" />
+        app:layout_constraintTop_toBottomOf="@+id/text_view_password" />
 
     <TextView
-        android:id="@+id/textView_password"
+        android:id="@+id/text_view_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="Password"
+        android:text="@string/password"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_pseudo" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_pseudo" />
 
     <EditText
-        android:id="@+id/editText_pseudo"
+        android:id="@+id/edit_text_pseudo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="Pseudo"
+        android:hint="@string/pseudo"
         android:inputType="textPersonName"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_pseudo" />
+        app:layout_constraintTop_toBottomOf="@+id/text_view_pseudo" />
 
     <TextView
-        android:id="@+id/textView_pseudo"
+        android:id="@+id/text_view_pseudo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
-        android:text="Pseudo"
+        android:text="@string/pseudo"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/button_create_account" />
 
     <Button
-        android:id="@+id/button_validLogin"
+        android:id="@+id/button_valid_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Login"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_password" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_password" />
 
     <Button
         android:id="@+id/button_valid_create"
@@ -122,26 +121,26 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Create"
+        android:text="@string/create"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/button_validLogin"
+        app:layout_constraintTop_toTopOf="@+id/button_valid_login"
         tools:text="Create" />
 
     <TextView
-        android:id="@+id/textView_chose_avatar"
+        android:id="@+id/text_view_chose_avatar"
         android:layout_width="wrap_content"
         android:layout_height="21dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Modifier l'avatar"
+        android:text="@string/modifier_l_avatar"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView_logo" />
+        app:layout_constraintTop_toBottomOf="@+id/image_view_logo" />
 
     <Button
         android:id="@+id/button_return"
@@ -149,7 +148,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
-        android:text="Return"
+        android:text="@string/return1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
