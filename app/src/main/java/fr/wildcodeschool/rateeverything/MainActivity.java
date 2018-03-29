@@ -1,7 +1,5 @@
 package fr.wildcodeschool.rateeverything;
 
-import android.graphics.drawable.Drawable;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
@@ -33,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         MainPhotoAdapter adapter = new MainPhotoAdapter(this, photoList);
-        ListView photoListView = (ListView)findViewById(R.id.listView_photo_main);
+        ListView photoListView = (ListView)findViewById(R.id.listview_photo_main);
         photoListView.setAdapter(adapter);
 
     }

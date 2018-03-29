@@ -26,8 +26,7 @@ public class MainPhotoAdapter extends ArrayAdapter<MainPhotoModel> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         MainPhotoModel photoModel = getItem(position);
-        if( convertView == null )
-        {
+        if(convertView==null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_photos, parent, false);
         }
         ImageView photo = convertView.findViewById(R.id.image_photo);
