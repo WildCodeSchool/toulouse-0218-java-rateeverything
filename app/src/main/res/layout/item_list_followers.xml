@@ -7,7 +7,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/imageView_photo"
+        android:id="@+id/imageview_photo"
         android:layout_width="109dp"
         android:layout_height="99dp"
         android:layout_marginBottom="8dp"
@@ -19,21 +19,21 @@
         app:srcCompat="@mipmap/ic_launcher" />
 
     <TextView
-        android:id="@+id/textView_user_name"
+        android:id="@+id/textview_user_name"
         android:layout_width="106dp"
         android:layout_height="23dp"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/user_name"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView_photo"
-        app:layout_constraintStart_toEndOf="@+id/imageView_photo" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageview_photo"
+        app:layout_constraintStart_toEndOf="@+id/imageview_photo" />
 
     <ImageView
-        android:id="@+id/imageView_ajout_followers"
+        android:id="@+id/imageview_ajout_followers"
         android:layout_width="54dp"
         android:layout_height="47dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView_photo"
+        app:layout_constraintBottom_toBottomOf="@+id/imageview_photo"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@mipmap/ic_launcher" />
 
@@ -43,12 +43,12 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView_user_name"
-        app:layout_constraintStart_toStartOf="@+id/textView_user_name"
+        app:layout_constraintBottom_toTopOf="@+id/textview_user_name"
+        app:layout_constraintStart_toStartOf="@+id/textview_user_name"
         app:srcCompat="@android:drawable/ic_menu_camera" />
 
     <TextView
-        android:id="@+id/textView_nb_photo"
+        android:id="@+id/textview_nb_photo"
         android:layout_width="34dp"
         android:layout_height="30dp"
         android:layout_marginStart="8dp"
@@ -57,20 +57,20 @@
         app:layout_constraintStart_toEndOf="@+id/imageView_logo_photo" />
 
     <TextView
-        android:id="@+id/textView_nb_followers"
+        android:id="@+id/textview_nb_followers"
         android:layout_width="39dp"
         android:layout_height="32dp"
         android:layout_marginStart="8dp"
         android:text="@string/nb_followers"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView_nb_followers"
-        app:layout_constraintStart_toEndOf="@+id/imageView_nb_followers" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageview_nb_followers"
+        app:layout_constraintStart_toEndOf="@+id/imageview_nb_followers" />
 
     <ImageView
-        android:id="@+id/imageView_nb_followers"
+        android:id="@+id/imageview_nb_followers"
         android:layout_width="36dp"
         android:layout_height="33dp"
         android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView_logo_photo"
-        app:layout_constraintStart_toEndOf="@+id/textView_nb_photo"
+        app:layout_constraintStart_toEndOf="@+id/textview_nb_photo"
         app:srcCompat="@mipmap/ic_launcher_round" />
 </android.support.constraint.ConstraintLayout>

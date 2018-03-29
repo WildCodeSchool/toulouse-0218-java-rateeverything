@@ -27,10 +27,10 @@ public class FollowersAdapter extends ArrayAdapter<FollowersModel> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_list_followers, parent, false);
         }
 
-        TextView textName = (TextView) convertView.findViewById(R.id.textView_user_name);
-        TextView textNbPhoto = (TextView) convertView.findViewById(R.id.textView_nb_photo);
-        TextView textNbFollowers = (TextView) convertView.findViewById(R.id.textView_nb_followers);
-        ImageView imgPhotoUser = (ImageView) convertView.findViewById(R.id.imageView_photo);
+        TextView textName = (TextView) convertView.findViewById(R.id.textview_user_name);
+        TextView textNbPhoto = (TextView) convertView.findViewById(R.id.textview_nb_photo);
+        TextView textNbFollowers = (TextView) convertView.findViewById(R.id.textview_nb_followers);
+        ImageView imgPhotoUser = (ImageView) convertView.findViewById(R.id.imageview_photo);
 
         textName.setText(followers.getUserName());
         String stringNbPhoto = String.valueOf(followers.getNbPhoto());
