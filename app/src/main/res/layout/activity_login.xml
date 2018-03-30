@@ -127,8 +127,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/button_valid_login"
-        tools:text="Create" />
+        app:layout_constraintTop_toTopOf="@+id/button_valid_login" />
 
     <TextView
         android:id="@+id/text_view_chose_avatar"
