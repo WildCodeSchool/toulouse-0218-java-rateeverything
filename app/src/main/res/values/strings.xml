@@ -1,5 +1,17 @@
 <resources>
     <string name="app_name">toulouse-0218-java-rateeverything</string>
+
+  
+    <string name="pseudo">Pseudo</string>
+    <string name="create">Create</string>
+    <string name="modifier_l_avatar">Modifier l\'avatar</string>
+    <string name="return1">Return</string>
+    <string name="password">Password</string>
+    <string name="create_an_account">Create An Account</string>
+    <string name="sign_in">Sign In</string>
+    <string name="login">Login</string>
+    <string name="page_login">page Login</string>
+
     <string name="followers">followers</string>
     <string name="textview">TextView</string>
     <string name="nb_followers">nb Followers</string>
@@ -26,5 +38,5 @@
     <string name="profil">Profil</string>
     <string name="setting">Setting</string>
     <string name="disconnect">Disconnect</string>
-
+  
 </resources>

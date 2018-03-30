@@ -18,6 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".LoginActivity" />
         <activity android:name=".ProfilUserActivity" />
         <activity android:name=".UserPhoto"></activity>
         <activity android:name=".FollowersActivity"></activity>
