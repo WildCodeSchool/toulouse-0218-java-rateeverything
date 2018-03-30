@@ -1,11 +1,10 @@
 package fr.wildcodeschool.rateeverything;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,58 +13,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Button buttonSignIn = findViewById(R.id.button_sign_in);
-        final Button buttonCreateAccount = findViewById(R.id.button_create_account);
-        final Button buttonValidLogin = findViewById(R.id.button_valid_login);
-        final Button buttonValidCreate = findViewById(R.id.button_valid_create);
-        final EditText editPseudo = findViewById(R.id.edit_text_pseudo);
-        final EditText editPassword = findViewById(R.id.edit_text_password);
-        final TextView textPseudo = findViewById(R.id.text_view_pseudo);
-        final TextView textPassword = findViewById(R.id.text_view_password);
-        final TextView textChangeAvatar = findViewById(R.id.text_view_chose_avatar);
+        final Button buttonIntent = findViewById(R.id.button_intent);
 
-        final Button buttonRetour = findViewById(R.id.button_return);
-
-        buttonCreateAccount.setOnClickListener(new View.OnClickListener() {
+        buttonIntent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                buttonSignIn.setVisibility(View.GONE);
-                buttonCreateAccount.setVisibility(View.GONE);
-                textPseudo.setVisibility(View.VISIBLE);
-                textPassword.setVisibility(View.VISIBLE);
-                editPseudo.setVisibility(View.VISIBLE);
-                editPassword.setVisibility(View.VISIBLE);
-                buttonValidCreate.setVisibility(View.VISIBLE);
-                textChangeAvatar.setVisibility(View.VISIBLE);
+                Intent goToLoginActivity = new Intent(MainActivity.this, LoginActivity.class);
+                MainActivity.this.startActivity(goToLoginActivity);
             }
         });
 
-        buttonSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                buttonSignIn.setVisibility(View.GONE);
-                buttonCreateAccount.setVisibility(View.GONE);
-                textPseudo.setVisibility(View.VISIBLE);
-                textPassword.setVisibility(View.VISIBLE);
-                editPseudo.setVisibility(View.VISIBLE);
-                editPassword.setVisibility(View.VISIBLE);
-                buttonValidLogin.setVisibility(View.VISIBLE);
-            }
-        });
-        //BOUTON provisoire pour tester le layout
-        buttonRetour.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                buttonSignIn.setVisibility(View.VISIBLE);
-                buttonCreateAccount.setVisibility(View.VISIBLE);
-                textPseudo.setVisibility(View.GONE);
-                textPassword.setVisibility(View.GONE);
-                editPseudo.setVisibility(View.GONE);
-                editPassword.setVisibility(View.GONE);
-                buttonValidCreate.setVisibility(View.GONE);
-                textChangeAvatar.setVisibility(View.GONE);
-                buttonValidLogin.setVisibility(View.GONE);
-            }
-        });
     }
 }
