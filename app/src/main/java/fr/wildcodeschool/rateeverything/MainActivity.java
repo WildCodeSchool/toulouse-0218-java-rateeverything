@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.ListView;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
 
         MainPhotoAdapter adapter = new MainPhotoAdapter(this, photoList);
         ListView photoListView = (ListView)findViewById(R.id.listview_photo_main);
@@ -94,9 +96,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_setting) {
 
         } else if (id == R.id.nav_disconnect) {
-        
+            return super.onOptionsItemSelected(item);
         }
-        
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
