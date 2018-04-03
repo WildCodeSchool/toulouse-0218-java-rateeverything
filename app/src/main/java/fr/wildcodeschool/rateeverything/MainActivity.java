@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
         ArrayList<MainPhotoModel> photoList = new ArrayList<>();
