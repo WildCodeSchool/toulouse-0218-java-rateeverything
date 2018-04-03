@@ -87,10 +87,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.followers) {
             Intent intentFollowers = new Intent(MainActivity.this, FollowersActivity.class);
             startActivity(intentFollowers);
-        } else if (id == R.id.nav_setting) {
-
-        } else if (id == R.id.nav_disconnect) {
-            return super.onOptionsItemSelected(item);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
