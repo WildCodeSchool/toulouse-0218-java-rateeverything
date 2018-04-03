@@ -37,9 +37,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-
-
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
         ArrayList<MainPhotoModel> photoList = new ArrayList<>();
@@ -71,8 +68,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -104,7 +99,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (mToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

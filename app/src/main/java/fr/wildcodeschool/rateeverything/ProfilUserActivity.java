@@ -69,9 +69,6 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
         if (mToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
-
-
 }

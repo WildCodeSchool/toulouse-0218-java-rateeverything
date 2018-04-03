@@ -15,16 +15,14 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ben"
+        android:text="@string/ben"
         android:layout_marginTop="5dp"
         android:textColor="#000000"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ben@lebeaugossedu974@gmali.com"
+        android:text="@string/ben_lebeaugossedu974_gmali_com"
         android:textColor="#000000"/>
-
-
 
 </LinearLayout>
