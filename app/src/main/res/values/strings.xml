@@ -38,5 +38,6 @@
     <string name="profil">Profil</string>
     <string name="setting">Setting</string>
     <string name="disconnect">Disconnect</string>
-  
+    <string name="username">Username</string>
+
 </resources>

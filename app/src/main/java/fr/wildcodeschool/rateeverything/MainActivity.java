@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
+
         ArrayList<MainPhotoModel> photoList = new ArrayList<>();
         try {
 
@@ -88,9 +89,11 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             // Handle the camera action
         } else if (id == R.id.nav_profil) {
-
+            Intent intent = new Intent(MainActivity.this, ProfilUserActivity.class);
+            MainActivity.this.startActivity(intent);
         } else if (id == R.id.nav_followers) {
-
+            Intent intent = new Intent(MainActivity.this, FollowersActivity.class);
+            MainActivity.this.startActivity(intent);
         } else if (id == R.id.nav_setting) {
 
         } else if (id == R.id.nav_disconnect) {
