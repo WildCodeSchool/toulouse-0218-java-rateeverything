@@ -7,7 +7,7 @@
     tools:context="fr.wildcodeschool.rateeverything.AddPhotoActivity">
 
     <ImageView
-        android:id="@+id/ivPhoto"
+        android:id="@+id/iv_photo"
         android:layout_width="258dp"
         android:layout_height="188dp"
         android:layout_marginEnd="8dp"
@@ -25,23 +25,23 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:text="App Photo"
-        app:layout_constraintEnd_toStartOf="@+id/button_add_galery"
+        android:text="@string/app_photo"
+        app:layout_constraintEnd_toStartOf="@+id/button_add_gallery"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivPhoto" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_photo" />
 
     <Button
-        android:id="@+id/button_add_galery"
+        android:id="@+id/button_add_gallery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="60dp"
         android:layout_marginTop="16dp"
-        android:text="Bibliothèque"
+        android:text="@string/biblioth_que"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivPhoto" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_photo" />
 
     <RatingBar
-        android:id="@+id/ratingBar"
+        android:id="@+id/rating_bar_first_note"
         android:layout_width="wrap_content"
         android:layout_height="54dp"
         android:layout_marginEnd="8dp"
@@ -58,10 +58,10 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:text="@string/description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
+        app:layout_constraintTop_toBottomOf="@+id/rating_bar_first_note" />
 
     <Button
         android:id="@+id/button_share_img"
@@ -70,7 +70,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Partager"
+        android:text="@string/partager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_description_img" />
