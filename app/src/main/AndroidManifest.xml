@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="fr.wildcodeschool.rateeverything">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -17,12 +18,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".ProfilUserActivity" />
         <activity android:name=".UserPhoto" />
         <activity android:name=".FollowersActivity" />
+        <activity android:name=".AddPhotoActivity">
+        </activity>
     </application>
 
 </manifest>

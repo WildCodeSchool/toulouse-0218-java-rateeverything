@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">toulouse-0218-java-rateeverything</string>
 
-  
+
     <string name="pseudo">Pseudo</string>
     <string name="create">Create</string>
     <string name="modifier_l_avatar">Modifier l\'avatar</string>
