@@ -2,12 +2,8 @@ package fr.wildcodeschool.rateeverything;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.GridLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-
-
 import java.util.ArrayList;
 
 public class ProfilUserActivity extends AppCompatActivity {
@@ -36,8 +32,6 @@ public class ProfilUserActivity extends AppCompatActivity {
 
         ProfilUserGridAdapter adapter = new ProfilUserGridAdapter(this, userGrid);
         gridView.setAdapter(adapter);
-
-
 
         ImageView photoUser = (ImageView)findViewById(R.id.profil_photo_user);
         photoUser.setImageResource(R.drawable.photobenbronde);
