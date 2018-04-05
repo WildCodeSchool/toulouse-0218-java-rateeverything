@@ -11,16 +11,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 public class AddPhotoActivity extends Activity {
-    Button buttonAdd;
-    ImageView imagePhoto;
+    ImageView mImagePhoto;
     static final int CAM_REQUEST = 0;
     static final int SELECT_IMAGE = 1 ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Button buttonAdd;
         setContentView(R.layout.activity_add_photo);
-        buttonAdd =(Button) findViewById(R.id.button_add_photo);
-        imagePhoto =(ImageView) findViewById(R.id.iv_photo);
+        buttonAdd = (Button) findViewById(R.id.button_add_photo);
+        mImagePhoto = (ImageView) findViewById(R.id.iv_photo);
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,13 +44,13 @@ public class AddPhotoActivity extends Activity {
             case CAM_REQUEST:
                 if(resultCode == RESULT_OK) {
                     Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-                    imagePhoto.setImageBitmap(bitmap);
+                    mImagePhoto.setImageBitmap(bitmap);
                 }
                 break;
             case SELECT_IMAGE:
-                if(resultCode== RESULT_OK) {
+                if(resultCode == RESULT_OK) {
                     Uri selectedImage = data.getData();
-                    imagePhoto.setImageURI(selectedImage);
+                    mImagePhoto.setImageURI(selectedImage);
                 }
                 break;
         }
