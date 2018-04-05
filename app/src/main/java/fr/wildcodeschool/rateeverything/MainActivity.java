@@ -31,18 +31,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.Open, R.string.Close);
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
         ArrayList<MainPhotoModel> photoList = new ArrayList<>();
-        try {
 
+        try {
             photoList.add(new MainPhotoModel(R.drawable.index, "Coralie", sdf.parse("21/02/2017"), 4));
             photoList.add(new MainPhotoModel(R.drawable.moon, "Thomas", sdf.parse("20/02/2017"), 4));
             photoList.add(new MainPhotoModel(R.drawable.cat, "Benjamin", sdf.parse("19/02/2017"), 4));
@@ -53,18 +50,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             e.printStackTrace();
         }
 
-
         MainPhotoAdapter adapter = new MainPhotoAdapter(this, photoList);
         ListView photoListView = (ListView) findViewById(R.id.listview_photo_main);
         photoListView.setAdapter(adapter);
-
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(MainActivity.this, AddPhotoActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -77,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
         if (id == R.id.home) {
             Intent intentHome = new Intent(MainActivity.this, MainActivity.class);
             startActivity(intentHome);
@@ -88,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intentFollowers = new Intent(MainActivity.this, FollowersActivity.class);
             startActivity(intentFollowers);
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
