@@ -39,5 +39,8 @@
     <string name="setting">Setting</string>
     <string name="disconnect">Disconnect</string>
     <string name="username">Username</string>
-
+    <string name="Open">Open</string>
+    <string name="Close">Close</string>
+    <string name="ben">Ben</string>
+    <string name="ben_lebeaugossedu974_gmali_com">Ben@lebeaugossedu974@gmali.com</string>
 </resources>
