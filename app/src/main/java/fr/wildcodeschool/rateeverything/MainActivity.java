@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
         ArrayList<MainPhotoModel> photoList = new ArrayList<>();
 
         try {
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.followers) {
             Intent intentFollowers = new Intent(MainActivity.this, FollowersActivity.class);
             startActivity(intentFollowers);
+
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
