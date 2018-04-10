@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         if (textPseudo.length() == 0 || textPassword.length() == 0){
 
-                            Toast.makeText(LoginActivity.this, "Please fill all fields !", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, R.string.fillFields, Toast.LENGTH_SHORT).show();
 
                         } else {
                             SaveSharedPreference.setUserName(LoginActivity.this,pseudoValue);

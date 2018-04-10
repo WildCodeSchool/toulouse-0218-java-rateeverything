@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intentFollowers = new Intent(MainActivity.this, FollowersActivity.class);
             startActivity(intentFollowers);
         } else if (id == R.id.disconnect){
-            SaveSharedPreference.setUserName(MainActivity.this,"");
+            SaveSharedPreference.setUserName(MainActivity.this, "");
             Intent goToLoginActivity = new Intent(MainActivity.this,LoginActivity.class);
             startActivity(goToLoginActivity);
         }

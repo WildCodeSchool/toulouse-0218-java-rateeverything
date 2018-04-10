@@ -47,4 +47,5 @@
     <string name="app_photo">App Photo</string>
     <string name="description_photo">Description photo</string>
     <string name="description">Description</string>
+    <string name="fillFields">Please fill all fields !</string>
 </resources>

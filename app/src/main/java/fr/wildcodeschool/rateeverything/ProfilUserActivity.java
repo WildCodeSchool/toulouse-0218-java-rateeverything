@@ -56,7 +56,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
             Intent intentFollowers = new Intent(ProfilUserActivity.this, FollowersActivity.class);
             startActivity(intentFollowers);
         } else if (id == R.id.disconnect) {
-            SaveSharedPreference.setUserName(ProfilUserActivity.this,"");
+            SaveSharedPreference.setUserName(ProfilUserActivity.this, "");
             Intent goToLoginActivity = new Intent(ProfilUserActivity.this,LoginActivity.class);
             startActivity(goToLoginActivity);
         }
