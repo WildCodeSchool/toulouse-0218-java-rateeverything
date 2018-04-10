@@ -40,6 +40,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
         userGrid.add(new ProfilUserGridModel(R.drawable.pascaltof,3));
         userGrid.add(new ProfilUserGridModel(R.drawable.tofperrine,3));
 
+
         ProfilUserGridAdapter adapter = new ProfilUserGridAdapter(this, userGrid);
         gridView.setAdapter(adapter);
 
