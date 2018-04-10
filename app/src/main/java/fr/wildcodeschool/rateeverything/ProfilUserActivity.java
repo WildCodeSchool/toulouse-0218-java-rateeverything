@@ -7,8 +7,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.GridView;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import java.util.ArrayList;
 
 public class ProfilUserActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -20,21 +22,33 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil_user);
 
+
+        final GridView gridView = findViewById(R.id.grid_view_user);
+        ArrayList<ProfilUserGridModel> userGrid = new ArrayList<>();
+
+        userGrid.add(new ProfilUserGridModel(R.drawable.coco,3));
+        userGrid.add(new ProfilUserGridModel(R.drawable.lebosse,3));
+        userGrid.add(new ProfilUserGridModel(R.drawable.toto,4));
+        userGrid.add(new ProfilUserGridModel(R.drawable.tofperrine,5));
+        userGrid.add(new ProfilUserGridModel(R.drawable.pad_ps,4));
+        userGrid.add(new ProfilUserGridModel(R.drawable.bottes,3));
+        userGrid.add(new ProfilUserGridModel(R.drawable.lampe,3));
+        userGrid.add(new ProfilUserGridModel(R.drawable.hamac_pieds,3));
+        userGrid.add(new ProfilUserGridModel(R.drawable.licorne_chat,3));
+        userGrid.add(new ProfilUserGridModel(R.drawable.taille_chat,3));
+        userGrid.add(new ProfilUserGridModel(R.drawable.licornes,3));
+        userGrid.add(new ProfilUserGridModel(R.drawable.pascaltof,3));
+        userGrid.add(new ProfilUserGridModel(R.drawable.tofperrine,3));
+
+
+        ProfilUserGridAdapter adapter = new ProfilUserGridAdapter(this, userGrid);
+        gridView.setAdapter(adapter);
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_user);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.Open, R.string.Close);
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
-        ImageView photoUser = (ImageView)findViewById(R.id.profil_photo_user);
-        photoUser.setImageResource(R.drawable.photobenbronde);
-
-        ImageView logoFollower = (ImageView)findViewById(R.id.logo_follower);
-        logoFollower.setImageResource(R.drawable.suricate);
-
-        ImageView logoPicture = (ImageView)findViewById(R.id.logo_picture);
-        logoPicture.setImageResource(R.drawable.camera);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_user);
         navigationView.setNavigationItemSelectedListener(this);
@@ -73,4 +87,5 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

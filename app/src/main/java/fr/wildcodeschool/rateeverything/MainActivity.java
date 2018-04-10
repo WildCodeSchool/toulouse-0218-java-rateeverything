@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
         ArrayList<MainPhotoModel> photoList = new ArrayList<>();
 
         try {
