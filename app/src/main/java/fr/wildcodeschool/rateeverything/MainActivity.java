@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             SaveSharedPreference.setUserName(MainActivity.this, "");
             Intent goToLoginActivity = new Intent(MainActivity.this,LoginActivity.class);
             startActivity(goToLoginActivity);
+            finish();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

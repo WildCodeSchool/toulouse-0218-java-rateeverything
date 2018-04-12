@@ -65,6 +65,7 @@ public class FollowersActivity extends AppCompatActivity implements NavigationVi
             SaveSharedPreference.setUserName(FollowersActivity.this, "");
             Intent goToLoginActivity = new Intent(FollowersActivity.this,LoginActivity.class);
             startActivity(goToLoginActivity);
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_follow);

@@ -78,6 +78,7 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             SaveSharedPreference.setUserName(LoginActivity.this,pseudoValue);
                             LoginActivity.this.startActivity(goToMainActivity);
+                            finish();
                         }
 
                     }
