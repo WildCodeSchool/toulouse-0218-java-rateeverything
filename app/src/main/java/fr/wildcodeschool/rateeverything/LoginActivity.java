@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
             final TextView textChangeAvatar = findViewById(R.id.text_view_chose_avatar);
 
 
-        if(SaveSharedPreference.getUserName(LoginActivity.this).length() ==0)
+        if(SaveSharedPreference.getUserName(LoginActivity.this).length() == 0)
         {
             // call Login Activity
         }
@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                         String pass = editPassword.getText().toString().trim();
                         if (TextUtils.isEmpty(email) || TextUtils.isEmpty(pass)) {
 
-                            Toast.makeText(LoginActivity.this, "Enter both values", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, R.string.bothValues, Toast.LENGTH_SHORT).show();
                         } else {
 
                             mAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -114,12 +114,11 @@ public class LoginActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
 
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(LoginActivity.this, "ok", Toast.LENGTH_SHORT).show();
                                         SaveSharedPreference.setUserName(LoginActivity.this, email);
                                         LoginActivity.this.startActivity(goToMainActivity);
 
                                     } else {
-                                        Toast.makeText(LoginActivity.this, "Incorrect username or password", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(LoginActivity.this, R.string.incorrectUserPassword, Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });

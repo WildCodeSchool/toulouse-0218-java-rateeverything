@@ -49,4 +49,6 @@
     <string name="description_photo">Description photo</string>
     <string name="description">Description</string>
     <string name="fillFields">Please fill all fields !</string>
+    <string name="bothValues">Enter both values</string>
+    <string name="incorrectUserPassword">Incorrect username or password</string>
 </resources>
