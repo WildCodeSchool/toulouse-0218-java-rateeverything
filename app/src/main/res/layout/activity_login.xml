@@ -19,6 +19,34 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_launcher_background" />
 
+    <TextView
+        android:id="@+id/text_view_pseudo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/pseudo_text"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/button_create_account"/>
+
+    <EditText
+        android:id="@+id/edit_text_pseudo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="@string/pseudo"
+        android:inputType="textPersonName"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_view_pseudo"/>
+
     <Button
         android:id="@+id/button_sign_in"
         android:layout_width="wrap_content"
@@ -71,39 +99,39 @@
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_text_pseudo" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_mail" />
+
 
     <EditText
-        android:id="@+id/edit_text_pseudo"
+        android:id="@+id/edit_text_mail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="@string/pseudo"
+        android:hint="@string/mail"
         android:inputType="textPersonName"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_pseudo" />
+        app:layout_constraintTop_toBottomOf="@+id/text_view_mail" />
 
     <TextView
-        android:id="@+id/text_view_pseudo"
+        android:id="@+id/text_view_mail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="64dp"
-        android:text="@string/pseudo"
+        android:layout_marginTop="16dp"
+        android:text="@string/mail"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/button_create_account" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_pseudo" />
 
     <Button
         android:id="@+id/button_valid_login"
-        android:onClick="loginButtonClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
