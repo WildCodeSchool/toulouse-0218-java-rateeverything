@@ -26,8 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
 
-    private EditText editPseudo;
-    private EditText editPassword;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +51,10 @@ public class LoginActivity extends AppCompatActivity {
             final Button buttonValidLogin = findViewById(R.id.button_valid_login);
             final Button buttonValidCreate = findViewById(R.id.button_valid_create);
             final EditText editPseudo = findViewById(R.id.edit_text_pseudo);
+            final EditText editMail = findViewById(R.id.edit_text_mail);
             final EditText editPassword = findViewById(R.id.edit_text_password);
             final TextView textPseudo = findViewById(R.id.text_view_pseudo);
+            final TextView textMail = findViewById(R.id.text_view_mail);
             final TextView textPassword = findViewById(R.id.text_view_password);
             final TextView textChangeAvatar = findViewById(R.id.text_view_chose_avatar);
 
@@ -78,12 +79,42 @@ public class LoginActivity extends AppCompatActivity {
                 buttonSignIn.setVisibility(View.GONE);
                 buttonCreateAccount.setVisibility(View.GONE);
                 textPseudo.setVisibility(View.VISIBLE);
+                textMail.setVisibility(View.VISIBLE);
                 textPassword.setVisibility(View.VISIBLE);
                 editPseudo.setVisibility(View.VISIBLE);
+                editMail.setVisibility(View.VISIBLE);
                 editPassword.setVisibility(View.VISIBLE);
                 buttonValidCreate.setVisibility(View.VISIBLE);
                 textChangeAvatar.setVisibility(View.VISIBLE);
             }
+            });
+
+            buttonValidCreate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String mail = editMail.getText().toString().trim();
+                    String pass = editPassword.getText().toString().trim();
+                    if (TextUtils.isEmpty(mail) || TextUtils.isEmpty(pass)) {
+                        Toast.makeText(LoginActivity.this, R.string.bothValues, Toast.LENGTH_SHORT).show();
+                    }
+                    else if(pass.length() < 6) {
+                        Toast.makeText(LoginActivity.this, R.string.passwordNeed, Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        mAuth.createUserWithEmailAndPassword(mail, pass).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (!task.isSuccessful()) {
+                                    Toast.makeText(LoginActivity.this, R.string.authentificatinFailed, Toast.LENGTH_SHORT).show();
+                                }
+                                else {
+                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                }
+
+                            }
+                        });
+                    }
+                }
             });
 
                     buttonSignIn.setOnClickListener(new View.OnClickListener()
@@ -94,15 +125,17 @@ public class LoginActivity extends AppCompatActivity {
                 buttonSignIn.setVisibility(View.GONE);
                 buttonCreateAccount.setVisibility(View.GONE);
                 textPseudo.setVisibility(View.VISIBLE);
+                textMail.setVisibility(View.VISIBLE);
                 textPassword.setVisibility(View.VISIBLE);
                 editPseudo.setVisibility(View.VISIBLE);
+                editMail.setVisibility(View.VISIBLE);
                 editPassword.setVisibility(View.VISIBLE);
                 buttonValidLogin.setVisibility(View.VISIBLE);
 
                 buttonValidLogin.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        final String email = editPseudo.getText().toString().trim();
+                        final String email = editMail.getText().toString().trim();
                         String pass = editPassword.getText().toString().trim();
                         if (TextUtils.isEmpty(email) || TextUtils.isEmpty(pass)) {
 
