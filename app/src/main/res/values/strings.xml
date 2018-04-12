@@ -2,7 +2,7 @@
     <string name="app_name">toulouse-0218-java-rateeverything</string>
 
 
-    <string name="pseudo">Pseudo</string>
+    <string name="mail">Mail</string>
     <string name="create">Create</string>
     <string name="modifier_l_avatar">Modifier l\'avatar</string>
     <string name="return1">Return</string>
@@ -51,4 +51,9 @@
     <string name="fillFields">Please fill all fields !</string>
     <string name="bothValues">Enter both values</string>
     <string name="incorrectUserPassword">Incorrect username or password</string>
+    <string name="passwordNeed">Password need 6 characters minimum</string>
+    <string name="authentificatinFailed">Authentification failed</string>
+    <string name="pseudo">Pseudo</string>
+    <string name="pseudo_text">Pseudo</string>
+
 </resources>
