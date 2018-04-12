@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 
 public class FollowersActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -62,6 +64,7 @@ public class FollowersActivity extends AppCompatActivity implements NavigationVi
             Intent intentFollowers = new Intent(FollowersActivity.this, FollowersActivity.class);
             startActivity(intentFollowers);
         } else if (id == R.id.disconnect) {
+            FirebaseAuth.getInstance().signOut();
             SaveSharedPreference.setUserName(FollowersActivity.this, "");
             Intent goToLoginActivity = new Intent(FollowersActivity.this,LoginActivity.class);
             startActivity(goToLoginActivity);
