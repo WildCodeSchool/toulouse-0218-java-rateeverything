@@ -22,6 +22,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawerLayout;
@@ -83,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intentFollowers = new Intent(MainActivity.this, FollowersActivity.class);
             startActivity(intentFollowers);
         } else if (id == R.id.disconnect){
+            FirebaseAuth.getInstance().signOut();
             SaveSharedPreference.setUserName(MainActivity.this, "");
             Intent goToLoginActivity = new Intent(MainActivity.this,LoginActivity.class);
             startActivity(goToLoginActivity);
