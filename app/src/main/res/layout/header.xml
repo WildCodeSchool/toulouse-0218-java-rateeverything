@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="160dp"
     android:orientation="vertical"
-    android:background="@drawable/photobenb"
+    android:background="@drawable/ic_launcher_background"
     android:padding="20dp">
 
     <ImageView
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:src="@drawable/photobenbronde"/>
+        android:src="@drawable/benou_min"/>
 
     <TextView
         android:layout_width="wrap_content"

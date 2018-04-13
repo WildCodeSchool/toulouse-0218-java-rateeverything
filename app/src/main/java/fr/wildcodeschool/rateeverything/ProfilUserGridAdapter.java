@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 /**
@@ -28,9 +30,13 @@ public class ProfilUserGridAdapter extends ArrayAdapter<ProfilUserGridModel> {
         }
 
         ImageView imgUser = (ImageView) convertView.findViewById(R.id.img_user);
+        Glide.with(getContext())
+                .load(userGrid.getImgUser())
+                .into(imgUser);
+
         RatingBar ratingBar = (RatingBar) convertView.findViewById(R.id.rating_bar_user);
 
-        imgUser.setImageResource(userGrid.getImgUser());
+
         ratingBar.setRating(userGrid.getRatingPhotoUser());
 
         return convertView;
