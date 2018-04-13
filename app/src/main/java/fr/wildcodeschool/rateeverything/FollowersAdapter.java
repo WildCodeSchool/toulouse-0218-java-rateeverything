@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 /**
@@ -26,6 +28,11 @@ public class FollowersAdapter extends ArrayAdapter<FollowersModel> {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_list_followers, parent, false);
         }
+
+        ImageView imgUser = (ImageView) convertView.findViewById(R.id.imageview_photo);
+        Glide.with(getContext())
+                .load(followers.getUserPhoto())
+                .into(imgUser);
 
         TextView textName = (TextView) convertView.findViewById(R.id.textview_user_name);
         TextView textNbPhoto = (TextView) convertView.findViewById(R.id.textview_nb_photo);
