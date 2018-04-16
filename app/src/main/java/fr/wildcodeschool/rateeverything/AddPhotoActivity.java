@@ -13,7 +13,7 @@ import android.widget.ImageView;
 public class AddPhotoActivity extends Activity {
     ImageView mImagePhoto;
     static final int CAM_REQUEST = 0;
-    static final int SELECT_IMAGE = 1 ;
+    static final int SELECT_IMAGE = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
