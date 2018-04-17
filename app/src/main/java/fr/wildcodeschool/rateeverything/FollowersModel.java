@@ -48,4 +48,7 @@ public class FollowersModel {
         this.nbFollowers = nbFollowers;
         this.userName = userName;
     }
+
+    public void FollowersModel(){};
+
 }
