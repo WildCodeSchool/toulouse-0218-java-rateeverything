@@ -77,6 +77,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
             SaveSharedPreference.setUserName(ProfilUserActivity.this, "");
             Intent goToLoginActivity = new Intent(ProfilUserActivity.this,LoginActivity.class);
             startActivity(goToLoginActivity);
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_user);
