@@ -23,20 +23,20 @@ import com.google.firebase.database.FirebaseDatabase;
 public class LoginActivity extends AppCompatActivity {
 
     //Firebase
-    private FirebaseAuth.AuthStateListener authStateListener;
+    private FirebaseAuth.AuthStateListener mAuthStateListener;
     private FirebaseAuth mAuth;
     private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference myRef;
-    private FirebaseUser currentUser;
+    private DatabaseReference mRef;
+    private FirebaseUser mCurrentUser;
 
     //Widget
-    private Button buttonSignIn, buttonCreateAccount, buttonValidLogin, buttonValidCreate;
-    private EditText editPseudo, editPassword, editMail;
-    private TextView textPseudo, textMail, textPassword, textChangeAvatar;
-    private ProgressBar progressBarLoading;
+    private Button mButtonSignIn, mButtonCreateAccount, mButtonValidLogin, mButtonValidCreate;
+    private EditText mEditPseudo, mEditPassword, mEditMail;
+    private TextView mTextPseudo, mTextMail, mTextPassword, mTextChangeAvatar;
+    private ProgressBar mProgressBarLoading;
 
     //Intent
-    private Intent goToMainActivity;
+    private Intent mGoToMainActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,34 +44,34 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = mFirebaseDatabase.getReference("Users");
+        mRef = mFirebaseDatabase.getReference("Users");
         mAuth = FirebaseAuth.getInstance();
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        goToMainActivity = new Intent(LoginActivity.this, MainActivity.class);
+        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+        mGoToMainActivity = new Intent(LoginActivity.this, MainActivity.class);
 
         initWidgets();
 
         if (isSharedPreference()) {
 
-            startActivity(goToMainActivity);
+            startActivity(mGoToMainActivity);
             finish();
         }
 
-        authStateListener = new FirebaseAuth.AuthStateListener() {
+        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
 
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 
                 if (firebaseAuth.getCurrentUser() != null) {
 
-                    startActivity(goToMainActivity);
+                    startActivity(mGoToMainActivity);
                     finish();
                 }
             }
         };
 
         //Show Widget Create Account
-        buttonCreateAccount.setOnClickListener(new View.OnClickListener() {
+        mButtonCreateAccount.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick (View view) {
@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         //Register
-        buttonValidCreate.setOnClickListener(new View.OnClickListener() {
+        mButtonValidCreate.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         //Show Widget Sign In
-        buttonSignIn.setOnClickListener(new View.OnClickListener() {
+        mButtonSignIn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick (View view) {
@@ -101,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         //Sign In
-        buttonValidLogin.setOnClickListener(new View.OnClickListener() {
+        mButtonValidLogin.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -116,8 +116,8 @@ public class LoginActivity extends AppCompatActivity {
      */
     public void createAccount() {
 
-        String mail = editMail.getText().toString().trim();
-        String pass = editPassword.getText().toString().trim();
+        String mail = mEditMail.getText().toString().trim();
+        String pass = mEditPassword.getText().toString().trim();
 
         if (TextUtils.isEmpty(mail) || TextUtils.isEmpty(pass)) {
 
@@ -129,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         else {
 
-            progressBarLoading.setVisibility(View.VISIBLE);
+            mProgressBarLoading.setVisibility(View.VISIBLE);
             mAuth.createUserWithEmailAndPassword(mail, pass).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
 
                 @Override
@@ -141,12 +141,12 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     else {
 
-                        String mail = editMail.getText().toString().trim();
-                        String pseudo = editPseudo.getText().toString().trim();
-                        currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                        String userID = currentUser.getUid();
-                        myRef.child(userID).child("Profil").child("Email").setValue(mail);
-                        myRef.child(userID).child("Profil").child("Name").setValue(pseudo);
+                        String mail = mEditMail.getText().toString().trim();
+                        String pseudo = mEditPseudo.getText().toString().trim();
+                        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+                        String userID = mCurrentUser.getUid();
+                        mRef.child(userID).child("Profil").child("Email").setValue(mail);
+                        mRef.child(userID).child("Profil").child("Name").setValue(pseudo);
                         SaveSharedPreference.setUserName(LoginActivity.this, mail);
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     }
@@ -162,14 +162,14 @@ public class LoginActivity extends AppCompatActivity {
 
     public void signIn() {
 
-        String mail = editMail.getText().toString().trim();
-        String pass = editPassword.getText().toString().trim();
+        String mail = mEditMail.getText().toString().trim();
+        String pass = mEditPassword.getText().toString().trim();
         if (TextUtils.isEmpty(mail) || TextUtils.isEmpty(pass)) {
 
             Toast.makeText(LoginActivity.this, R.string.bothValues, Toast.LENGTH_SHORT).show();
         } else {
 
-            progressBarLoading.setVisibility(View.VISIBLE);
+            mProgressBarLoading.setVisibility(View.VISIBLE);
             mAuth.signInWithEmailAndPassword(mail, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
 
                 @Override
@@ -177,9 +177,9 @@ public class LoginActivity extends AppCompatActivity {
 
                     if (task.isSuccessful()) {
 
-                        String mail = editMail.getText().toString().trim();
+                        String mail = mEditMail.getText().toString().trim();
                         SaveSharedPreference.setUserName(LoginActivity.this, mail);
-                        LoginActivity.this.startActivity(goToMainActivity);
+                        LoginActivity.this.startActivity(mGoToMainActivity);
 
                     } else {
 
@@ -198,7 +198,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onStart() {
 
         super.onStart();
-        mAuth.addAuthStateListener(authStateListener);
+        mAuth.addAuthStateListener(mAuthStateListener);
     }
 
     /*
@@ -220,45 +220,45 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initWidgets() {
 
-        buttonSignIn = findViewById(R.id.button_sign_in);
-        buttonCreateAccount = findViewById(R.id.button_create_account);
-        buttonValidLogin = findViewById(R.id.button_valid_login);
-        buttonValidCreate = findViewById(R.id.button_valid_create);
-        editPseudo = findViewById(R.id.edit_text_pseudo);
-        editMail = findViewById(R.id.edit_text_mail);
-        editPassword = findViewById(R.id.edit_text_password);
-        textPseudo = findViewById(R.id.text_view_pseudo);
-        textMail = findViewById(R.id.text_view_mail);
-        textPassword = findViewById(R.id.text_view_password);
-        textChangeAvatar = findViewById(R.id.text_view_chose_avatar);
-        progressBarLoading = findViewById(R.id.progress_bar_load);
+        mButtonSignIn = findViewById(R.id.button_sign_in);
+        mButtonCreateAccount = findViewById(R.id.button_create_account);
+        mButtonValidLogin = findViewById(R.id.button_valid_login);
+        mButtonValidCreate = findViewById(R.id.button_valid_create);
+        mEditPseudo = findViewById(R.id.edit_text_pseudo);
+        mEditMail = findViewById(R.id.edit_text_mail);
+        mEditPassword = findViewById(R.id.edit_text_password);
+        mTextPseudo = findViewById(R.id.text_view_pseudo);
+        mTextMail = findViewById(R.id.text_view_mail);
+        mTextPassword = findViewById(R.id.text_view_password);
+        mTextChangeAvatar = findViewById(R.id.text_view_chose_avatar);
+        mProgressBarLoading = findViewById(R.id.progress_bar_load);
     }
 
     private void initWidgetSignIn() {
 
-        buttonSignIn.setVisibility(View.GONE);
-        buttonCreateAccount.setVisibility(View.GONE);
-        textPseudo.setVisibility(View.VISIBLE);
-        textMail.setVisibility(View.VISIBLE);
-        textPassword.setVisibility(View.VISIBLE);
-        editPseudo.setVisibility(View.VISIBLE);
-        editMail.setVisibility(View.VISIBLE);
-        editPassword.setVisibility(View.VISIBLE);
-        buttonValidLogin.setVisibility(View.VISIBLE);
+        mButtonSignIn.setVisibility(View.GONE);
+        mButtonCreateAccount.setVisibility(View.GONE);
+        mTextPseudo.setVisibility(View.VISIBLE);
+        mTextMail.setVisibility(View.VISIBLE);
+        mTextPassword.setVisibility(View.VISIBLE);
+        mEditPseudo.setVisibility(View.VISIBLE);
+        mEditMail.setVisibility(View.VISIBLE);
+        mEditPassword.setVisibility(View.VISIBLE);
+        mButtonValidLogin.setVisibility(View.VISIBLE);
     }
 
     private void initWidgetRegister() {
 
-        buttonSignIn.setVisibility(View.GONE);
-        buttonCreateAccount.setVisibility(View.GONE);
-        textPseudo.setVisibility(View.VISIBLE);
-        textMail.setVisibility(View.VISIBLE);
-        textPassword.setVisibility(View.VISIBLE);
-        editPseudo.setVisibility(View.VISIBLE);
-        editMail.setVisibility(View.VISIBLE);
-        editPassword.setVisibility(View.VISIBLE);
-        buttonValidCreate.setVisibility(View.VISIBLE);
-        textChangeAvatar.setVisibility(View.VISIBLE);
+        mButtonSignIn.setVisibility(View.GONE);
+        mButtonCreateAccount.setVisibility(View.GONE);
+        mTextPseudo.setVisibility(View.VISIBLE);
+        mTextMail.setVisibility(View.VISIBLE);
+        mTextPassword.setVisibility(View.VISIBLE);
+        mEditPseudo.setVisibility(View.VISIBLE);
+        mEditMail.setVisibility(View.VISIBLE);
+        mEditPassword.setVisibility(View.VISIBLE);
+        mButtonValidCreate.setVisibility(View.VISIBLE);
+        mTextChangeAvatar.setVisibility(View.VISIBLE);
     }
 
 }
