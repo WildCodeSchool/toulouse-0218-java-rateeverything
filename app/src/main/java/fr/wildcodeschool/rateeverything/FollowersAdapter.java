@@ -14,6 +14,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 /**
@@ -32,6 +34,11 @@ public class FollowersAdapter extends ArrayAdapter<FollowersModel> {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_list_followers, parent, false);
         }
+
+        ImageView imgUser = (ImageView) convertView.findViewById(R.id.imageview_photo);
+        Glide.with(getContext())
+                .load(followers.getUserPhoto())
+                .into(imgUser);
 
         TextView textName = (TextView) convertView.findViewById(R.id.textview_user_name);
         TextView textNbPhoto = (TextView) convertView.findViewById(R.id.textview_nb_photo);
