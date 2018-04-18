@@ -10,12 +10,30 @@ import android.os.Bundle;
 import android.widget.GridView;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import static java.lang.System.load;
+
 public class ProfilUserActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+
+    FirebaseDatabase database;
+    FirebaseUser user;
+    DatabaseReference myProfil;
+
+    ImageView photo;
+    TextView nbFollowers, nbPhoto, userName;
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
@@ -25,24 +43,49 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil_user);
 
+        photo = findViewById(R.id.profil_photo_user);
+        nbFollowers = findViewById(R.id.item_followers);
+        nbPhoto = findViewById(R.id.item_pictures);
+        userName = findViewById(R.id.edit_name_user);
 
         final GridView gridView = findViewById(R.id.grid_view_user);
         ArrayList<ProfilUserGridModel> userGrid = new ArrayList<>();
 
-        userGrid.add(new ProfilUserGridModel(R.drawable.coco,3));
-        userGrid.add(new ProfilUserGridModel(R.drawable.lebosse,3));
-        userGrid.add(new ProfilUserGridModel(R.drawable.toto,4));
-        userGrid.add(new ProfilUserGridModel(R.drawable.tofperrine,5));
-        userGrid.add(new ProfilUserGridModel(R.drawable.pad_ps,4));
-        userGrid.add(new ProfilUserGridModel(R.drawable.bottes,3));
-        userGrid.add(new ProfilUserGridModel(R.drawable.lampe,3));
-        userGrid.add(new ProfilUserGridModel(R.drawable.hamac_pieds,3));
-        userGrid.add(new ProfilUserGridModel(R.drawable.licorne_chat,3));
-        userGrid.add(new ProfilUserGridModel(R.drawable.taille_chat,3));
-        userGrid.add(new ProfilUserGridModel(R.drawable.licornes,3));
-        userGrid.add(new ProfilUserGridModel(R.drawable.pascaltof,3));
-        userGrid.add(new ProfilUserGridModel(R.drawable.tofperrine,3));
+        database = FirebaseDatabase.getInstance();
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        String iDUser = user.getUid();
+        myProfil = database.getReference("Users/" + iDUser + "/Profil/");
 
+        myProfil.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.child("UserName").getValue() != null) {
+                    String stringName = (String) dataSnapshot.child("UserName").getValue();
+                    userName.setText(stringName);
+                }
+                if (dataSnapshot.child("NbFollowers").getValue() != null) {
+                    String stringNbFollowers = dataSnapshot.child("NbFollowers").getValue().toString();
+                    nbFollowers.setText(stringNbFollowers);
+                }
+                if (dataSnapshot.child("NbPhotos").getValue() != null) {
+                    String stringNbPhotos = dataSnapshot.child("NbPhotos").getValue().toString();
+                    nbPhoto.setText(stringNbPhotos);
+                }
+                if (dataSnapshot.child("PhotoUser").getValue() != null) {
+                    String stringUrl = (String) dataSnapshot.child("PhotoUser").getValue();
+                    Glide.with(ProfilUserActivity.this)
+                            .load(stringUrl)
+                            .into(photo);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         ProfilUserGridAdapter adapter = new ProfilUserGridAdapter(this, userGrid);
         gridView.setAdapter(adapter);
