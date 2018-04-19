@@ -7,49 +7,73 @@ import java.util.Date;
  */
 
 public class MainPhotoModel {
-    private int photo;
-    private String username;
-    private Date date;
-    private float note;
+    String description;
+    long timestamp;
+    String title;
+    int totalnote;
+    String photo;
 
-    public MainPhotoModel(int photo, String username, Date date, float note) {
-        this.username = username;
-        this.photo = photo;
-        this.date = date;
-        this.note = note;
+    public MainPhotoModel() {
     }
-    
-    public int getPhoto() {
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public int getTotalnote() {
+        return totalnote;
+    }
+
+    public void setTotalnote(int totalnote) {
+        this.totalnote = totalnote;
+    }
+
+    public String getPhoto() {
         return photo;
     }
 
-    public void setPhoto(int photo) {
+    public void setPhoto(String photo) {
         this.photo = photo;
     }
 
-    public String getUsername() {
-        return username;
+    public int getNbnote() {
+        return nbnote;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setNbnote(int nbnote) {
+        this.nbnote = nbnote;
     }
 
-    public Date getDate() {
-        return date;
-    }
+    int nbnote;
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public float getNote() {
-        return note;
-    }
-
-    public void setNote(float note) {
-        this.note = note;
+    public MainPhotoModel(String description, long timestamp, String title, int totalnote, String photo, int nbnote) {
+        this.description = description;
+        this.timestamp = timestamp;
+        this.title = title;
+        this.totalnote = totalnote;
+        this.photo = photo;
+        this.nbnote = nbnote;
     }
 }
-
-
