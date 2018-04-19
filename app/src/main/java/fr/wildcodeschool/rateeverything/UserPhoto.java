@@ -23,14 +23,8 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
 
-    private TextView tvTitre, tvDescription;
-    private ImageView ivPhoto;
-    private RatingBar ratingBar;
-
     private FirebaseDatabase database;
     private DatabaseReference myRef;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,16 +37,14 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        tvTitre = findViewById(R.id.text_titre_photo);
-        tvDescription = findViewById(R.id.text_description_photo);
-        ivPhoto = findViewById(R.id.iv_photo);
-        ratingBar = findViewById(R.id.bar_modif_note);
+        TextView tvTitre = findViewById(R.id.text_titre_photo);
+        TextView tvDescription = findViewById(R.id.text_description_photo);
+        ImageView ivPhoto = findViewById(R.id.iv_photo);
+        RatingBar ratingBar = findViewById(R.id.bar_modif_note);
 
         database = FirebaseDatabase.getInstance();
         final String profilId = getIntent().getStringExtra("idprofil");
         final String idPhoto = getIntent().getStringExtra("keyphoto");
-
-
 
         myRef = database.getReference("Users/" + profilId + "/Photo/" + idPhoto);
         myRef.addValueEventListener(new ValueEventListener() {
@@ -68,13 +60,6 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
 
             }
         });
-
-
-
-
-
-
-
 
         // -----------MENU BURGER DON'T TOUCH FOR THE MOMENT------------------
 
