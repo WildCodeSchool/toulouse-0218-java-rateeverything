@@ -25,9 +25,18 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+
+
+
+
+
+
+
+        // -----------MENU BURGER DON'T TOUCH FOR THE MOMENT------------------
+
         NavigationView navigationViewPhoto = (NavigationView) findViewById(R.id.nav_view_photo);
         navigationViewPhoto.setNavigationItemSelectedListener(this);
-
 
     }
 
