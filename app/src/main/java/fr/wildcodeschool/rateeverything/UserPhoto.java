@@ -8,11 +8,23 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class UserPhoto extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
+
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +37,34 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        TextView tvTitre = findViewById(R.id.text_titre_photo);
+        TextView tvDescription = findViewById(R.id.text_description_photo);
+        ImageView ivPhoto = findViewById(R.id.iv_photo);
+        RatingBar ratingBar = findViewById(R.id.bar_modif_note);
+
+        database = FirebaseDatabase.getInstance();
+        final String profilId = getIntent().getStringExtra("idprofil");
+        final String idPhoto = getIntent().getStringExtra("keyphoto");
+
+        myRef = database.getReference("Users/" + profilId + "/Photo/" + idPhoto);
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                //TODO: paramêtrer en fonction du constructeur
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        // -----------MENU BURGER DON'T TOUCH FOR THE MOMENT------------------
+
         NavigationView navigationViewPhoto = (NavigationView) findViewById(R.id.nav_view_photo);
         navigationViewPhoto.setNavigationItemSelectedListener(this);
-
 
     }
 
