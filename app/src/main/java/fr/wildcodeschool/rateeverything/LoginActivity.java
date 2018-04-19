@@ -36,7 +36,6 @@ public class LoginActivity extends AppCompatActivity {
     static final int CAM_REQUEST = 1;
     static final int SELECT_IMAGE = 0;
     private static final String ID_PROFIL = "idprofil";
-
     //Firebase
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private FirebaseAuth mAuth;
