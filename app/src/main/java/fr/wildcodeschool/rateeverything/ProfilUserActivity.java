@@ -45,9 +45,6 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
         mNbPhoto = findViewById(R.id.item_pictures);
         mUserName = findViewById(R.id.edit_name_user);
 
-        final GridView gridView = findViewById(R.id.grid_view_user);
-        ArrayList<ProfilUserGridModel> userGrid = new ArrayList<>();
-
         mDatabase = FirebaseDatabase.getInstance();
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         String iDUser = mUser.getUid();
@@ -88,9 +85,6 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
 
                 }
             });
-
-            ProfilUserGridAdapter adapter = new ProfilUserGridAdapter(this, userGrid);
-            gridView.setAdapter(adapter);
 
             mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_user);
             mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.Open, R.string.Close);
@@ -134,9 +128,6 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
 
                     }
                 });
-
-                ProfilUserGridAdapter adapter = new ProfilUserGridAdapter(this, userGrid);
-                gridView.setAdapter(adapter);
 
                 mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_user);
                 mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.Open, R.string.Close);
