@@ -51,51 +51,107 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
         mDatabase = FirebaseDatabase.getInstance();
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         String iDUser = mUser.getUid();
-        mProfil = mDatabase.getReference("Users/" + iDUser + "/Profil/");
 
-        mProfil.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+        final String profilId = getIntent().getStringExtra("idprofil");
+        if (iDUser.equals(profilId)) {
 
-                if (dataSnapshot.child("UserName").getValue() != null) {
-                    String stringName = (String) dataSnapshot.child("UserName").getValue();
-                    mUserName.setText(stringName);
+
+            mProfil = mDatabase.getReference("Users/" + iDUser + "/Profil/");
+
+            mProfil.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    if (dataSnapshot.child("username").getValue() != null) {
+                        String stringName = (String) dataSnapshot.child("username").getValue();
+                        mUserName.setText(stringName);
+                    }
+                    if (dataSnapshot.child("nbfollowers").getValue() != null) {
+                        String stringNbFollowers = dataSnapshot.child("nbfollowers").getValue().toString();
+                        mNbFollowers.setText(stringNbFollowers);
+                    }
+                    if (dataSnapshot.child("nbphoto").getValue() != null) {
+                        String stringNbPhotos = dataSnapshot.child("nbphoto").getValue().toString();
+                        mNbPhoto.setText(stringNbPhotos);
+                    }
+                    if (dataSnapshot.child("photouser").getValue() != null) {
+                        String stringUrl = (String) dataSnapshot.child("photouser").getValue();
+                        Glide.with(ProfilUserActivity.this)
+                                .load(stringUrl)
+                                .into(mPhoto);
+                    }
+
                 }
-                if (dataSnapshot.child("NbFollowers").getValue() != null) {
-                    String stringNbFollowers = dataSnapshot.child("NbFollowers").getValue().toString();
-                    mNbFollowers.setText(stringNbFollowers);
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
                 }
-                if (dataSnapshot.child("NbPhotos").getValue() != null) {
-                    String stringNbPhotos = dataSnapshot.child("NbPhotos").getValue().toString();
-                    mNbPhoto.setText(stringNbPhotos);
-                }
-                if (dataSnapshot.child("PhotoUser").getValue() != null) {
-                    String stringUrl = (String) dataSnapshot.child("PhotoUser").getValue();
-                    Glide.with(ProfilUserActivity.this)
-                            .load(stringUrl)
-                            .into(mPhoto);
-                }
+            });
+
+            ProfilUserGridAdapter adapter = new ProfilUserGridAdapter(this, userGrid);
+            gridView.setAdapter(adapter);
+
+            mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_user);
+            mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.Open, R.string.Close);
+            mDrawerLayout.addDrawerListener(mToggle);
+            mToggle.syncState();
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_user);
+            navigationView.setNavigationItemSelectedListener(this);
+        }
+        else {
+                mProfil = mDatabase.getReference("Users/" + profilId + "/Profil/");
+
+                mProfil.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        if (dataSnapshot.child("username").getValue() != null) {
+                            String stringName = (String) dataSnapshot.child("username").getValue();
+                            mUserName.setText(stringName);
+                        }
+                        if (dataSnapshot.child("nbfollowers").getValue() != null) {
+                            String stringNbFollowers = dataSnapshot.child("nbfollowers").getValue().toString();
+                            mNbFollowers.setText(stringNbFollowers);
+                        }
+                        if (dataSnapshot.child("nbphoto").getValue() != null) {
+                            String stringNbPhotos = dataSnapshot.child("nbphoto").getValue().toString();
+                            mNbPhoto.setText(stringNbPhotos);
+                        }
+                        if (dataSnapshot.child("photouser").getValue() != null) {
+                            String stringUrl = (String) dataSnapshot.child("photouser").getValue();
+                            Glide.with(ProfilUserActivity.this)
+                                    .load(stringUrl)
+                                    .into(mPhoto);
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+                ProfilUserGridAdapter adapter = new ProfilUserGridAdapter(this, userGrid);
+                gridView.setAdapter(adapter);
+
+                mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_user);
+                mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.Open, R.string.Close);
+                mDrawerLayout.addDrawerListener(mToggle);
+                mToggle.syncState();
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
             }
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_user);
+            navigationView.setNavigationItemSelectedListener(this);
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+        }
 
-            }
-        });
-
-        ProfilUserGridAdapter adapter = new ProfilUserGridAdapter(this, userGrid);
-        gridView.setAdapter(adapter);
-
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_user);
-        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.Open, R.string.Close);
-        mDrawerLayout.addDrawerListener(mToggle);
-        mToggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_user);
-        navigationView.setNavigationItemSelectedListener(this);
-    }
+    // -----------------------MENU BURGER DON'T TOUCH PLEASE !!!--------------------------
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
