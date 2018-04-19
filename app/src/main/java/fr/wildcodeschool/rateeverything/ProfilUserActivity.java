@@ -144,9 +144,11 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                 mToggle.syncState();
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-                NavigationView navigationView = (NavigationView) findViewById(R.id.nav_user);
-                navigationView.setNavigationItemSelectedListener(this);
+
             }
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_user);
+            navigationView.setNavigationItemSelectedListener(this);
+
         }
 
     // -----------------------MENU BURGER DON'T TOUCH PLEASE !!!--------------------------
