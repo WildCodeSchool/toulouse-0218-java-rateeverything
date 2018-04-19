@@ -36,24 +36,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-        ArrayList<MainPhotoModel> photoList = new ArrayList<>();
 
-        try {
-            photoList.add(new MainPhotoModel(R.drawable.index, "Coralie", sdf.parse("21/02/2017"), 4));
-            photoList.add(new MainPhotoModel(R.drawable.moon, "Thomas", sdf.parse("20/02/2017"), 4));
-            photoList.add(new MainPhotoModel(R.drawable.cat, "Benjamin", sdf.parse("19/02/2017"), 4));
-            photoList.add(new MainPhotoModel(R.drawable.whelk, "Thomas", sdf.parse("18/02/2017"), 4));
-            photoList.add(new MainPhotoModel(R.drawable.cat, "Benjamin", sdf.parse("17/02/2017"), 4));
 
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        // TODO : mettre en place le listview avec l'adapter
 
-        MainPhotoAdapter adapter = new MainPhotoAdapter(this, photoList);
-        ListView photoListView = (ListView) findViewById(R.id.listview_photo_main);
-        photoListView.setAdapter(adapter);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

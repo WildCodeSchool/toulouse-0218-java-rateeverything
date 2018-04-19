@@ -16,28 +16,27 @@ import java.util.ArrayList;
  * Created by wilder on 04/04/18.
  */
 
-public class ProfilUserGridAdapter extends ArrayAdapter<ProfilUserGridModel> {
-    public ProfilUserGridAdapter (Context context, ArrayList<ProfilUserGridModel> userGrid) {
+public class ProfilUserGridAdapter extends ArrayAdapter<MainPhotoModel> {
+    public ProfilUserGridAdapter (Context context, ArrayList<MainPhotoModel> userGrid) {
         super(context, 0, userGrid);
     }
 
     @Override
     public View getView (int position, View convertView, ViewGroup parent) {
-        ProfilUserGridModel userGrid = getItem(position);
+        MainPhotoModel userGrid = getItem(position);
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_grid_user, parent, false);
         }
 
         ImageView imgUser = (ImageView) convertView.findViewById(R.id.img_user);
-        Glide.with(getContext())
-                .load(userGrid.getImgUser())
-                .into(imgUser);
+        Glide.with(getContext()).load(userGrid.getPhoto()).into(imgUser);
 
         RatingBar ratingBar = (RatingBar) convertView.findViewById(R.id.rating_bar_user);
 
+        int valeurnote = userGrid.getTotalnote()/userGrid.getNbphoto();
 
-        ratingBar.setRating(userGrid.getRatingPhotoUser());
+        ratingBar.setRating(valeurnote);
 
         return convertView;
     }
