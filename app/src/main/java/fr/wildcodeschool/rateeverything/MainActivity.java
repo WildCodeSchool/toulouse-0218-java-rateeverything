@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-        /*
+
         ArrayList<MainPhotoModel> photoList = new ArrayList<>();
 
         try {
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         MainPhotoAdapter adapter = new MainPhotoAdapter(this, photoList);
         ListView photoListView = (ListView) findViewById(R.id.listview_photo_main);
         photoListView.setAdapter(adapter);
-  */
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

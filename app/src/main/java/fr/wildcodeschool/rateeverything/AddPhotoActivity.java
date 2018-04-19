@@ -138,7 +138,6 @@ public class AddPhotoActivity extends Activity {
         });
 
 
-    }
 
 
 /*
@@ -205,9 +204,9 @@ public class AddPhotoActivity extends Activity {
                 }
             });
       */
-
-
     }
+
+}
 
 
 
