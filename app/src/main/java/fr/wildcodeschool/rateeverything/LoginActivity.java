@@ -1,5 +1,6 @@
 package fr.wildcodeschool.rateeverything;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -26,6 +27,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.ByteArrayOutputStream;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -178,7 +181,7 @@ public class LoginActivity extends AppCompatActivity {
                         mRef.child(userID).child("Profil").child("nbphoto").setValue(0);
                         mRef.child(userID).child("Profil").child("photobackground").setValue("1");
 
-                        //if (mUrlImage == null) {
+                        //if (urlImage == null) {
                             mRef.child(userID).child("Profil").child("photouser").setValue("1");
                         //} else {
                             //mRef.child(userID).child("Profil").child("photouser").setValue(mUrlImage);
