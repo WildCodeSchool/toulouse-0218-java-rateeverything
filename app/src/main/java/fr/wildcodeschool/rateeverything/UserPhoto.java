@@ -12,8 +12,11 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class UserPhoto extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -46,11 +49,25 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
         ratingBar = findViewById(R.id.bar_modif_note);
 
         database = FirebaseDatabase.getInstance();
+        final String profilId = getIntent().getStringExtra("idprofil");
+        final String idPhoto = getIntent().getStringExtra("keyphoto");
 
 
 
+        myRef = database.getReference("Users/" + profilId + "/Photo/" + idPhoto);
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
-        myRef =
+                //TODO: paramêtrer en fonction du constructeur
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
 
