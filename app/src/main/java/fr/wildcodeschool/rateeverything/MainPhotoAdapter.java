@@ -41,6 +41,7 @@ public class MainPhotoAdapter extends ArrayAdapter<MainPhotoModel> {
         textDatePub.setText(""+photoModel.getTimestamp());
 
         TextView note = (TextView) convertView.findViewById(R.id.text_note);
+
         int valeurnote = photoModel.getTotalnote()/photoModel.getNbphoto();
         note.setText("" + valeurnote);
 
