@@ -1,13 +1,21 @@
 package fr.wildcodeschool.rateeverything;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,8 +28,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.ByteArrayOutputStream;
+
 public class LoginActivity extends AppCompatActivity {
 
+    //CONSTANT
+    static final int CAM_REQUEST = 1;
+    static final int SELECT_IMAGE = 0;
+    private static final String ID_PROFIL = "idprofil";
     //Firebase
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private FirebaseAuth mAuth;
@@ -34,9 +48,13 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mEditPseudo, mEditPassword, mEditMail;
     private TextView mTextPseudo, mTextMail, mTextPassword, mTextChangeAvatar;
     private ProgressBar mProgressBarLoading;
+    private ImageView mImageAvatar;
 
     //Intent
     private Intent mGoToMainActivity;
+
+    //Photo
+    private Uri mUrlImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +128,16 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //Choose Avatar
+        mTextChangeAvatar.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                showPickImageDialog();
+            }
+        });
+
     }
     /*
     ---------------------------------CreateAnAccount--------------------------------------
@@ -145,8 +173,18 @@ public class LoginActivity extends AppCompatActivity {
                         String pseudo = mEditPseudo.getText().toString().trim();
                         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
                         String userID = mCurrentUser.getUid();
-                        mRef.child(userID).child("Profil").child("Email").setValue(mail);
-                        mRef.child(userID).child("Profil").child("Name").setValue(pseudo);
+                        mRef.child(userID).child("Profil").child("id").setValue(userID);
+                        mRef.child(userID).child("Profil").child("mail").setValue(mail);
+                        mRef.child(userID).child("Profil").child("username").setValue(pseudo);
+                        mRef.child(userID).child("Profil").child("nbfollowers").setValue(0);
+                        mRef.child(userID).child("Profil").child("nbphoto").setValue(0);
+                        mRef.child(userID).child("Profil").child("photobackground").setValue("1");
+
+                        //if (urlImage == null) {
+                            mRef.child(userID).child("Profil").child("photouser").setValue("1");
+                        //} else {
+                            //mRef.child(userID).child("Profil").child("photouser").setValue(mUrlImage);
+                        //}
                         SaveSharedPreference.setUserName(LoginActivity.this, mail);
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     }
@@ -176,9 +214,14 @@ public class LoginActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
                     if (task.isSuccessful()) {
+                        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+                        String userID = mCurrentUser.getUid();
+
+                        mGoToMainActivity.putExtra(ID_PROFIL, userID);
 
                         String mail = mEditMail.getText().toString().trim();
                         SaveSharedPreference.setUserName(LoginActivity.this, mail);
+
                         LoginActivity.this.startActivity(mGoToMainActivity);
 
                     } else {
@@ -190,8 +233,75 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+
     /*
-    -----------------------------------Firebase-------------------------------------------------
+    -----------------------------------AvatarMethod-------------------------------------------------
+     */
+
+    private void showPickImageDialog() {
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(LoginActivity.this);
+        builderSingle.setTitle("Select One Option");
+
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                LoginActivity.this,
+                android.R.layout.select_dialog_singlechoice);
+        arrayAdapter.add("Gallery");
+        arrayAdapter.add("Camera");
+
+        builderSingle.setNegativeButton(
+                "cancel",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        builderSingle.setAdapter(
+                arrayAdapter,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+                                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                startActivityForResult(pickPhoto, SELECT_IMAGE);
+                                break;
+
+                            case 1:
+                                Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                startActivityForResult(takePicture, CAM_REQUEST);
+                                break;
+                        }
+
+                    }
+                });
+        builderSingle.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case CAM_REQUEST:
+                if(resultCode == RESULT_OK) {
+                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                    mImageAvatar.setImageBitmap(bitmap);
+                }
+                break;
+            case SELECT_IMAGE:
+                if(resultCode == RESULT_OK) {
+                    Uri selectedImage = data.getData();
+                    mUrlImage = selectedImage;
+                    mImageAvatar.setImageURI(selectedImage);
+                }
+                break;
+        }
+    }
+
+    /*
+    -----------------------------------Firebase-----------------------------------------------------
      */
 
     @Override
@@ -202,7 +312,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /*
-    ------------------------SharedPreference-----------------------------------
+    ------------------------------SharedPreference--------------------------------------------------
      */
     private boolean isSharedPreference() {
 
@@ -215,7 +325,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /*
-    -------------------WidgetsMethod--------------------------------------
+    --------------------------------WidgetsMethod---------------------------------------------------
      */
 
     private void initWidgets() {
@@ -232,6 +342,7 @@ public class LoginActivity extends AppCompatActivity {
         mTextPassword = findViewById(R.id.text_view_password);
         mTextChangeAvatar = findViewById(R.id.text_view_chose_avatar);
         mProgressBarLoading = findViewById(R.id.progress_bar_load);
+        mImageAvatar = findViewById(R.id.image_view_logo);
     }
 
     private void initWidgetSignIn() {
