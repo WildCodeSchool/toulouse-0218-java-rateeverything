@@ -7,49 +7,84 @@ import java.util.Date;
  */
 
 public class MainPhotoModel {
-    private int photo;
-    private String username;
-    private Date date;
-    private float note;
+    String description;
+    String idvotant;
+    int nbphoto;
+    String photo;
+    int timestamp;
+    String titre;
+    int totalnote;
 
-    public MainPhotoModel(int photo, String username, Date date, float note) {
-        this.username = username;
-        this.photo = photo;
-        this.date = date;
-        this.note = note;
+    public MainPhotoModel() {
     }
-    
-    public int getPhoto() {
+
+    public MainPhotoModel(String description, String idvotant, int nbphoto, String photo, int timestamp, String titre, int totalnote) {
+        this.description = description;
+        this.idvotant = idvotant;
+        this.nbphoto = nbphoto;
+        this.photo = photo;
+        this.timestamp = timestamp;
+        this.titre = titre;
+        this.totalnote = totalnote;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getIdvotant() {
+        return idvotant;
+    }
+
+    public void setIdvotant(String idvotant) {
+        this.idvotant = idvotant;
+    }
+
+    public int getNbphoto() {
+        return nbphoto;
+    }
+
+    public void setNbphoto(int nbphoto) {
+        this.nbphoto = nbphoto;
+    }
+
+    public String getPhoto() {
         return photo;
     }
 
-    public void setPhoto(int photo) {
+    public void setPhoto(String photo) {
         this.photo = photo;
     }
 
-    public String getUsername() {
-        return username;
+    public int getTimestamp() {
+        return timestamp;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setTimestamp(int timestamp) {
+        this.timestamp = timestamp;
     }
 
-    public Date getDate() {
-        return date;
+    public String getTitre() {
+        return titre;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setTitre(String titre) {
+        this.titre = titre;
     }
 
-    public float getNote() {
-        return note;
+    public int getTotalnote() {
+        return totalnote;
     }
 
-    public void setNote(float note) {
-        this.note = note;
+    public void setTotalnote(int totalnote) {
+        this.totalnote = totalnote;
     }
 }
+
+
 
 
