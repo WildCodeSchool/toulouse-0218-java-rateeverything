@@ -1,6 +1,5 @@
 package fr.wildcodeschool.rateeverything;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -28,8 +27,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.io.ByteArrayOutputStream;
-
 public class LoginActivity extends AppCompatActivity {
 
     //CONSTANT
@@ -55,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
     private Intent mGoToMainActivity;
 
     //Photo
-    private Uri urlImage;
+    private Uri mUrlImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,10 +178,10 @@ public class LoginActivity extends AppCompatActivity {
                         mRef.child(userID).child("Profil").child("nbphoto").setValue(0);
                         mRef.child(userID).child("Profil").child("photobackground").setValue("1");
 
-                        //if (urlImage == null) {
+                        //if (mUrlImage == null) {
                             mRef.child(userID).child("Profil").child("photouser").setValue("1");
                         //} else {
-                            //mRef.child(userID).child("Profil").child("photouser").setValue(urlImage);
+                            //mRef.child(userID).child("Profil").child("photouser").setValue(mUrlImage);
                         //}
                         SaveSharedPreference.setUserName(LoginActivity.this, mail);
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
@@ -218,7 +215,7 @@ public class LoginActivity extends AppCompatActivity {
                         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
                         String userID = mCurrentUser.getUid();
 
-                        mGoToMainActivity.putExtra(ID_PROFIL,userID);
+                        mGoToMainActivity.putExtra(ID_PROFIL, userID);
 
                         String mail = mEditMail.getText().toString().trim();
                         SaveSharedPreference.setUserName(LoginActivity.this, mail);
@@ -294,7 +291,7 @@ public class LoginActivity extends AppCompatActivity {
             case SELECT_IMAGE:
                 if(resultCode == RESULT_OK) {
                     Uri selectedImage = data.getData();
-                    urlImage = selectedImage;
+                    mUrlImage = selectedImage;
                     mImageAvatar.setImageURI(selectedImage);
                 }
                 break;

@@ -46,6 +46,7 @@ public class MainPhotoAdapter extends ArrayAdapter<MainPhotoModel> {
         note.setText(String.valueOf(photoModel.getNote()));
 
 
+
         return convertView;
     }
 
