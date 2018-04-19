@@ -8,11 +8,26 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class UserPhoto extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
+
+    private TextView tvTitre, tvDescription;
+    private ImageView ivPhoto;
+    private RatingBar ratingBar;
+
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +40,17 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        tvTitre = findViewById(R.id.text_titre_photo);
+        tvDescription = findViewById(R.id.text_description_photo);
+        ivPhoto = findViewById(R.id.iv_photo);
+        ratingBar = findViewById(R.id.bar_modif_note);
+
+        database = FirebaseDatabase.getInstance();
+
+
+
+
+        myRef =
 
 
 
