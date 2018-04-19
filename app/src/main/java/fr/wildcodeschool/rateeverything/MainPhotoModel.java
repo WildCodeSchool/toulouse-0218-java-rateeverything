@@ -24,8 +24,6 @@ public class MainPhotoModel {
         this.description = description;
     }
 
-
-
     public long getTimestamp() {
         return timestamp;
     }
@@ -57,7 +55,7 @@ public class MainPhotoModel {
     public void setPhoto(String photo) {
         this.photo = photo;
     }
-
+  
     public int getNbnote() {
         return nbnote;
     }
@@ -65,8 +63,6 @@ public class MainPhotoModel {
     public void setNbnote(int nbnote) {
         this.nbnote = nbnote;
     }
-
-    int nbnote;
 
     public MainPhotoModel(String description, long timestamp, String title, int totalnote, String photo, int nbnote) {
         this.description = description;
