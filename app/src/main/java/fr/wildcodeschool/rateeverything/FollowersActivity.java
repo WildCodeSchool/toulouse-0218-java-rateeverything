@@ -1,7 +1,6 @@
 package fr.wildcodeschool.rateeverything;
 
 import android.content.Intent;
-import android.media.Image;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -9,8 +8,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,10 +27,10 @@ public class FollowersActivity extends AppCompatActivity implements NavigationVi
 
 
 
-    ListView listViewFollowers;
-    ArrayList<FollowersModel> followers;
-    FollowersAdapter adapter;
-    FollowersModel myModel;
+    ListView mListViewFollowers;
+    ArrayList<FollowersModel> mFollowers;
+    FollowersAdapter mAdapter;
+    FollowersModel mModel;git
 
     FirebaseDatabase mDatabase;
     FirebaseUser mUser;
@@ -58,18 +55,18 @@ public class FollowersActivity extends AppCompatActivity implements NavigationVi
         myRef = mDatabase.getReference("Users/" + mUser.getUid());
         refFollowers = mDatabase.getReference("Users/");
 
-        listViewFollowers = findViewById(R.id.listview_followers);
-        followers = new ArrayList<>();
-        adapter = new FollowersAdapter(this, followers);
+        mListViewFollowers = findViewById(R.id.listview_followers);
+        mFollowers = new ArrayList<>();
+        mAdapter = new FollowersAdapter(this, mFollowers);
 
-        listViewFollowers.setAdapter(adapter);
+        mListViewFollowers.setAdapter(mAdapter);
         refFollowers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                followers.clear();
+                mFollowers.clear();
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
-                    myModel = ds.child("Profil").getValue(FollowersModel.class);
-                    followers.add(myModel);
+                    mModel = ds.child("Profil").getValue(FollowersModel.class);
+                    mFollowers.add(mModel);
                 }
             }
 
