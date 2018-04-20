@@ -3,7 +3,6 @@ package fr.wildcodeschool.rateeverything;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.icu.text.DateTimePatternGenerator;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.os.Bundle;
@@ -19,33 +18,24 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.ByteArrayOutputStream;
-import java.net.URI;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Date;
-
-import static com.google.firebase.storage.FirebaseStorage.*;
 
 public class AddPhotoActivity extends Activity {
     ImageView mImagePhoto;
     static final int CAM_REQUEST = 0;
     static final int SELECT_IMAGE = 1;
-    private Uri selectedImage = null;
-    private Bitmap bitmap = null;
+    private Uri mSelectedImage = null;
+    private Bitmap mBitmap = null;
     private StorageReference mStorageRef;
-    private FirebaseDatabase database;
+    private FirebaseDatabase mDatabase;
     private DatabaseReference mRef;
-    private FirebaseUser currentUser;
+    private FirebaseUser mCurrentUser;
 
 
 
@@ -53,13 +43,12 @@ public class AddPhotoActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        database = FirebaseDatabase.getInstance();
+        mDatabase = FirebaseDatabase.getInstance();
         mStorageRef = FirebaseStorage.getInstance().getReference();
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        String idUser = currentUser.getUid();
+        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String idUser = mCurrentUser.getUid();
 
-        mRef = database.getReference("Users/" + idUser + "/Photo/");
-
+        mRef = mDatabase.getReference("Users/" + idUser + "/Photo/");
 
         Button buttonAdd;
         setContentView(R.layout.activity_add_photo);
@@ -67,7 +56,6 @@ public class AddPhotoActivity extends Activity {
         mImagePhoto = (ImageView) findViewById(R.id.iv_photo);
         TextView tvTitle = findViewById(R.id.et_title_img);
         TextView tvDescription = findViewById(R.id.et_description_img);
-
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,14 +80,14 @@ public class AddPhotoActivity extends Activity {
         switch(requestCode) {
             case CAM_REQUEST:
                 if(resultCode == RESULT_OK) {
-                    bitmap = (Bitmap) data.getExtras().get("data");
-                    mImagePhoto.setImageBitmap(bitmap);
+                    mBitmap = (Bitmap) data.getExtras().get("data");
+                    mImagePhoto.setImageBitmap(mBitmap);
                 }
                 break;
             case SELECT_IMAGE:
                 if(resultCode == RESULT_OK) {
-                    selectedImage = data.getData();
-                    mImagePhoto.setImageURI(selectedImage);
+                    mSelectedImage = data.getData();
+                    mImagePhoto.setImageURI(mSelectedImage);
                 }
                 break;
         }
@@ -116,7 +104,7 @@ public class AddPhotoActivity extends Activity {
 
                 StorageReference riverRef = mStorageRef.child("Image");
 
-                riverRef.putFile(selectedImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                riverRef.putFile(mSelectedImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         Uri downloadUrl = taskSnapshot.getDownloadUrl();
@@ -136,74 +124,6 @@ public class AddPhotoActivity extends Activity {
 
             }
         });
-
-
-
-
-/*
-    public void shareImageButton(View view){
-
-
-
-                    .child(selectedImage.getLastPathSegment());
-            filePath.putFile(selectedImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    final Uri downloadUri = taskSnapshot.getUploadSessionUri();
-                    final DatabaseReference newPost = databaseReference.push();
-                    mDatabaseUsers.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            newPost.child("description").setValue(descriptionValue);
-
-                            newPost.child("photo").setValue(downloadUri.toString());
-
-                            newPost.child("title").setValue(titleValue);
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-            });
-        }
-        if(CAM_REQUEST == 0){;
-            bitmap = mImagePhoto.getDrawingCache();
-
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-            byte[] dataB = baos.toByteArray();
-
-            StorageReference filePath = storageReference.child("Image").child(dataB+"");
-            UploadTask uploadTask = filePath.putBytes(dataB);
-            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    final Uri downloadUriB = taskSnapshot.getUploadSessionUri();
-                    final DatabaseReference newPost = databaseReference.push();
-                    mDatabaseUsers.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            newPost.child("description").setValue(descriptionValue);
-
-                            newPost.child("photo").setValue(downloadUriB.toString());
-
-                            newPost.child("title").setValue(titleValue);
-
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-            });
-      */
     }
 
 }
