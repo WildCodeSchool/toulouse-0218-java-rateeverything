@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,39 +34,20 @@ public class FollowersAdapter extends ArrayAdapter<FollowersModel> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_list_followers, parent, false);
         }
 
-        ImageView imgUser = (ImageView) convertView.findViewById(R.id.imageview_photo);
-        Glide.with(getContext())
-                .load(followers.getUserPhoto())
-                .into(imgUser);
+        if (followers.getPhotouser()!= "1") {
+            ImageView photo = (ImageView) convertView.findViewById(R.id.imageview_photo);
+            Glide.with(parent.getContext()).load(followers.getPhotouser().toString()).into(photo);
+        }
 
         TextView textName = (TextView) convertView.findViewById(R.id.textview_user_name);
+        textName.setText(followers.getUserName().toString());
+
         TextView textNbPhoto = (TextView) convertView.findViewById(R.id.textview_nb_photo);
+        textNbPhoto.setText(followers.getNbphoto() + "");
+
         TextView textNbFollowers = (TextView) convertView.findViewById(R.id.textview_nb_followers);
-        ImageView imgPhotoUser = (ImageView) convertView.findViewById(R.id.imageview_photo);
+        textNbFollowers.setText(followers.getNbfollowers() + "");
 
-
-
-
-        textName.setText(followers.getUserName());
-        String stringNbPhoto = String.valueOf(followers.getNbPhoto());
-        textNbPhoto.setText(stringNbPhoto);
-        String stringNbFollowers = String.valueOf(followers.getNbFollowers());
-        textNbFollowers.setText(stringNbFollowers);
-        imgPhotoUser.setImageResource(followers.getUserPhoto());
-
-        ImageView addFollowers = (ImageView) convertView.findViewById(R.id.imageview_ajout_followers);
-
-        addFollowers.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Write a message to the database
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                String userID = user.getUid();
-                DatabaseReference myRef = database.getReference("Users");
-                myRef.child(userID).child("Followers").setValue(followers.getUserName());
-            }
-        });
 
         return convertView;
 

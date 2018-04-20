@@ -5,33 +5,20 @@ package fr.wildcodeschool.rateeverything;
  */
 
 public class FollowersModel {
-    private int userPhoto;
-    private int nbPhoto;
-    private int nbFollowers;
+    private String mail;
     private String userName;
+    private int nbfollowers;
+    private int nbphoto;
+    private String photouser;
+    private String photbackground;
+    private String id;
 
-    public int getUserPhoto() {
-        return userPhoto;
+    public String getMail() {
+        return mail;
     }
 
-    public void setUserPhoto(int userPhoto) {
-        this.userPhoto = userPhoto;
-    }
-
-    public int getNbPhoto() {
-        return nbPhoto;
-    }
-
-    public void setNbPhoto(int nbPhoto) {
-        this.nbPhoto = nbPhoto;
-    }
-
-    public int getNbFollowers() {
-        return nbFollowers;
-    }
-
-    public void setNbFollowers(int nbFollowers) {
-        this.nbFollowers = nbFollowers;
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 
     public String getUserName() {
@@ -42,11 +29,56 @@ public class FollowersModel {
         this.userName = userName;
     }
 
-    public FollowersModel(int userPhoto, int nbPhoto, int nbFollowers, String userName) {
-        this.userPhoto = userPhoto;
-        this.nbPhoto = nbPhoto;
-        this.nbFollowers = nbFollowers;
+    public int getNbfollowers() {
+        return nbfollowers;
+    }
+
+    public void setNbfollowers(int nbfollowers) {
+        this.nbfollowers = nbfollowers;
+    }
+
+    public int getNbphoto() {
+        return nbphoto;
+    }
+
+    public void setNbphoto(int nbphoto) {
+        this.nbphoto = nbphoto;
+    }
+
+    public String getPhotouser() {
+        return photouser;
+    }
+
+    public void setPhotouser(String photouser) {
+        this.photouser = photouser;
+    }
+
+    public String getPhotbackground() {
+        return photbackground;
+    }
+
+    public void setPhotbackground(String photbackground) {
+        this.photbackground = photbackground;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public FollowersModel(String mail, String userName, int nbfollowers, int nbphoto, String photouser, String photbackground, String id) {
+        this.mail = mail;
         this.userName = userName;
+        this.nbfollowers = nbfollowers;
+        this.nbphoto = nbphoto;
+        this.photouser = photouser;
+        this.photbackground = photbackground;
+        this.id = id;
+
+
     }
 
     public void FollowersModel(){};
