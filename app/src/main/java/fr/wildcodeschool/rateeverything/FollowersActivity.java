@@ -30,7 +30,7 @@ public class FollowersActivity extends AppCompatActivity implements NavigationVi
     ListView mListViewFollowers;
     ArrayList<FollowersModel> mFollowers;
     FollowersAdapter mAdapter;
-    FollowersModel mModel;git
+    FollowersModel mModel;
 
     FirebaseDatabase mDatabase;
     FirebaseUser mUser;
