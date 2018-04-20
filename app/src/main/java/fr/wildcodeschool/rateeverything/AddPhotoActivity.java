@@ -113,12 +113,12 @@ public class AddPhotoActivity extends Activity {
 
                         MainPhotoModel mainPhotoModel = new MainPhotoModel(descriptionValue, date,titleValue, 1, url, 1);
                         mRef.push().setValue(mainPhotoModel);
-                        Toast.makeText(AddPhotoActivity.this, "Ok", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddPhotoActivity.this, R.string.Ok, Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(AddPhotoActivity.this, "Fail", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddPhotoActivity.this, R.string.fail, Toast.LENGTH_SHORT).show();
                     }
                 });
 
