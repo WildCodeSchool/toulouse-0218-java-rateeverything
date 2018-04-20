@@ -66,7 +66,6 @@ public class LoginActivity extends AppCompatActivity {
 
     //Photo
     private Uri mUrlImage;
-    private Bitmap mBitmap;
 
     private Uri mPhotoURI;
 
@@ -194,7 +193,7 @@ public class LoginActivity extends AppCompatActivity {
                         mRef.child(userID).child("Profil").child("nbphoto").setValue(0);
                         mRef.child(userID).child("Profil").child("photobackground").setValue("1");
 
-                        if (mUrlImage == null && mBitmap == null) {
+                        if (mUrlImage == null) {
                             mRef.child(userID).child("Profil").child("photouser").setValue("1");
                         }
                         // TODO : enregistrer dans firebaseStorage
