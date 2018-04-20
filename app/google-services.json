@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "294229839097-c9e98daph6nv9n80mok4lefmd2nrku6f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.wildcodeschool.rateeverything",
+            "certificate_hash": "9b13e1a9283a343524df1e8e374efaac24cabdeb"
+          }
+        },
+        {
+          "client_id": "294229839097-1edrn4qospi167thola0lromnlbaeaid.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.wildcodeschool.rateeverything",
+            "certificate_hash": "ea90d1db1faca38e710d2887464c7e56ae1c0aa9"
+          }
+        },
+        {
           "client_id": "294229839097-vkmoljm1ta516sbsfg24vf0bq26g6csc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

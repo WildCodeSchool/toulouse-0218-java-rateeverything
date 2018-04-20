@@ -38,10 +38,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-
+        
+        ArrayList<MainPhotoModel> photoList = new ArrayList<>();
         // TODO : mettre en place le listview avec l'adapter
 
-
+        MainPhotoAdapter adapter = new MainPhotoAdapter(this, photoList);
+        ListView photoListView = (ListView) findViewById(R.id.listview_photo_main);
+        photoListView.setAdapter(adapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

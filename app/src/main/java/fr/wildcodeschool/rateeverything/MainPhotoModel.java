@@ -8,24 +8,12 @@ import java.util.Date;
 
 public class MainPhotoModel {
     String description;
-    String idvotant;
-    int nbphoto;
-    String photo;
-    int timestamp;
-    String titre;
+    long timestamp;
+    String title;
     int totalnote;
+    String photo;
 
     public MainPhotoModel() {
-    }
-
-    public MainPhotoModel(String description, String idvotant, int nbphoto, String photo, int timestamp, String titre, int totalnote) {
-        this.description = description;
-        this.idvotant = idvotant;
-        this.nbphoto = nbphoto;
-        this.photo = photo;
-        this.timestamp = timestamp;
-        this.titre = titre;
-        this.totalnote = totalnote;
     }
 
     public String getDescription() {
@@ -36,44 +24,20 @@ public class MainPhotoModel {
         this.description = description;
     }
 
-    public String getIdvotant() {
-        return idvotant;
-    }
-
-    public void setIdvotant(String idvotant) {
-        this.idvotant = idvotant;
-    }
-
-    public int getNbphoto() {
-        return nbphoto;
-    }
-
-    public void setNbphoto(int nbphoto) {
-        this.nbphoto = nbphoto;
-    }
-
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
-
-    public int getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(int timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 
-    public String getTitre() {
-        return titre;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitre(String titre) {
-        this.titre = titre;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public int getTotalnote() {
@@ -83,8 +47,29 @@ public class MainPhotoModel {
     public void setTotalnote(int totalnote) {
         this.totalnote = totalnote;
     }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+  
+    public int getNbnote() {
+        return nbnote;
+    }
+
+    public void setNbnote(int nbnote) {
+        this.nbnote = nbnote;
+    }
+
+    public MainPhotoModel(String description, long timestamp, String title, int totalnote, String photo, int nbnote) {
+        this.description = description;
+        this.timestamp = timestamp;
+        this.title = title;
+        this.totalnote = totalnote;
+        this.photo = photo;
+        this.nbnote = nbnote;
+    }
 }
-
-
-
-

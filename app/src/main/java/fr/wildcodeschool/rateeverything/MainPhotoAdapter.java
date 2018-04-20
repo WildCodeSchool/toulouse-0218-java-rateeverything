@@ -24,13 +24,16 @@ public class MainPhotoAdapter extends ArrayAdapter<MainPhotoModel> {
     public MainPhotoAdapter(Context context, ArrayList<MainPhotoModel> items) {
         super(context, 0, items);
     }
+     /*
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         MainPhotoModel photoModel = getItem(position);
         if(convertView==null) {
+
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_photos, parent, false);
         }
+
         ImageView photo = convertView.findViewById(R.id.image_photo);
         Glide.with(getContext()).load(photoModel.getPhoto()).into(photo);
 
@@ -48,5 +51,5 @@ public class MainPhotoAdapter extends ArrayAdapter<MainPhotoModel> {
         return convertView;
     }
 
-
+*/
 }
