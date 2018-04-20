@@ -59,7 +59,7 @@ public class FollowersActivity extends AppCompatActivity implements NavigationVi
         mFollowers = new ArrayList<>();
         mAdapter = new FollowersAdapter(this, mFollowers);
 
-        mListViewFollowers.setAdapter(mAdapter);
+
         refFollowers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -67,6 +67,7 @@ public class FollowersActivity extends AppCompatActivity implements NavigationVi
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
                     mModel = ds.child("Profil").getValue(FollowersModel.class);
                     mFollowers.add(mModel);
+                    mListViewFollowers.setAdapter(mAdapter);
                 }
             }
 

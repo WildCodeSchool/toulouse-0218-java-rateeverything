@@ -8,11 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -35,14 +30,14 @@ public class FollowersAdapter extends ArrayAdapter<FollowersModel> {
         }
 
         if (followers.getPhotouser()!= "1") {
-            ImageView photo = (ImageView) convertView.findViewById(R.id.imageview_photo);
+            ImageView photo = (ImageView) convertView.findViewById(R.id.imageview_photo_followers);
             Glide.with(parent.getContext()).load(followers.getPhotouser().toString()).into(photo);
         }
 
-        TextView textName = (TextView) convertView.findViewById(R.id.textview_user_name);
-        textName.setText(followers.getUserName().toString());
+        TextView textName = (TextView) convertView.findViewById(R.id.textview_user_name_followers);
+        textName.setText(followers.getUsername().toString());
 
-        TextView textNbPhoto = (TextView) convertView.findViewById(R.id.textview_nb_photo);
+        TextView textNbPhoto = (TextView) convertView.findViewById(R.id.textview_nb_photo_followers);
         textNbPhoto.setText(followers.getNbphoto() + "");
 
         TextView textNbFollowers = (TextView) convertView.findViewById(R.id.textview_nb_followers);

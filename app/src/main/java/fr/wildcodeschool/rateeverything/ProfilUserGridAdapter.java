@@ -34,7 +34,7 @@ public class ProfilUserGridAdapter extends ArrayAdapter<MainPhotoModel> {
 
         RatingBar ratingBar = (RatingBar) convertView.findViewById(R.id.rating_bar_user);
 
-        int valeurnote = userGrid.getTotalnote()/userGrid.getNbphoto();
+        int valeurnote = userGrid.getTotalnote()/userGrid.getNbnote();
 
         ratingBar.setRating(valeurnote);
 
