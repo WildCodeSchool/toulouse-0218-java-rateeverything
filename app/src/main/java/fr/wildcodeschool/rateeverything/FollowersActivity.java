@@ -1,7 +1,6 @@
 package fr.wildcodeschool.rateeverything;
 
 import android.content.Intent;
-import android.media.Image;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -9,13 +8,15 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -23,6 +24,17 @@ public class FollowersActivity extends AppCompatActivity implements NavigationVi
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
+
+
+
+    ListView mListViewFollowers;
+    ArrayList<FollowersModel> mFollowers;
+    FollowersAdapter mAdapter;
+    FollowersModel mModel;
+
+    FirebaseDatabase mDatabase;
+    FirebaseUser mUser;
+    DatabaseReference myRef, refFollowers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,24 +48,49 @@ public class FollowersActivity extends AppCompatActivity implements NavigationVi
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        final ListView listFollowers = findViewById(R.id.listview_followers);
-        ArrayList<FollowersModel> followers = new ArrayList<>();
 
-        followers.add(new FollowersModel(R.drawable.lebosse_min, 23, 12, "Benjamin W"));
-        followers.add(new FollowersModel(R.drawable.toto_min, 2, 150, "Thomas"));
-        followers.add(new FollowersModel(R.drawable.coco_min, 200, 1500, "Coralie"));
-        followers.add(new FollowersModel(R.drawable.benou_min, 50, 2, "Benjamin B"));
-        followers.add(new FollowersModel(R.drawable.tofperrine_min, 150, 4, "Perrine"));
-        followers.add(new FollowersModel(R.drawable.pascaltof_min, 20, 50, "Pascal"));
+        mDatabase = FirebaseDatabase.getInstance();
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
+        String iDUser = mUser.getUid();
+        myRef = mDatabase.getReference("Users/" + mUser.getUid());
+        refFollowers = mDatabase.getReference("Users/");
 
-        FollowersAdapter adapter = new FollowersAdapter(this, followers);
-        listFollowers.setAdapter(adapter);
+        mListViewFollowers = findViewById(R.id.listview_followers);
+        mFollowers = new ArrayList<>();
+        mAdapter = new FollowersAdapter(this, mFollowers);
+
+        mListViewFollowers.setAdapter(mAdapter);
+        refFollowers.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mFollowers.clear();
+                for(DataSnapshot ds: dataSnapshot.getChildren()){
+                    mModel = ds.child("Profil").getValue(FollowersModel.class);
+                    mFollowers.add(mModel);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+        // -------------------------MENU BURGER DON'T TOUCH--------------------------------
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_follow);
         navigationView.setNavigationItemSelectedListener(this);
-
-
-
 
     }
 

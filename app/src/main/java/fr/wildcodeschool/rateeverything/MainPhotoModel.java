@@ -18,12 +18,12 @@ public class MainPhotoModel {
 
     public String getDescription() {
         return description;
+
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
-
 
 
     public long getTimestamp() {
@@ -66,8 +66,6 @@ public class MainPhotoModel {
         this.nbnote = nbnote;
     }
 
-    int nbnote;
-
     public MainPhotoModel(String description, long timestamp, String title, int totalnote, String photo, int nbnote) {
         this.description = description;
         this.timestamp = timestamp;
@@ -77,3 +75,4 @@ public class MainPhotoModel {
         this.nbnote = nbnote;
     }
 }
+
