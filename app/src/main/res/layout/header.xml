@@ -8,9 +8,10 @@
     android:padding="20dp">
 
     <ImageView
+        android:id="@+id/img_header_user"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:src="@drawable/benou_min"/>
+        android:src="@drawable/benou_min" />
 
     <TextView
         android:layout_width="wrap_content"

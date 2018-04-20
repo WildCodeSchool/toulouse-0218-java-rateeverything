@@ -2,30 +2,64 @@ package fr.wildcodeschool.rateeverything;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.FileProvider;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
+
+    private ImageView mImgViewUserHeader;
+
+    private String mImgUser;
+
+    private static final String ID_PROFIL = "idprofil";
+
+
+    //Firebase
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mRef;
+    private FirebaseUser mCurrentUser;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +71,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mImgViewUserHeader = mDrawerLayout.findViewById(R.id.img_header_user);
 
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String userID = mCurrentUser.getUid();
+        mRef = mFirebaseDatabase.getReference("Users/" + userID + "/Profil/");
 
         ArrayList<MainPhotoModel> photoList = new ArrayList<>();
 
@@ -58,6 +98,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -93,4 +135,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
