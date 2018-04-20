@@ -39,6 +39,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
+        ArrayList<MainPhotoModel> photoList = new ArrayList<>();
+
+
+
         // TODO : mettre en place le listview avec l'adapter
 
 

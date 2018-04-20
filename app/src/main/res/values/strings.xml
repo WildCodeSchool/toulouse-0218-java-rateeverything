@@ -55,6 +55,8 @@
     <string name="authentificatinFailed">Authentification failed</string>
     <string name="pseudo">Pseudo</string>
     <string name="pseudo_text">Pseudo</string>
+    <string name="Ok">Ok</string>
+    <string name="fail">Fail</string>
     <string name="titre">titre</string>
 
 </resources>

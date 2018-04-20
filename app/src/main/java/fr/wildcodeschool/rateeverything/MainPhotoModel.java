@@ -8,48 +8,46 @@ import java.util.Date;
 
 public class MainPhotoModel {
     String description;
-    String idvotant;
-    int nbphoto;
-    String photo;
-    int timestamp;
-    String titre;
+    long timestamp;
+    String title;
     int totalnote;
+    String photo;
 
     public MainPhotoModel() {
     }
 
-    public MainPhotoModel(String description, String idvotant, int nbphoto, String photo, int timestamp, String titre, int totalnote) {
-        this.description = description;
-        this.idvotant = idvotant;
-        this.nbphoto = nbphoto;
-        this.photo = photo;
-        this.timestamp = timestamp;
-        this.titre = titre;
-        this.totalnote = totalnote;
-    }
-
     public String getDescription() {
         return description;
+
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public String getIdvotant() {
-        return idvotant;
+
+    public long getTimestamp() {
+        return timestamp;
     }
 
-    public void setIdvotant(String idvotant) {
-        this.idvotant = idvotant;
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 
-    public int getNbphoto() {
-        return nbphoto;
+    public String getTitle() {
+        return title;
     }
 
-    public void setNbphoto(int nbphoto) {
-        this.nbphoto = nbphoto;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public int getTotalnote() {
+        return totalnote;
+    }
+
+    public void setTotalnote(int totalnote) {
+        this.totalnote = totalnote;
     }
 
     public String getPhoto() {
@@ -60,31 +58,21 @@ public class MainPhotoModel {
         this.photo = photo;
     }
 
-    public int getTimestamp() {
-        return timestamp;
+    public int getNbnote() {
+        return nbnote;
     }
 
-    public void setTimestamp(int timestamp) {
+    public void setNbnote(int nbnote) {
+        this.nbnote = nbnote;
+    }
+
+    public MainPhotoModel(String description, long timestamp, String title, int totalnote, String photo, int nbnote) {
+        this.description = description;
         this.timestamp = timestamp;
-    }
-
-    public String getTitre() {
-        return titre;
-    }
-
-    public void setTitre(String titre) {
-        this.titre = titre;
-    }
-
-    public int getTotalnote() {
-        return totalnote;
-    }
-
-    public void setTotalnote(int totalnote) {
+        this.title = title;
         this.totalnote = totalnote;
+        this.photo = photo;
+        this.nbnote = nbnote;
     }
 }
-
-
-
 

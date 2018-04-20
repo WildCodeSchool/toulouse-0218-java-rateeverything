@@ -47,6 +47,3 @@ public class MainPhotoAdapter extends ArrayAdapter<MainPhotoModel> {
 
         return convertView;
     }
-
-
-}
