@@ -5,13 +5,16 @@ package fr.wildcodeschool.rateeverything;
  */
 
 public class FollowersModel {
+    private String id;
     private String mail;
-    private String userName;
     private int nbfollowers;
     private int nbphoto;
-    private String photouser;
     private String photbackground;
-    private String id;
+    private String photouser;
+    private String username;
+
+    public FollowersModel() {
+    }
 
     public String getMail() {
         return mail;
@@ -21,12 +24,12 @@ public class FollowersModel {
         this.mail = mail;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public int getNbfollowers() {
@@ -69,18 +72,13 @@ public class FollowersModel {
         this.id = id;
     }
 
-    public FollowersModel(String mail, String userName, int nbfollowers, int nbphoto, String photouser, String photbackground, String id) {
+    public FollowersModel(String id, String mail, int nbfollowers, int nbphoto, String photbackground, String photouser, String username) {
+        this.id = id;
         this.mail = mail;
-        this.userName = userName;
         this.nbfollowers = nbfollowers;
         this.nbphoto = nbphoto;
-        this.photouser = photouser;
         this.photbackground = photbackground;
-        this.id = id;
-
-
+        this.photouser = photouser;
+        this.username = username;
     }
-
-    public void FollowersModel(){};
-
 }

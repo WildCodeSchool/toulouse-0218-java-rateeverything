@@ -8,6 +8,7 @@ import java.util.Date;
 
 public class MainPhotoModel {
     String description;
+    int nbnote;
     long timestamp;
     String title;
     int totalnote;

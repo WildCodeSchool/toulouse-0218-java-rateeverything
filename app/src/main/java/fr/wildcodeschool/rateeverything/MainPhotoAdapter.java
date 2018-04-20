@@ -28,22 +28,23 @@ public class MainPhotoAdapter extends ArrayAdapter<MainPhotoModel> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         MainPhotoModel photoModel = getItem(position);
-        if(convertView==null) {
+        if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_photos, parent, false);
         }
         ImageView photo = convertView.findViewById(R.id.image_photo);
         Glide.with(getContext()).load(photoModel.getPhoto()).into(photo);
 
         TextView textUsername = (TextView) convertView.findViewById(R.id.text_user_name_pub);
-        textUsername.setText(photoModel.getTitre());
+        textUsername.setText(photoModel.getTitle());
 
         TextView textDatePub = (TextView) convertView.findViewById(R.id.text_date_pub);
-        textDatePub.setText(""+photoModel.getTimestamp());
+        textDatePub.setText("" + photoModel.getTimestamp());
 
         TextView note = (TextView) convertView.findViewById(R.id.text_note);
 
-        int valeurnote = photoModel.getTotalnote()/photoModel.getNbphoto();
+        int valeurnote = photoModel.getTotalnote() / photoModel.getNbnote();
         note.setText("" + valeurnote);
 
         return convertView;
     }
+}
