@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +45,10 @@ public class AddPhotoActivity extends Activity {
     private DatabaseReference mRef;
     private FirebaseUser mCurrentUser;
 
+    private Intent mGoToMainActivity;
+
+    private RatingBar mNoteBar;
+
 
     private static final int REQUEST_TAKE_PHOTO = 11;
 
@@ -60,6 +65,8 @@ public class AddPhotoActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mGoToMainActivity = new Intent(AddPhotoActivity.this,MainActivity.class);
+
         mDatabase = FirebaseDatabase.getInstance();
         mStorageRef = FirebaseStorage.getInstance().getReference();
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -73,6 +80,8 @@ public class AddPhotoActivity extends Activity {
         mImagePhoto = (ImageView) findViewById(R.id.iv_photo);
         TextView tvTitle = findViewById(R.id.et_title_img);
         TextView tvDescription = findViewById(R.id.et_description_img);
+
+        mNoteBar = findViewById(R.id.rating_bar_first_note);
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,10 +175,11 @@ public class AddPhotoActivity extends Activity {
                         String url = downloadUrl.toString();
                         long date = new Date().getTime();
 
-                        MainPhotoModel mainPhotoModel = new MainPhotoModel(descriptionValue, 1, date, url,  titleValue, 1
+                        MainPhotoModel mainPhotoModel = new MainPhotoModel(descriptionValue, Math.round(mNoteBar.getRating()), date, url,  titleValue, 1
                         );
                         mRef.push().setValue(mainPhotoModel);
                         Toast.makeText(AddPhotoActivity.this, R.string.Ok, Toast.LENGTH_SHORT).show();
+                        startActivity(mGoToMainActivity);
                     }
                 }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override
