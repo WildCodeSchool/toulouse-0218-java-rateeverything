@@ -5,6 +5,7 @@
     android:layout_height="160dp"
     android:orientation="vertical"
     android:background="@drawable/ic_launcher_background"
+    android:id="@+id/header_user"
     android:padding="20dp">
 
     <ImageView
@@ -14,16 +15,18 @@
         android:src="@drawable/benou_min" />
 
     <TextView
+        android:id="@+id/textview_name_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/ben"
+        android:text="@string/user_name"
         android:layout_marginTop="5dp"
         android:textColor="#000000"/>
 
     <TextView
+        android:id="@+id/textview_mail_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/ben_lebeaugossedu974_gmali_com"
+        android:text="@string/user_mail"
         android:textColor="#000000"/>
 
 </LinearLayout>
