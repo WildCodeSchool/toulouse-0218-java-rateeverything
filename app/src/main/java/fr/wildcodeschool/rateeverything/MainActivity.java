@@ -76,13 +76,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
-        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         mUserID = mCurrentUser.getUid();
         mRef = mFirebaseDatabase.getReference("Users/" + mUserID + "/Profil/");
 
         ArrayList<MainPhotoModel> photoList = new ArrayList<>();
 
-        // TODO : recupérer l'image utilisateur dans le header depuis la firebase
 
         // TODO : mettre en place le listview avec l'adapter
 
@@ -105,14 +103,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 FollowersModel userProfil = dataSnapshot.getValue(FollowersModel.class);
-                View mView = getLayoutInflater().inflate(R.layout.header, null);
-                ImageView photoHeader = mView.findViewById(R.id.img_header_user);
+                ImageView photoHeader = findViewById(R.id.img_header_user);
                 Glide.with(MainActivity.this).load(userProfil.getPhotouser()).into(photoHeader);
-                TextView nameHeader = mView.findViewById(R.id.textview_name_header);
+                TextView nameHeader = findViewById(R.id.textview_name_header);
                 nameHeader.setText(userProfil.getUsername());
-                TextView mailUser = mView.findViewById(R.id.textview_mail_header);
+                TextView mailUser = findViewById(R.id.textview_mail_header);
                 mailUser.setText(userProfil.getMail());
-
             }
 
             @Override
