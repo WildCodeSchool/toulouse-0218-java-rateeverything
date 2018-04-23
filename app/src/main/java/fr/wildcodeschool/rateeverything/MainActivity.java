@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         ArrayList<MainPhotoModel> photoList = new ArrayList<>();
 
-
+        // TODO : recupérer l'image utilisateur dans le header depuis la firebase
 
         // TODO : mettre en place le listview avec l'adapter
 

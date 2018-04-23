@@ -24,12 +24,18 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -50,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mRef;
     private FirebaseUser mCurrentUser;
+    private StorageReference mStorageRef;
 
     //Widget
     private Button mButtonSignIn, mButtonCreateAccount, mButtonValidLogin, mButtonValidCreate;
@@ -75,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mStorageRef = FirebaseStorage.getInstance().getReference();
         mRef = mFirebaseDatabase.getReference("Users");
         mAuth = FirebaseAuth.getInstance();
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -177,7 +185,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
                     if (!task.isSuccessful()) {
-
+                        mProgressBarLoading.setVisibility(View.GONE);
                         Toast.makeText(LoginActivity.this, R.string.authentificatinFailed, Toast.LENGTH_SHORT).show();
                     }
                     else {
@@ -185,7 +193,7 @@ public class LoginActivity extends AppCompatActivity {
                         String mail = mEditMail.getText().toString().trim();
                         String pseudo = mEditPseudo.getText().toString().trim();
                         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
-                        String userID = mCurrentUser.getUid();
+                        final String userID = mCurrentUser.getUid();
                         mRef.child(userID).child("Profil").child("id").setValue(userID);
                         mRef.child(userID).child("Profil").child("mail").setValue(mail);
                         mRef.child(userID).child("Profil").child("username").setValue(pseudo);
@@ -193,10 +201,35 @@ public class LoginActivity extends AppCompatActivity {
                         mRef.child(userID).child("Profil").child("nbphoto").setValue(0);
                         mRef.child(userID).child("Profil").child("photobackground").setValue("1");
 
-                        if (mUrlImage == null) {
+                        if (mPhotoURI == null) {
                             mRef.child(userID).child("Profil").child("photouser").setValue("1");
+                        } else {
+                            //enregistre dans firebaseStorage
+                            StorageReference riverRef = mStorageRef.child("PhotoUser").child(mPhotoURI.getLastPathSegment());;
+
+                            riverRef.putFile(mPhotoURI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                                    String url = downloadUrl.toString();
+
+                                    mRef.child(userID).child("Profil").child("photouser").setValue(url);
+                                    Toast.makeText(LoginActivity.this, R.string.Ok, Toast.LENGTH_SHORT).show();
+                                }
+                            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                                    double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                                    Toast.makeText(LoginActivity.this,"Upload is " + progress + "% done", Toast.LENGTH_SHORT).show();
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(LoginActivity.this, R.string.fail, Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
-                        // TODO : enregistrer dans firebaseStorage
 
                         SaveSharedPreference.setUserName(LoginActivity.this, mail);
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
@@ -238,7 +271,7 @@ public class LoginActivity extends AppCompatActivity {
                         LoginActivity.this.startActivity(mGoToMainActivity);
 
                     } else {
-
+                        mProgressBarLoading.setVisibility(View.GONE);
                         Toast.makeText(LoginActivity.this, R.string.incorrectUserPassword, Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -337,8 +370,8 @@ public class LoginActivity extends AppCompatActivity {
             case SELECT_IMAGE:
                 if(resultCode == RESULT_OK) {
                     Uri selectedImage = data.getData();
-                    mUrlImage = selectedImage;
-                    mImageAvatar.setImageURI(selectedImage);
+                    mPhotoURI = selectedImage;
+                    Glide.with(LoginActivity.this).load(mPhotoURI).into(mImageAvatar);
                 }
                 break;
             case REQUEST_TAKE_PHOTO:
