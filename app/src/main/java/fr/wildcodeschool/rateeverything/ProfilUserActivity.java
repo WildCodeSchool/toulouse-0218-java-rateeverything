@@ -98,8 +98,55 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
         else {
                 mProfil = mDatabase.getReference("Users/" + profilId + "/Profil/");
                 boutonModifier.setVisibility(View.INVISIBLE);
-                Button boutonAddFollowers = findViewById(R.id.button_add_followers);
+                final Button boutonAddFollowers = findViewById(R.id.button_add_followers);
                 boutonAddFollowers.setVisibility(View.VISIBLE);
+
+
+                // Fonction Follow
+                final DatabaseReference refFollowers = mDatabase.getReference("Users/" + iDUser + "/Followers/" + profilId);
+                refFollowers.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()){
+                            String verifFollowers = dataSnapshot.getValue().toString();
+                            if (verifFollowers.equals("true")) {
+                                boutonAddFollowers.setText(R.string.ne_plus_suivre);
+                                boutonAddFollowers.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        refFollowers.setValue("false");
+                                        boutonAddFollowers.setText(R.string.suivre_cette_personne);
+                                    }
+                                });
+                            }
+                            else {
+                                boutonAddFollowers.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        refFollowers.setValue("true");
+                                        boutonAddFollowers.setText(R.string.ne_plus_suivre);
+                                    }
+                                });
+                            }
+                        }
+                        else {
+                            boutonAddFollowers.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    refFollowers.setValue("true");
+                                    boutonAddFollowers.setText(R.string.ne_plus_suivre);
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
 
                 mProfil.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -132,13 +179,6 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                     }
                 });
 
-                boutonAddFollowers.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        DatabaseReference refFollow = mDatabase.getReference("Users/" + iDUser + "/Followers");
-                        refFollow.child(profilId).setValue("true");
-                    }
-                });
 
                 mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_user);
                 mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.Open, R.string.Close);
