@@ -108,13 +108,13 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()){
-                            String verifFollowers = dataSnapshot.getValue().toString();
-                            if (verifFollowers.equals("true")) {
+                            Boolean verifFollowers = (Boolean) dataSnapshot.getValue();
+                            if (verifFollowers) {
                                 boutonAddFollowers.setText(R.string.ne_plus_suivre);
                                 boutonAddFollowers.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        refFollowers.setValue("false");
+                                        refFollowers.setValue(false);
                                         boutonAddFollowers.setText(R.string.suivre_cette_personne);
                                     }
                                 });
@@ -123,7 +123,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                                 boutonAddFollowers.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        refFollowers.setValue("true");
+                                        refFollowers.setValue(true);
                                         boutonAddFollowers.setText(R.string.ne_plus_suivre);
                                     }
                                 });
@@ -133,7 +133,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                             boutonAddFollowers.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    refFollowers.setValue("true");
+                                    refFollowers.setValue(true);
                                     boutonAddFollowers.setText(R.string.ne_plus_suivre);
                                 }
                             });
