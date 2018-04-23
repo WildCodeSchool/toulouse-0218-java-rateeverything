@@ -67,7 +67,7 @@ public class MainPhotoModel {
         this.nbnote = nbnote;
     }
 
-    public MainPhotoModel(String description, long timestamp, String title, int totalnote, String photo, int nbnote) {
+    public MainPhotoModel(String description, int totalnote, long timestamp, String photo, String title, int nbnote) {
         this.description = description;
         this.timestamp = timestamp;
         this.title = title;
