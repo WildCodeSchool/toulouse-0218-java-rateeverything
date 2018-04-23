@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private ImageView mImgViewUserHeader;
 
-    private String mImgUser;
+    private String mImgUser, mUserID;
 
     private static final String ID_PROFIL = "idprofil";
 
@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+
         String userID = mCurrentUser.getUid();
         mMyRef = mFirebaseDatabase.getReference("Users/" + userID + "/Profil/");
         mRef = mFirebaseDatabase.getReference("Users/");
@@ -86,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mListview = findViewById(R.id.listview_photo_main);
         mPhotoList = new ArrayList<>();
         mAdapter = new MainPhotoAdapter(this, mPhotoList);
+
 
         // Affichage Liste view
         mListview.setAdapter(mAdapter);
@@ -130,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intentHome);
         } else if (id == R.id.profil) {
             Intent intentProfil = new Intent(MainActivity.this, ProfilUserActivity.class);
+            intentProfil.putExtra(ID_PROFIL, mUserID);
             startActivity(intentProfil);
         } else if (id == R.id.followers) {
             Intent intentFollowers = new Intent(MainActivity.this, FollowersActivity.class);

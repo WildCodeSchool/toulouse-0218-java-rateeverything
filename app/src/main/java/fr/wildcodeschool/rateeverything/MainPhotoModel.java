@@ -73,5 +73,6 @@ public class MainPhotoModel {
     public void setTotalnote(int totalnote) {
         this.totalnote = totalnote;
     }
+
 }
 
