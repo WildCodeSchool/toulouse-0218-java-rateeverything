@@ -32,7 +32,9 @@ public class MainPhotoAdapter extends ArrayAdapter<MainPhotoModel> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_photos, parent, false);
         }
         ImageView photo = convertView.findViewById(R.id.image_photo);
-        Glide.with(getContext()).load(photoModel.getPhoto()).into(photo);
+        if (photoModel.getPhoto()!=null) {
+            Glide.with(getContext()).load(photoModel.getPhoto()).into(photo);
+        }
 
         TextView textUsername = (TextView) convertView.findViewById(R.id.text_user_name_pub);
         textUsername.setText(photoModel.getTitle());

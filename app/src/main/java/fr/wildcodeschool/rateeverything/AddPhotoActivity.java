@@ -111,7 +111,7 @@ public class AddPhotoActivity extends Activity {
                         String url = downloadUrl.toString();
                         long date = new Date().getTime();
 
-                        MainPhotoModel mainPhotoModel = new MainPhotoModel(descriptionValue, date,titleValue, 1, url, 1);
+                        MainPhotoModel mainPhotoModel = new MainPhotoModel(descriptionValue, 1, url, date, titleValue, 1);
                         mRef.push().setValue(mainPhotoModel);
                         Toast.makeText(AddPhotoActivity.this, R.string.Ok, Toast.LENGTH_SHORT).show();
                     }
