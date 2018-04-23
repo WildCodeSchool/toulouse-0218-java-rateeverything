@@ -7,6 +7,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.GridView;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -50,6 +52,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
         mNbFollowers = findViewById(R.id.item_followers);
         mNbPhoto = findViewById(R.id.item_pictures);
         mUserName = findViewById(R.id.edit_name_user);
+        Button boutonModifier = findViewById(R.id.button_modify_profil);
 
         mDatabase = FirebaseDatabase.getInstance();
         mUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -57,7 +60,6 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
 
         final String profilId = getIntent().getStringExtra("idprofil");
         if (iDUser.equals(profilId)) {
-
 
             mProfil = mDatabase.getReference("Users/" + iDUser + "/Profil/");
 
@@ -98,11 +100,12 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
             mToggle.syncState();
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_user);
-            navigationView.setNavigationItemSelectedListener(this);
         }
         else {
                 mProfil = mDatabase.getReference("Users/" + profilId + "/Profil/");
+                boutonModifier.setVisibility(View.INVISIBLE);
+                Button boutonAddFollowers = findViewById(R.id.button_add_followers);
+                boutonAddFollowers.setVisibility(View.VISIBLE);
 
                 mProfil.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -135,11 +138,20 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                     }
                 });
 
+                boutonAddFollowers.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        DatabaseReference refFollow = mDatabase.getReference("Users/" + iDUser + "/Followers");
+                        refFollow.child(profilId).setValue("true");
+                    }
+                });
+
                 mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_user);
                 mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.Open, R.string.Close);
                 mDrawerLayout.addDrawerListener(mToggle);
                 mToggle.syncState();
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
             }
 
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_user);

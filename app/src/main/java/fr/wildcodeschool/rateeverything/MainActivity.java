@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private ImageView mImgViewUserHeader;
 
-    private String mImgUser;
+    private String mImgUser, mUserID;
 
     private static final String ID_PROFIL = "idprofil";
 
@@ -76,12 +76,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
-        String userID = mCurrentUser.getUid();
-        mRef = mFirebaseDatabase.getReference("Users/" + userID + "/Profil/");
+        mUserID = mCurrentUser.getUid();
+        mRef = mFirebaseDatabase.getReference("Users/" + mUserID + "/Profil/");
 
         ArrayList<MainPhotoModel> photoList = new ArrayList<>();
 
-
+        // TODO : recupérer l'image utilisateur dans le header depuis la firebase
 
         // TODO : mettre en place le listview avec l'adapter
 
@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intentHome);
         } else if (id == R.id.profil) {
             Intent intentProfil = new Intent(MainActivity.this, ProfilUserActivity.class);
+            intentProfil.putExtra(ID_PROFIL, mUserID);
             startActivity(intentProfil);
         } else if (id == R.id.followers) {
             Intent intentFollowers = new Intent(MainActivity.this, FollowersActivity.class);
