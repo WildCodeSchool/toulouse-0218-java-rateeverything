@@ -59,5 +59,6 @@
     <string name="fail">Fail</string>
     <string name="titre">titre</string>
     <string name="suivre_cette_personne">Suivre cette personne</string>
+    <string name="user_mail">user mail</string>
 
 </resources>
