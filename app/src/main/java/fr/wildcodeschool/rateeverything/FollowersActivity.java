@@ -8,6 +8,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -77,14 +79,16 @@ public class FollowersActivity extends AppCompatActivity implements NavigationVi
             }
         });
 
-
-
-
-
-
-
-
-
+        mListViewFollowers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                FollowersModel newFollow = (FollowersModel) mListViewFollowers.getItemAtPosition(position);
+                String idFollowers = newFollow.getId().toString();
+                Intent intentFollowers = new Intent(FollowersActivity.this, ProfilUserActivity.class);
+                intentFollowers.putExtra("idprofil", idFollowers);
+                startActivity(intentFollowers);
+            }
+        });
 
 
         // -------------------------MENU BURGER DON'T TOUCH--------------------------------

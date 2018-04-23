@@ -86,6 +86,19 @@
                 app:layout_constraintStart_toEndOf="@+id/profil_photo_user"
                 app:layout_constraintTop_toBottomOf="@+id/logo_follower" />
 
+            <Button
+                android:id="@+id/button_add_followers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="64dp"
+                android:text="@string/suivre_cette_personne"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/profil_photo_user"
+                app:layout_constraintTop_toBottomOf="@+id/logo_follower" />
+
             <TextView
                 android:id="@+id/edit_name_user"
                 android:layout_width="wrap_content"
