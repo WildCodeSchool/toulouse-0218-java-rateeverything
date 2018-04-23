@@ -27,13 +27,19 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
 
     private FirebaseDatabase mDatabase;
     private FirebaseUser mUser;
-    private DatabaseReference mProfil;
+    private DatabaseReference mProfil, mRefUserPhoto;
 
     private ImageView mPhoto;
     private TextView mNbFollowers, mNbPhoto, mUserName;
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
+
+    GridView mUserPhoto;
+    ArrayList<MainPhotoModel> mUserProfil;
+    ProfilUserGridAdapter mUserAdapter;
+    MainPhotoModel mModelPhoto;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +53,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
 
         mDatabase = FirebaseDatabase.getInstance();
         mUser = FirebaseAuth.getInstance().getCurrentUser();
-        String iDUser = mUser.getUid();
+        final String iDUser = mUser.getUid();
 
         final String profilId = getIntent().getStringExtra("idprofil");
         if (iDUser.equals(profilId)) {
@@ -134,13 +140,35 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                 mDrawerLayout.addDrawerListener(mToggle);
                 mToggle.syncState();
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
             }
+
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_user);
             navigationView.setNavigationItemSelectedListener(this);
 
-        }
+        mRefUserPhoto = FirebaseDatabase.getInstance().getReference().child("Users/"+ iDUser +"/Photo/");
+        mUserPhoto = findViewById(R.id.grid_view_user);
+        mUserProfil = new ArrayList<>();
+        mUserAdapter = new ProfilUserGridAdapter(this, mUserProfil);
+
+        mRefUserPhoto.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mUserProfil.clear();
+                for(DataSnapshot dsUser: dataSnapshot.getChildren()){
+                    mModelPhoto = dsUser.getValue(MainPhotoModel.class);
+                    mUserProfil.add(mModelPhoto);
+                    mUserPhoto.setAdapter(mUserAdapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
 
     // -----------------------MENU BURGER DON'T TOUCH PLEASE !!!--------------------------
 
