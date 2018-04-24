@@ -64,20 +64,6 @@ public class MainPhotoAdapter extends ArrayAdapter<MainPhotoModel> {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder popup = new AlertDialog.Builder(parent.getContext());
-                popup.setTitle("Note la photo");
-                popup.setMessage("Quel note veux tu mettre");
-                popup.setPositiveButton("Oui tkt", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(parent.getContext(), "Ok c'est supprimé morray", Toast.LENGTH_LONG).show();
-                    }
-                });
-                popup.setNegativeButton("Finalement non", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(parent.getContext(), "C'est un bon choix", Toast.LENGTH_LONG).show();
-                    }
-                });
                 popup.show();
             }
         });
