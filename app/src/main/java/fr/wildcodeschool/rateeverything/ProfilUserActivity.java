@@ -29,7 +29,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
 
     private FirebaseDatabase mDatabase;
     private FirebaseUser mUser;
-    private DatabaseReference mProfil, mRefUserPhoto;
+    private DatabaseReference mProfil, mRefUserPhoto, mProfilUser;
 
     private ImageView mPhoto;
     private TextView mNbFollowers, mNbPhoto, mUserName;
@@ -58,7 +58,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
         mDatabase = FirebaseDatabase.getInstance();
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         mUserID = mUser.getUid();
-        mRef = mDatabase.getReference("Users/" + mUserID + "/Profil/");
+        mProfilUser = mDatabase.getReference("Users/" + mUserID + "/Profil/");
 
         final String profilId = getIntent().getStringExtra("idprofil");
         if (mUserID.equals(profilId)) {
@@ -102,6 +102,28 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
             mToggle.syncState();
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+            mRefUserPhoto = FirebaseDatabase.getInstance().getReference().child("Users/"+ mUserID +"/Photo/");
+            mUserPhoto = findViewById(R.id.grid_view_user);
+            mUserProfil = new ArrayList<>();
+            mUserAdapter = new ProfilUserGridAdapter(this, mUserProfil);
+
+            mRefUserPhoto.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    mUserProfil.clear();
+                    for(DataSnapshot dsUser: dataSnapshot.getChildren()){
+                        mModelPhoto = dsUser.getValue(MainPhotoModel.class);
+                        mUserProfil.add(mModelPhoto);
+                        mUserPhoto.setAdapter(mUserAdapter);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
         }
         else {
                 mProfil = mDatabase.getReference("Users/" + profilId + "/Profil/");
@@ -111,7 +133,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
 
 
                 // Fonction Follow
-                final DatabaseReference refFollowers = mDatabase.getReference("Users/" + iDUser + "/Followers/" + profilId);
+                final DatabaseReference refFollowers = mDatabase.getReference("Users/" + mUserID + "/Followers/" + profilId);
                 refFollowers.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -194,32 +216,35 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                 mToggle.syncState();
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+            mRefUserPhoto = FirebaseDatabase.getInstance().getReference().child("Users/"+ profilId +"/Photo/");
+            mUserPhoto = findViewById(R.id.grid_view_user);
+            mUserProfil = new ArrayList<>();
+            mUserAdapter = new ProfilUserGridAdapter(this, mUserProfil);
+
+            mRefUserPhoto.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    mUserProfil.clear();
+                    for(DataSnapshot dsUser: dataSnapshot.getChildren()){
+                        mModelPhoto = dsUser.getValue(MainPhotoModel.class);
+                        mUserProfil.add(mModelPhoto);
+                        mUserPhoto.setAdapter(mUserAdapter);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
             }
 
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_user);
             navigationView.setNavigationItemSelectedListener(this);
 
-        mRefUserPhoto = FirebaseDatabase.getInstance().getReference().child("Users/"+ iDUser +"/Photo/");
-        mUserPhoto = findViewById(R.id.grid_view_user);
-        mUserProfil = new ArrayList<>();
-        mUserAdapter = new ProfilUserGridAdapter(this, mUserProfil);
+        // TODO remettre le menu burger
 
-        mRefUserPhoto.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                mUserProfil.clear();
-                for(DataSnapshot dsUser: dataSnapshot.getChildren()){
-                    mModelPhoto = dsUser.getValue(MainPhotoModel.class);
-                    mUserProfil.add(mModelPhoto);
-                    mUserPhoto.setAdapter(mUserAdapter);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 
     // -----------------------MENU BURGER DON'T TOUCH PLEASE !!!--------------------------
