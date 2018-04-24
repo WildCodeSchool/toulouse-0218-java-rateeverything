@@ -29,7 +29,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
 
     private FirebaseDatabase mDatabase;
     private FirebaseUser mUser;
-    private DatabaseReference mProfil, mRef;
+    private DatabaseReference mProfil, mRefUserPhoto;
 
     private ImageView mPhoto;
     private TextView mNbFollowers, mNbPhoto, mUserName;
@@ -37,6 +37,12 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
+
+    GridView mUserPhoto;
+    ArrayList<MainPhotoModel> mUserProfil;
+    ProfilUserGridAdapter mUserAdapter;
+    MainPhotoModel mModelPhoto;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,19 +195,24 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
             }
+
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_user);
             navigationView.setNavigationItemSelectedListener(this);
 
-        mRef.addValueEventListener(new ValueEventListener() {
+        mRefUserPhoto = FirebaseDatabase.getInstance().getReference().child("Users/"+ iDUser +"/Photo/");
+        mUserPhoto = findViewById(R.id.grid_view_user);
+        mUserProfil = new ArrayList<>();
+        mUserAdapter = new ProfilUserGridAdapter(this, mUserProfil);
+
+        mRefUserPhoto.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                FollowersModel userProfil = dataSnapshot.getValue(FollowersModel.class);
-                ImageView photoHeader = findViewById(R.id.img_header_user);
-                Glide.with(ProfilUserActivity.this).load(userProfil.getPhotouser()).into(photoHeader);
-                TextView nameHeader = findViewById(R.id.textview_name_header);
-                nameHeader.setText(userProfil.getUsername());
-                TextView mailUser = findViewById(R.id.textview_mail_header);
-                mailUser.setText(userProfil.getMail());
+                mUserProfil.clear();
+                for(DataSnapshot dsUser: dataSnapshot.getChildren()){
+                    mModelPhoto = dsUser.getValue(MainPhotoModel.class);
+                    mUserProfil.add(mModelPhoto);
+                    mUserPhoto.setAdapter(mUserAdapter);
+                }
             }
 
             @Override
@@ -209,8 +220,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
 
             }
         });
-
-        }
+    }
 
     // -----------------------MENU BURGER DON'T TOUCH PLEASE !!!--------------------------
 
