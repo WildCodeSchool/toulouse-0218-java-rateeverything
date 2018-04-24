@@ -32,7 +32,7 @@ public class MainPhotoAdapter extends ArrayAdapter<MainPhotoModel> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_photos, parent, false);
         }
         ImageView photo = convertView.findViewById(R.id.image_photo);
-        if (photoModel.getPhoto()!=null) {
+        if (photoModel.getPhoto() != null) {
             Glide.with(getContext()).load(photoModel.getPhoto()).into(photo);
         }
 
