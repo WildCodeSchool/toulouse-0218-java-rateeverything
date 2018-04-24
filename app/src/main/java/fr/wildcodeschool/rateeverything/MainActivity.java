@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActionBarDrawerToggle mToggle;
 
     private ImageView mImgViewUserHeader;
+    private Boolean mTestFollow;
 
     private String mImgUser, mUserID;
 
@@ -95,9 +96,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                    for (DataSnapshot photoSnapshot : userSnapshot.child("Photo").getChildren()) {
-                        mObjetPhoto = photoSnapshot.getValue(MainPhotoModel.class);
-                        mPhotoList.add(mObjetPhoto);
+                    final String testFollowers = userSnapshot.getKey();
+                    mTestFollow = false;
+                    if (dataSnapshot.child(mUserID).child("Followers").child(testFollowers).exists()){
+                        mTestFollow = (Boolean) dataSnapshot.child(mUserID).child("Followers").child(testFollowers).getValue();
+                        if(mTestFollow){
+                            for (DataSnapshot photoSnapshot : userSnapshot.child("Photo").getChildren()) {
+                                mObjetPhoto = photoSnapshot.getValue(MainPhotoModel.class);
+                                mPhotoList.add(mObjetPhoto);
+                            }
+                        }
                     }
                     mAdapter.notifyDataSetChanged();
                 }
@@ -107,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+
 
         // Bouton Flotant
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
