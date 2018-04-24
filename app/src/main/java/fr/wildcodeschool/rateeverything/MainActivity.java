@@ -34,6 +34,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -53,13 +54,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private static final String ID_PROFIL = "idprofil";
 
+    //ListeView
+    private ListView mListview;
+    private ArrayList<MainPhotoModel> mPhotoList;
+    private MainPhotoAdapter mAdapter;
+    private MainPhotoModel mObjetPhoto;
 
     //Firebase
     private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference mRef;
+    private DatabaseReference mRef, mMyRef;
     private FirebaseUser mCurrentUser;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,18 +79,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
-        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
-        mUserID = mCurrentUser.getUid();
-        mRef = mFirebaseDatabase.getReference("Users/" + mUserID + "/Profil/");
 
-        ArrayList<MainPhotoModel> photoList = new ArrayList<>();
-
-        // TODO : recupérer l'image utilisateur dans le header depuis la firebase
-
-        // TODO : mettre en place le listview avec l'adapter
+        String userID = mCurrentUser.getUid();
+        mMyRef = mFirebaseDatabase.getReference("Users/" + userID + "/Profil/");
+        mRef = mFirebaseDatabase.getReference("Users/");
 
 
+        mListview = findViewById(R.id.listview_photo_main);
+        mPhotoList = new ArrayList<>();
+        mAdapter = new MainPhotoAdapter(this, mPhotoList);
 
+        // Affichage Liste view
+        mListview.setAdapter(mAdapter);
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    for (DataSnapshot photoSnapshot : userSnapshot.child("Photo").getChildren()) {
+                        mObjetPhoto = photoSnapshot.getValue(MainPhotoModel.class);
+                        mPhotoList.add(mObjetPhoto);
+                    }
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        // Bouton Flotant
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,11 +117,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
             }
         });
-
+        // Menu Burger
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                FollowersModel userProfil = dataSnapshot.getValue(FollowersModel.class);
+                ImageView photoHeader = findViewById(R.id.img_header_user);
+                Glide.with(MainActivity.this).load(userProfil.getPhotouser()).into(photoHeader);
+                TextView nameHeader = findViewById(R.id.textview_name_header);
+                nameHeader.setText(userProfil.getUsername());
+                TextView mailUser = findViewById(R.id.textview_mail_header);
+                mailUser.setText(userProfil.getMail());
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

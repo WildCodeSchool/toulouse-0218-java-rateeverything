@@ -9,23 +9,46 @@ import java.util.Date;
 public class MainPhotoModel {
     String description;
     int nbnote;
+    String photo;
     long timestamp;
     String title;
     int totalnote;
-    String photo;
 
     public MainPhotoModel() {
     }
 
+    public MainPhotoModel(String description, int nbnote, String photo, long timestamp, String title, int totalnote) {
+        this.description = description;
+        this.nbnote = nbnote;
+        this.photo = photo;
+        this.timestamp = timestamp;
+        this.title = title;
+        this.totalnote = totalnote;
+    }
+
     public String getDescription() {
         return description;
-
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
+    public int getNbnote() {
+        return nbnote;
+    }
+
+    public void setNbnote(int nbnote) {
+        this.nbnote = nbnote;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 
     public long getTimestamp() {
         return timestamp;
@@ -51,29 +74,5 @@ public class MainPhotoModel {
         this.totalnote = totalnote;
     }
 
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
-
-    public int getNbnote() {
-        return nbnote;
-    }
-
-    public void setNbnote(int nbnote) {
-        this.nbnote = nbnote;
-    }
-
-    public MainPhotoModel(String description, int totalnote, long timestamp, String photo, String title, int nbnote) {
-        this.description = description;
-        this.timestamp = timestamp;
-        this.title = title;
-        this.totalnote = totalnote;
-        this.photo = photo;
-        this.nbnote = nbnote;
-    }
 }
 
