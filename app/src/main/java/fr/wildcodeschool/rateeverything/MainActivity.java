@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+
         // Bouton Flotant
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
