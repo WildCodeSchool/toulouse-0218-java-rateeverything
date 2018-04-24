@@ -43,7 +43,6 @@ public class FollowersAdapter extends ArrayAdapter<FollowersModel> {
         TextView textNbFollowers = (TextView) convertView.findViewById(R.id.textview_nb_followers);
         textNbFollowers.setText(followers.getNbfollowers() + "");
 
-
         return convertView;
 
     }

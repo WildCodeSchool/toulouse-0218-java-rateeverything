@@ -29,10 +29,11 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
 
     private FirebaseDatabase mDatabase;
     private FirebaseUser mUser;
-    private DatabaseReference mProfil;
+    private DatabaseReference mProfil, mRef;
 
     private ImageView mPhoto;
     private TextView mNbFollowers, mNbPhoto, mUserName;
+    private String mUserID;
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
@@ -50,12 +51,13 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
 
         mDatabase = FirebaseDatabase.getInstance();
         mUser = FirebaseAuth.getInstance().getCurrentUser();
-        final String iDUser = mUser.getUid();
+        mUserID = mUser.getUid();
+        mRef = mDatabase.getReference("Users/" + mUserID + "/Profil/");
 
         final String profilId = getIntent().getStringExtra("idprofil");
-        if (iDUser.equals(profilId)) {
+        if (mUserID.equals(profilId)) {
 
-            mProfil = mDatabase.getReference("Users/" + iDUser + "/Profil/");
+            mProfil = mDatabase.getReference("Users/" + mUserID + "/Profil/");
 
             mProfil.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -98,8 +100,55 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
         else {
                 mProfil = mDatabase.getReference("Users/" + profilId + "/Profil/");
                 boutonModifier.setVisibility(View.INVISIBLE);
-                Button boutonAddFollowers = findViewById(R.id.button_add_followers);
+                final Button boutonAddFollowers = findViewById(R.id.button_add_followers);
                 boutonAddFollowers.setVisibility(View.VISIBLE);
+
+
+                // Fonction Follow
+                final DatabaseReference refFollowers = mDatabase.getReference("Users/" + iDUser + "/Followers/" + profilId);
+                refFollowers.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()){
+                            Boolean verifFollowers = (Boolean) dataSnapshot.getValue();
+                            if (verifFollowers) {
+                                boutonAddFollowers.setText(R.string.ne_plus_suivre);
+                                boutonAddFollowers.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        refFollowers.setValue(false);
+                                        boutonAddFollowers.setText(R.string.suivre_cette_personne);
+                                    }
+                                });
+                            }
+                            else {
+                                boutonAddFollowers.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        refFollowers.setValue(true);
+                                        boutonAddFollowers.setText(R.string.ne_plus_suivre);
+                                    }
+                                });
+                            }
+                        }
+                        else {
+                            boutonAddFollowers.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    refFollowers.setValue(true);
+                                    boutonAddFollowers.setText(R.string.ne_plus_suivre);
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
 
                 mProfil.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -132,13 +181,6 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                     }
                 });
 
-                boutonAddFollowers.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        DatabaseReference refFollow = mDatabase.getReference("Users/" + iDUser + "/Followers");
-                        refFollow.child(profilId).setValue("true");
-                    }
-                });
 
                 mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_user);
                 mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.Open, R.string.Close);
@@ -149,6 +191,24 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
             }
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_user);
             navigationView.setNavigationItemSelectedListener(this);
+
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                FollowersModel userProfil = dataSnapshot.getValue(FollowersModel.class);
+                ImageView photoHeader = findViewById(R.id.img_header_user);
+                Glide.with(ProfilUserActivity.this).load(userProfil.getPhotouser()).into(photoHeader);
+                TextView nameHeader = findViewById(R.id.textview_name_header);
+                nameHeader.setText(userProfil.getUsername());
+                TextView mailUser = findViewById(R.id.textview_mail_header);
+                mailUser.setText(userProfil.getMail());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         }
 
@@ -165,6 +225,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
             startActivity(intentHome);
         } else if (id == R.id.profil) {
             Intent intentProfil = new Intent(ProfilUserActivity.this, ProfilUserActivity.class);
+            intentProfil.putExtra("idprofil", mUserID);
             startActivity(intentProfil);
         } else if (id == R.id.followers) {
             Intent intentFollowers = new Intent(ProfilUserActivity.this, FollowersActivity.class);
