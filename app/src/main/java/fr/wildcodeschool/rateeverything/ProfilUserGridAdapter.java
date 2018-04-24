@@ -30,7 +30,9 @@ public class ProfilUserGridAdapter extends ArrayAdapter<MainPhotoModel> {
         }
 
         ImageView imgUser = (ImageView) convertView.findViewById(R.id.img_user);
-        Glide.with(parent.getContext()).load(userGrid.getPhoto()).into(imgUser);
+        if (userGrid.getPhoto() != null) {
+            Glide.with(parent.getContext()).load(userGrid.getPhoto()).into(imgUser);
+        }
 
         RatingBar ratingBar = (RatingBar) convertView.findViewById(R.id.rating_bar_user);
 

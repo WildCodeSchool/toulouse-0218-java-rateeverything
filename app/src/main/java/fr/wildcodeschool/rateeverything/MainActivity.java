@@ -80,8 +80,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        String userID = mCurrentUser.getUid();
-        mMyRef = mFirebaseDatabase.getReference("Users/" + userID + "/Profil/");
+        mUserID = mCurrentUser.getUid();
+        mMyRef = mFirebaseDatabase.getReference("Users/" + mUserID + "/Profil/");
         mRef = mFirebaseDatabase.getReference("Users/");
 
 
@@ -121,12 +121,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        mRef.addValueEventListener(new ValueEventListener() {
+        mMyRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 FollowersModel userProfil = dataSnapshot.getValue(FollowersModel.class);
                 ImageView photoHeader = findViewById(R.id.img_header_user);
-                Glide.with(MainActivity.this).load(userProfil.getPhotouser()).into(photoHeader);
+                if(userProfil.getPhotouser() != null){
+                    Glide.with(MainActivity.this).load(userProfil.getPhotouser()).into(photoHeader);
+                }
                 TextView nameHeader = findViewById(R.id.textview_name_header);
                 nameHeader.setText(userProfil.getUsername());
                 TextView mailUser = findViewById(R.id.textview_mail_header);

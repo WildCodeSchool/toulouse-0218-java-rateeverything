@@ -80,7 +80,9 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
             public void onDataChange(DataSnapshot dataSnapshot) {
                 FollowersModel userProfil = dataSnapshot.getValue(FollowersModel.class);
                 ImageView photoHeader = findViewById(R.id.img_header_user);
-                Glide.with(UserPhoto.this).load(userProfil.getPhotouser()).into(photoHeader);
+                if(userProfil.getPhotouser() != null){
+                    Glide.with(UserPhoto.this).load(userProfil.getPhotouser()).into(photoHeader);
+                }
                 TextView nameHeader = findViewById(R.id.textview_name_header);
                 nameHeader.setText(userProfil.getUsername());
                 TextView mailUser = findViewById(R.id.textview_mail_header);

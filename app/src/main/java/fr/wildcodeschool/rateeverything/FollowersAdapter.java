@@ -29,7 +29,7 @@ public class FollowersAdapter extends ArrayAdapter<FollowersModel> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_list_followers, parent, false);
         }
 
-        if (followers.getPhotouser()!= "1") {
+        if (followers.getPhotouser()!= null) {
             ImageView photo = (ImageView) convertView.findViewById(R.id.imageview_photo_followers);
             Glide.with(parent.getContext()).load(followers.getPhotouser().toString()).into(photo);
         }
