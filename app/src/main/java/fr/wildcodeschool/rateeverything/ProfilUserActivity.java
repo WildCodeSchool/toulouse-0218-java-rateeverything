@@ -29,10 +29,11 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
 
     private FirebaseDatabase mDatabase;
     private FirebaseUser mUser;
-    private DatabaseReference mProfil;
+    private DatabaseReference mProfil, mRef;
 
     private ImageView mPhoto;
     private TextView mNbFollowers, mNbPhoto, mUserName;
+    private String mUserID;
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
@@ -50,12 +51,13 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
 
         mDatabase = FirebaseDatabase.getInstance();
         mUser = FirebaseAuth.getInstance().getCurrentUser();
-        final String iDUser = mUser.getUid();
+        mUserID = mUser.getUid();
+        mRef = mDatabase.getReference("Users/" + mUserID + "/Profil/");
 
         final String profilId = getIntent().getStringExtra("idprofil");
-        if (iDUser.equals(profilId)) {
+        if (mUserID.equals(profilId)) {
 
-            mProfil = mDatabase.getReference("Users/" + iDUser + "/Profil/");
+            mProfil = mDatabase.getReference("Users/" + mUserID + "/Profil/");
 
             mProfil.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -190,6 +192,24 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_user);
             navigationView.setNavigationItemSelectedListener(this);
 
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                FollowersModel userProfil = dataSnapshot.getValue(FollowersModel.class);
+                ImageView photoHeader = findViewById(R.id.img_header_user);
+                Glide.with(ProfilUserActivity.this).load(userProfil.getPhotouser()).into(photoHeader);
+                TextView nameHeader = findViewById(R.id.textview_name_header);
+                nameHeader.setText(userProfil.getUsername());
+                TextView mailUser = findViewById(R.id.textview_mail_header);
+                mailUser.setText(userProfil.getMail());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         }
 
     // -----------------------MENU BURGER DON'T TOUCH PLEASE !!!--------------------------
@@ -205,6 +225,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
             startActivity(intentHome);
         } else if (id == R.id.profil) {
             Intent intentProfil = new Intent(ProfilUserActivity.this, ProfilUserActivity.class);
+            intentProfil.putExtra("idprofil", mUserID);
             startActivity(intentProfil);
         } else if (id == R.id.followers) {
             Intent intentFollowers = new Intent(ProfilUserActivity.this, FollowersActivity.class);

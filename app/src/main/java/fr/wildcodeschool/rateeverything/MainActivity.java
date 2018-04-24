@@ -34,6 +34,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -75,13 +76,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
-        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         mUserID = mCurrentUser.getUid();
         mRef = mFirebaseDatabase.getReference("Users/" + mUserID + "/Profil/");
 
         ArrayList<MainPhotoModel> photoList = new ArrayList<>();
 
-        // TODO : recupérer l'image utilisateur dans le header depuis la firebase
 
         // TODO : mettre en place le listview avec l'adapter
 
@@ -100,6 +99,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
 
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                FollowersModel userProfil = dataSnapshot.getValue(FollowersModel.class);
+                ImageView photoHeader = findViewById(R.id.img_header_user);
+                Glide.with(MainActivity.this).load(userProfil.getPhotouser()).into(photoHeader);
+                TextView nameHeader = findViewById(R.id.textview_name_header);
+                nameHeader.setText(userProfil.getUsername());
+                TextView mailUser = findViewById(R.id.textview_mail_header);
+                mailUser.setText(userProfil.getMail());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

@@ -60,6 +60,7 @@
     <string name="titre">titre</string>
     <string name="suivre_cette_personne">Suivre cette personne</string>
     <string name="ne_plus_suivre">Ne plus suivre</string>
+    <string name="user_mail">user mail</string>
 
 
 </resources>

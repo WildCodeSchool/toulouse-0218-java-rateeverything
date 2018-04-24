@@ -12,6 +12,9 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,8 +26,11 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
 
+    private String mUserID;
+
     private FirebaseDatabase database;
-    private DatabaseReference myRef;
+    private DatabaseReference myRef, mRef;
+    private FirebaseUser mCurrentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +52,9 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
         final String profilId = getIntent().getStringExtra("idprofil");
         final String idPhoto = getIntent().getStringExtra("keyphoto");
 
+        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+        mUserID = mCurrentUser.getUid();
+        mRef = database.getReference("Users/" + mUserID + "/Profil/");
         myRef = database.getReference("Users/" + profilId + "/Photo/" + idPhoto);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -66,6 +75,24 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
         NavigationView navigationViewPhoto = (NavigationView) findViewById(R.id.nav_view_photo);
         navigationViewPhoto.setNavigationItemSelectedListener(this);
 
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                FollowersModel userProfil = dataSnapshot.getValue(FollowersModel.class);
+                ImageView photoHeader = findViewById(R.id.img_header_user);
+                Glide.with(UserPhoto.this).load(userProfil.getPhotouser()).into(photoHeader);
+                TextView nameHeader = findViewById(R.id.textview_name_header);
+                nameHeader.setText(userProfil.getUsername());
+                TextView mailUser = findViewById(R.id.textview_mail_header);
+                mailUser.setText(userProfil.getMail());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -79,6 +106,7 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
             startActivity(intentHome);
         } else if (id == R.id.profil) {
             Intent intentProfil = new Intent(UserPhoto.this, ProfilUserActivity.class);
+            intentProfil.putExtra("idprofil", mUserID);
             startActivity(intentProfil);
         } else if (id == R.id.followers) {
             Intent intentFollowers = new Intent(UserPhoto.this, FollowersActivity.class);
