@@ -29,6 +29,7 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
     private String mUserID;
     private FirebaseUser mCurrentUser;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +45,8 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
         final TextView tvDescription = findViewById(R.id.text_description_photo);
         final ImageView ivPhoto = findViewById(R.id.imageview_photo);
         RatingBar ratingBar = findViewById(R.id.bar_modif_note);
+        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+        mUserID = mCurrentUser.getUid();
 
         final String profilId = getIntent().getStringExtra("idprofil");
         final String idPhoto = getIntent().getStringExtra("keyphoto");
