@@ -27,9 +27,6 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
     private ActionBarDrawerToggle mToggle;
 
     private String mUserID;
-
-    private FirebaseDatabase database;
-    private DatabaseReference myRef, mRef;
     private FirebaseUser mCurrentUser;
 
     @Override
@@ -43,25 +40,25 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        TextView tvTitre = findViewById(R.id.text_titre_photo);
-        TextView tvDescription = findViewById(R.id.text_description_photo);
-        ImageView ivPhoto = findViewById(R.id.iv_photo);
+        final TextView tvTitre = findViewById(R.id.text_titre_photo);
+        final TextView tvDescription = findViewById(R.id.text_description_photo);
+        final ImageView ivPhoto = findViewById(R.id.imageview_photo);
         RatingBar ratingBar = findViewById(R.id.bar_modif_note);
 
-        database = FirebaseDatabase.getInstance();
         final String profilId = getIntent().getStringExtra("idprofil");
         final String idPhoto = getIntent().getStringExtra("keyphoto");
 
-        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
-        mUserID = mCurrentUser.getUid();
-        mRef = database.getReference("Users/" + mUserID + "/Profil/");
-        myRef = database.getReference("Users/" + profilId + "/Photo/" + idPhoto);
-        myRef.addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        database.getReference("Users").child(profilId).child("Photo").child(idPhoto)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
-                //TODO: paramêtrer en fonction du constructeur
-
+                MainPhotoModel laphoto = (MainPhotoModel) dataSnapshot.getValue(MainPhotoModel.class);
+                if(laphoto.getPhoto() != null){
+                    Glide.with(UserPhoto.this).load(dataSnapshot.child("photo").getValue()).into(ivPhoto);
+                }
+                tvTitre.setText(laphoto.getTitle());
+                tvDescription.setText(laphoto.getDescription());
             }
 
             @Override
