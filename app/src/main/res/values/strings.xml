@@ -63,6 +63,10 @@
     <string name="user_mail">user mail</string>
     <string name="nb_photos">Nb Photos</string>
     <string name="supprimer_photo">Supprimer photo</string>
+    <string name="es_tu_sur">Es tu sur de vouloir supprimer cette photo ?</string>
+    <string name="oui">Oui</string>
+    <string name="photo_supprimée">Photo supprimée</string>
+    <string name="non">Non</string>
 
 
 </resources>

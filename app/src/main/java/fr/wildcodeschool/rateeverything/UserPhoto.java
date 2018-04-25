@@ -68,19 +68,19 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
                 public void onClick(View view) {
                    // mPhotoRef.removeValue();
                     AlertDialog.Builder popup = new AlertDialog.Builder(UserPhoto.this);
-                    popup.setTitle("Supprimer photo");
-                    popup.setMessage("Es tu sur de vouloir supprimer cette photo ?");
-                    popup.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                    popup.setTitle(R.string.supprimer_photo);
+                    popup.setMessage(R.string.es_tu_sur);
+                    popup.setPositiveButton(R.string.oui, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             mPhotoRef.removeValue();
-                            Toast.makeText(UserPhoto.this, "Photo supprimée", Toast.LENGTH_LONG).show();
+                            Toast.makeText(UserPhoto.this, R.string.photo_supprimée, Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(UserPhoto.this, ProfilUserActivity.class);
                             intent.putExtra("idprofil", profilId);
                             startActivity(intent);
                         }
                     });
-                    popup.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                    popup.setNegativeButton(R.string.non, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
 
