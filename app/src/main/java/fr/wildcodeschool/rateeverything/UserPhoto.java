@@ -1,16 +1,21 @@
 package fr.wildcodeschool.rateeverything;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,6 +33,7 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
 
     private String mUserID;
     private FirebaseUser mCurrentUser;
+    private DatabaseReference mPhotoRef;
 
 
     @Override
@@ -52,6 +58,42 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
         final String idPhoto = getIntent().getStringExtra("keyphoto");
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
+        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+        mUserID = mCurrentUser.getUid();
+        mPhotoRef = database.getReference("Users/" + profilId + "/Photo/" + idPhoto);
+
+        //Supprimer ses photos
+        Button boutonSupp = findViewById(R.id.button_suppression_photo);
+        if(mUserID.equals(profilId)){
+            boutonSupp.setVisibility(View.VISIBLE);
+            boutonSupp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                   // mPhotoRef.removeValue();
+                    AlertDialog.Builder popup = new AlertDialog.Builder(UserPhoto.this);
+                    popup.setTitle(R.string.supprimer_photo);
+                    popup.setMessage(R.string.es_tu_sur);
+                    popup.setPositiveButton(R.string.oui, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            mPhotoRef.removeValue();
+                            Toast.makeText(UserPhoto.this, R.string.photo_supprimée, Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(UserPhoto.this, ProfilUserActivity.class);
+                            intent.putExtra("idprofil", profilId);
+                            startActivity(intent);
+                        }
+                    });
+                    popup.setNegativeButton(R.string.non, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+                    popup.show();
+                }
+            });
+        }
+
         database.getReference("Users").child(profilId).child("Photo").child(idPhoto)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
