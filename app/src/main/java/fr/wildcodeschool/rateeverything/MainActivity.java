@@ -58,8 +58,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //ListeView
     private ListView mListview;
     private ArrayList<MainPhotoModel> mPhotoList;
-    private MainPhotoAdapter mAdapter;
-    private MainPhotoModel mObjetPhoto;
 
     //Firebase
     private FirebaseDatabase mFirebaseDatabase;
@@ -87,32 +85,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         mListview = findViewById(R.id.listview_photo_main);
-        mPhotoList = new ArrayList<>();
-        mAdapter = new MainPhotoAdapter(this, mPhotoList);
+        Singleton singleton = Singleton.getsIntance();
+        mPhotoList = singleton.getmListPrincipal();
+        final MainPhotoAdapter adapter = new MainPhotoAdapter(this, mPhotoList);
 
         // Affichage Liste view
-        mListview.setAdapter(mAdapter);
-        mRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                    final String testFollowers = userSnapshot.getKey();
-                    mTestFollow = false;
-                    if (dataSnapshot.child(mUserID).child("Followers").child(testFollowers).exists()){
-                        mTestFollow = (Boolean) dataSnapshot.child(mUserID).child("Followers").child(testFollowers).getValue();
-                        if(mTestFollow){
-                            for (DataSnapshot photoSnapshot : userSnapshot.child("Photo").getChildren()) {
-                                mObjetPhoto = photoSnapshot.getValue(MainPhotoModel.class);
-                                mPhotoList.add(mObjetPhoto);
-                            }
-                        }
-                    }
-                    mAdapter.notifyDataSetChanged();
-                }
-            }
+        mListview.setAdapter(adapter);
 
+        singleton.setListener(new Singleton.LoadListener() {
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onListUpdate(ArrayList<MainPhotoModel> photo) {
+                mPhotoList = photo;
+                adapter.notifyDataSetChanged();
             }
         });
 
@@ -130,25 +114,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        mMyRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                FollowersModel userProfil = dataSnapshot.getValue(FollowersModel.class);
-                ImageView photoHeader = findViewById(R.id.img_header_user);
-                if(userProfil.getPhotouser() != null){
-                    Glide.with(MainActivity.this).load(userProfil.getPhotouser()).into(photoHeader);
-                }
-                TextView nameHeader = findViewById(R.id.textview_name_header);
-                nameHeader.setText(userProfil.getUsername());
-                TextView mailUser = findViewById(R.id.textview_mail_header);
-                mailUser.setText(userProfil.getMail());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
