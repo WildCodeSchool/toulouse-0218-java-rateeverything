@@ -52,7 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="@string/textview"
+        android:text="@string/_0"
         app:layout_constraintBottom_toBottomOf="@+id/imageview_logo_photo_followers"
         app:layout_constraintStart_toEndOf="@id/imageview_logo_photo_followers"
         app:layout_constraintTop_toTopOf="@+id/imageview_logo_photo_followers" />
@@ -62,7 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="@string/nb_followers"
+        android:text="@string/_0"
         app:layout_constraintBottom_toBottomOf="@+id/imageview_nb_followers"
         app:layout_constraintStart_toEndOf="@id/imageview_nb_followers"
         app:layout_constraintTop_toTopOf="@+id/imageview_nb_followers" />
