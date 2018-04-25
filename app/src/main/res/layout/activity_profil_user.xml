@@ -58,33 +58,31 @@
                 android:id="@+id/item_followers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="40dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/nb_followers"
-                app:layout_constraintEnd_toStartOf="@+id/item_pictures"
+                app:layout_constraintEnd_toEndOf="@+id/logo_follower"
+                app:layout_constraintStart_toStartOf="@+id/logo_follower"
                 app:layout_constraintTop_toBottomOf="@+id/logo_follower" />
 
             <TextView
                 android:id="@+id/item_pictures"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="67dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/nb_photos"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/logo_picture"
+                app:layout_constraintStart_toStartOf="@+id/logo_picture"
                 app:layout_constraintTop_toBottomOf="@+id/logo_picture" />
 
             <Button
                 android:id="@+id/button_modify_profil"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="64dp"
+                android:layout_marginBottom="24dp"
                 android:text="@string/modifier_profil"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/profil_photo_user"
-                app:layout_constraintTop_toBottomOf="@+id/logo_follower" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/logo_picture"
+                app:layout_constraintStart_toStartOf="@+id/logo_follower" />
 
             <Button
                 android:id="@+id/button_add_followers"
@@ -102,14 +100,13 @@
             <TextView
                 android:id="@+id/edit_name_user"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="18dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/username"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.173"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/profil_photo_user"
+                app:layout_constraintStart_toStartOf="@+id/profil_photo_user"
                 app:layout_constraintTop_toBottomOf="@+id/profil_photo_user" />
 
         </android.support.constraint.ConstraintLayout>
