@@ -113,7 +113,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Menu Burger
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -138,8 +137,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(goToLoginActivity);
             finish();
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+
         return true;
     }
 
