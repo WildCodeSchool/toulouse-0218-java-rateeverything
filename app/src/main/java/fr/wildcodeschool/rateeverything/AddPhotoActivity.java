@@ -183,7 +183,7 @@ public class AddPhotoActivity extends Activity {
                 }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                        double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                        long progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
                         Toast.makeText(AddPhotoActivity.this,"Upload is " + progress + "% done", Toast.LENGTH_SHORT).show();
 
                     }
