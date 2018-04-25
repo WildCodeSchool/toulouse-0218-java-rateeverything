@@ -29,22 +29,32 @@ public class FollowersAdapter extends ArrayAdapter<FollowersModel> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_list_followers, parent, false);
         }
 
-        if (followers.getPhotouser()!= null) {
-            ImageView photo = (ImageView) convertView.findViewById(R.id.imageview_photo_followers);
-            Glide.with(parent.getContext()).load(followers.getPhotouser().toString()).into(photo);
+        if (followers != null) {
+
+            if (followers.getPhotouser() != null) {
+                ImageView photo = (ImageView) convertView.findViewById(R.id.imageview_photo_followers);
+                Glide.with(parent.getContext()).load(followers.getPhotouser().toString()).into(photo);
+            }
+
+            if (followers.getUsername().toString() != null) {
+                TextView textName = (TextView) convertView.findViewById(R.id.textview_user_name_followers);
+                textName.setText(followers.getUsername().toString());
+            }
+
+            if (followers.getNbphoto() != 0) {
+                TextView textNbPhoto = (TextView) convertView.findViewById(R.id.textview_nb_photo_followers);
+                textNbPhoto.setText(followers.getNbphoto() + "");
+            }
+
+            if (followers.getNbfollowers() != 0) {
+                TextView textNbFollowers = (TextView) convertView.findViewById(R.id.textview_nb_followers);
+                textNbFollowers.setText(followers.getNbfollowers() + "");
+            }
         }
 
-        TextView textName = (TextView) convertView.findViewById(R.id.textview_user_name_followers);
-        textName.setText(followers.getUsername().toString());
-
-        TextView textNbPhoto = (TextView) convertView.findViewById(R.id.textview_nb_photo_followers);
-        textNbPhoto.setText(followers.getNbphoto() + "");
-
-        TextView textNbFollowers = (TextView) convertView.findViewById(R.id.textview_nb_followers);
-        textNbFollowers.setText(followers.getNbfollowers() + "");
+        // TODO : problème, plante quand on affiche les follow et que un compte est créé, à rectifier
 
         return convertView;
-
     }
 
 
