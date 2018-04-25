@@ -130,25 +130,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        mMyRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                FollowersModel userProfil = dataSnapshot.getValue(FollowersModel.class);
-                ImageView photoHeader = findViewById(R.id.img_header_user);
-                if(userProfil.getPhotouser() != null){
-                    Glide.with(MainActivity.this).load(userProfil.getPhotouser()).into(photoHeader);
-                }
-                TextView nameHeader = findViewById(R.id.textview_name_header);
-                nameHeader.setText(userProfil.getUsername());
-                TextView mailUser = findViewById(R.id.textview_mail_header);
-                mailUser.setText(userProfil.getMail());
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -173,8 +155,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(goToLoginActivity);
             finish();
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+
         return true;
     }
 

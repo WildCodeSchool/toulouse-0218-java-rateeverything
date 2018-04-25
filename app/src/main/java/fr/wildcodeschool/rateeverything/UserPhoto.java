@@ -97,8 +97,6 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
             startActivity(intentFollowers);
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 

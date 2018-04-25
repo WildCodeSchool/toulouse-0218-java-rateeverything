@@ -273,8 +273,6 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
             finish();
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_user);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
