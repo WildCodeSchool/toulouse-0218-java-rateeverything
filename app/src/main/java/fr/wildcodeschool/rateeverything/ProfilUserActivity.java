@@ -128,9 +128,9 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
             mUserPhoto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    String key = mUserPhoto.getItemAtPosition(position).toString();
+                    MainPhotoModel laPhoto = (MainPhotoModel) mUserPhoto.getItemAtPosition(position);
                     Intent goToUserPhoto = new Intent(ProfilUserActivity.this, UserPhoto.class);
-                    goToUserPhoto.putExtra("keyphoto", key);
+                    goToUserPhoto.putExtra("keyphoto", laPhoto.getKeyphoto().toString());
                     goToUserPhoto.putExtra("idprofil", mUserID);
                     startActivity(goToUserPhoto);
 
@@ -181,6 +181,17 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                                 }
                             });
                         }
+                        mUserPhoto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                MainPhotoModel laPhoto = (MainPhotoModel) mUserPhoto.getItemAtPosition(position);
+                                Intent goToUserPhoto = new Intent(ProfilUserActivity.this, UserPhoto.class);
+                                goToUserPhoto.putExtra("keyphoto", laPhoto.getKeyphoto().toString());
+                                goToUserPhoto.putExtra("idprofil", profilId);
+                                startActivity(goToUserPhoto);
+
+                            }
+                        });
                     }
 
                     @Override
