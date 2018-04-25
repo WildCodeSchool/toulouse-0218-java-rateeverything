@@ -18,9 +18,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -53,12 +55,9 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
 
         final RatingBar ratingBar = findViewById(R.id.bar_modif_note);
         final Button validNote = findViewById(R.id.button_valid_new_note);
-        mUserID = mCurrentUser.getUid();
-
 
         final String profilId = getIntent().getStringExtra("idprofil");
         final String idPhoto = getIntent().getStringExtra("keyphoto");
-
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
