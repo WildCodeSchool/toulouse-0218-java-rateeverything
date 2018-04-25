@@ -70,9 +70,11 @@ public class FollowersActivity extends AppCompatActivity implements NavigationVi
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mFollowers.clear();
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
-                    mModel = ds.child("Profil").getValue(FollowersModel.class);
-                    mFollowers.add(mModel);
-                    mListViewFollowers.setAdapter(mAdapter);
+                    if (!(ds.getKey()).equals(mUserID)){
+                        mModel = ds.child("Profil").getValue(FollowersModel.class);
+                        mFollowers.add(mModel);
+                        mListViewFollowers.setAdapter(mAdapter);
+                    }
                 }
             }
 
