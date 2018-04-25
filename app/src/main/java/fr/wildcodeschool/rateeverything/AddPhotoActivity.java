@@ -175,7 +175,7 @@ public class AddPhotoActivity extends Activity {
                         String url = downloadUrl.toString();
                         long date = new Date().getTime();
                         String keyPhoto = mRef.push().getKey().toString();
-                        MainPhotoModel mainPhotoModel = new MainPhotoModel(descriptionValue, mCurrentUser.getUid(), keyPhoto ,1, url, date, titleValue, 1);
+                        MainPhotoModel mainPhotoModel = new MainPhotoModel(descriptionValue, mCurrentUser.getUid(), keyPhoto ,1, url, date, titleValue, Math.round(mNoteBar.getRating()));
                         mRef.child(keyPhoto).setValue(mainPhotoModel);
                         Toast.makeText(AddPhotoActivity.this, R.string.Ok, Toast.LENGTH_SHORT).show();
                         startActivity(mGoToMainActivity);

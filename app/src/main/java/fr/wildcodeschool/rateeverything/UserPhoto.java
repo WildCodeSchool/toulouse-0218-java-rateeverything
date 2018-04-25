@@ -2,26 +2,28 @@ package fr.wildcodeschool.rateeverything;
 
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class UserPhoto extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    private MainPhotoModel mLaphoto;
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
@@ -43,27 +45,37 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
         final TextView tvTitre = findViewById(R.id.text_titre_photo);
         final TextView tvDescription = findViewById(R.id.text_description_photo);
         final ImageView ivPhoto = findViewById(R.id.imageview_photo);
-        RatingBar ratingBar = findViewById(R.id.bar_modif_note);
+        final RatingBar ratingBar = findViewById(R.id.bar_modif_note);
+        final Button validNote = findViewById(R.id.button_valid_new_note);
 
         final String profilId = getIntent().getStringExtra("idprofil");
         final String idPhoto = getIntent().getStringExtra("keyphoto");
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
         database.getReference("Users").child(profilId).child("Photo").child(idPhoto)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                MainPhotoModel laphoto = (MainPhotoModel) dataSnapshot.getValue(MainPhotoModel.class);
-                if(laphoto.getPhoto() != null){
+                mLaphoto = (MainPhotoModel) dataSnapshot.getValue(MainPhotoModel.class);
+                if(mLaphoto.getPhoto() != null){
                     Glide.with(UserPhoto.this).load(dataSnapshot.child("photo").getValue()).into(ivPhoto);
                 }
-                tvTitre.setText(laphoto.getTitle());
-                tvDescription.setText(laphoto.getDescription());
+                tvTitre.setText(mLaphoto.getTitle());
+                tvDescription.setText(mLaphoto.getDescription());
+                ratingBar.setRating(Math.round(mLaphoto.getTotalnote())/Math.round(mLaphoto.getNbnote()));
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
+
+        validNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                database.getReference("Users").child(profilId).child("Photo").child(idPhoto).child("totalnote").setValue(Math.round(mLaphoto.getTotalnote()) + Math.round(ratingBar.getRating()));
+                database.getReference("Users").child(profilId).child("Photo").child(idPhoto).child("nbnote").setValue(Math.round(mLaphoto.getNbnote()) + 1);
             }
         });
 
