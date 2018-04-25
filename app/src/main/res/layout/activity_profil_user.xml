@@ -42,7 +42,7 @@
                 android:layout_marginTop="24dp"
                 app:layout_constraintEnd_toStartOf="@+id/logo_picture"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_launcher_background" />
+                app:srcCompat="@drawable/ic_followers" />
 
             <ImageView
                 android:id="@+id/logo_picture"
@@ -52,7 +52,7 @@
                 android:layout_marginTop="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_launcher_background" />
+                app:srcCompat="@drawable/ic_camera" />
 
             <TextView
                 android:id="@+id/item_followers"
