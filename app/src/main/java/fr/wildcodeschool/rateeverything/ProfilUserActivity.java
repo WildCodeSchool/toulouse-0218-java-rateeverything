@@ -129,9 +129,9 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     String key = mUserPhoto.getItemAtPosition(position).toString();
-                    Intent goToUserPhoto = new Intent(ProfilUserActivity.this,UserPhoto.class);
-                    goToUserPhoto.putExtra("keyphoto",key);
-                    goToUserPhoto.putExtra("idprofil",mUserID);
+                    Intent goToUserPhoto = new Intent(ProfilUserActivity.this, UserPhoto.class);
+                    goToUserPhoto.putExtra("keyphoto", key);
+                    goToUserPhoto.putExtra("idprofil", mUserID);
                     startActivity(goToUserPhoto);
 
                 }
@@ -229,7 +229,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                 mToggle.syncState();
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-            mRefUserPhoto = FirebaseDatabase.getInstance().getReference().child("Users/"+ profilId +"/Photo/");
+            mRefUserPhoto = FirebaseDatabase.getInstance().getReference().child("Users/" + profilId + "/Photo/");
             mUserPhoto = findViewById(R.id.grid_view_user);
             mUserProfil = new ArrayList<>();
             mUserAdapter = new ProfilUserGridAdapter(this, mUserProfil);
