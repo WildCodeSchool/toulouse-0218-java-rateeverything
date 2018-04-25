@@ -1,3 +1,67 @@
 <resources>
     <string name="app_name">toulouse-0218-java-rateeverything</string>
+
+
+    <string name="mail">Mail</string>
+    <string name="create">Create</string>
+    <string name="modifier_l_avatar">Modifier l\'avatar</string>
+    <string name="return1">Return</string>
+    <string name="password">Password</string>
+    <string name="create_an_account">Create An Account</string>
+    <string name="sign_in">Sign In</string>
+    <string name="login">Login</string>
+    <string name="page_login">page Login</string>
+
+    <string name="followers">followers</string>
+    <string name="textview">TextView</string>
+    <string name="nb_followers">nb Followers</string>
+
+    <string name="modifier_votre_note">Modifier votre note !</string>
+    <string name="_3_6">3.6</string>
+    <string name="user_name">User name</string>
+    <string name="commentaires">Commentaires</string>
+    <string name="_24">24</string>
+    <string name="_34">34</string>
+    <string name="modifier_profil">Modifier Profil</string>
+    <string name="profil_user">Profil User</string>
+    <string name="Date">Date</string>
+    <string name="User">User</string>
+    <string name="title_activity_menu">MenuActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="info_user">info user</string>
+    <string name="home">Home</string>
+    <string name="profil">Profil</string>
+    <string name="setting">Setting</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="username">Username</string>
+    <string name="Open">Open</string>
+    <string name="Close">Close</string>
+    <string name="ben">Ben</string>
+    <string name="ben_lebeaugossedu974_gmali_com">Ben@lebeaugossedu974@gmali.com</string>
+    <string name="biblioth_que">Bibliothèque</string>
+    <string name="tv_description">tv_description</string>
+    <string name="partager">Partager</string>
+    <string name="app_photo">App Photo</string>
+    <string name="description_photo">Description photo</string>
+    <string name="description">Description</string>
+    <string name="fillFields">Please fill all fields !</string>
+    <string name="bothValues">Enter both values</string>
+    <string name="incorrectUserPassword">Incorrect username or password</string>
+    <string name="passwordNeed">Password need 6 characters minimum</string>
+    <string name="authentificatinFailed">Authentification failed</string>
+    <string name="pseudo">Pseudo</string>
+    <string name="pseudo_text">Pseudo</string>
+    <string name="Ok">Ok</string>
+    <string name="fail">Fail</string>
+    <string name="titre">titre</string>
+    <string name="suivre_cette_personne">Suivre cette personne</string>
+    <string name="ne_plus_suivre">Ne plus suivre</string>
+    <string name="user_mail">user mail</string>
+    <string name="nb_photos">Nb Photos</string>
+
+
 </resources>
