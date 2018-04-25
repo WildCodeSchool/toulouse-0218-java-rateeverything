@@ -8,6 +8,8 @@ import java.util.Date;
 
 public class MainPhotoModel {
     String description;
+    String iduser;
+    String keyphoto;
     int nbnote;
     String photo;
     long timestamp;
@@ -17,8 +19,10 @@ public class MainPhotoModel {
     public MainPhotoModel() {
     }
 
-    public MainPhotoModel(String description, int nbnote, String photo, long timestamp, String title, int totalnote) {
+    public MainPhotoModel(String description, String iduser, String keyphoto, int nbnote, String photo, long timestamp, String title, int totalnote) {
         this.description = description;
+        this.iduser = iduser;
+        this.keyphoto = keyphoto;
         this.nbnote = nbnote;
         this.photo = photo;
         this.timestamp = timestamp;
@@ -32,6 +36,22 @@ public class MainPhotoModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getIduser() {
+        return iduser;
+    }
+
+    public void setIduser(String iduser) {
+        this.iduser = iduser;
+    }
+
+    public String getKeyphoto() {
+        return keyphoto;
+    }
+
+    public void setKeyphoto(String keyphoto) {
+        this.keyphoto = keyphoto;
     }
 
     public int getNbnote() {
@@ -73,6 +93,5 @@ public class MainPhotoModel {
     public void setTotalnote(int totalnote) {
         this.totalnote = totalnote;
     }
-
 }
 
