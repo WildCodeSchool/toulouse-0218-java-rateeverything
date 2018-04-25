@@ -97,7 +97,6 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
             startActivity(intentFollowers);
         }
 
-
         return true;
     }
 

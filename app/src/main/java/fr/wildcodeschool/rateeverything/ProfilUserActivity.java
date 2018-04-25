@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.view.MenuItem;
@@ -124,6 +125,18 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                 }
             });
 
+            mUserPhoto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    String key = mUserPhoto.getItemAtPosition(position).toString();
+                    Intent goToUserPhoto = new Intent(ProfilUserActivity.this, UserPhoto.class);
+                    goToUserPhoto.putExtra("keyphoto", key);
+                    goToUserPhoto.putExtra("idprofil", mUserID);
+                    startActivity(goToUserPhoto);
+
+                }
+            });
+
         }
         else {
                 mProfil = mDatabase.getReference("Users/" + profilId + "/Profil/");
@@ -216,7 +229,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                 mToggle.syncState();
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-            mRefUserPhoto = FirebaseDatabase.getInstance().getReference().child("Users/"+ profilId +"/Photo/");
+            mRefUserPhoto = FirebaseDatabase.getInstance().getReference().child("Users/" + profilId + "/Photo/");
             mUserPhoto = findViewById(R.id.grid_view_user);
             mUserProfil = new ArrayList<>();
             mUserAdapter = new ProfilUserGridAdapter(this, mUserProfil);
@@ -273,8 +286,6 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
             finish();
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_user);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 

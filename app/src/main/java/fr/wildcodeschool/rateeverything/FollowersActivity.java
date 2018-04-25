@@ -127,8 +127,6 @@ public class FollowersActivity extends AppCompatActivity implements NavigationVi
             finish();
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_follow);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
