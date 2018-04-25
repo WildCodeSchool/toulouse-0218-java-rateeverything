@@ -39,10 +39,10 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
 
-    GridView mUserPhoto;
-    ArrayList<MainPhotoModel> mUserProfil;
-    ProfilUserGridAdapter mUserAdapter;
-    MainPhotoModel mModelPhoto;
+    private GridView mUserPhoto;
+    private ArrayList<MainPhotoModel> mUserProfil;
+    private ProfilUserGridAdapter mUserAdapter;
+    private MainPhotoModel mModelPhoto;
 
 
     @Override

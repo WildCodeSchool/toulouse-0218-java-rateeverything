@@ -33,10 +33,10 @@ public class FollowersActivity extends AppCompatActivity implements NavigationVi
     private String mUserID;
     private Boolean mTestFollow;
 
-    ListView mListViewFollowers;
-    ArrayList<FollowersModel> mFollowers;
-    FollowersAdapter mAdapter;
-    FollowersModel mModel;
+    private ListView mListViewFollowers;
+    private ArrayList<FollowersModel> mFollowers;
+    private FollowersAdapter mAdapter;
+    private FollowersModel mModel;
 
     FirebaseDatabase mDatabase;
     FirebaseUser mUser;
