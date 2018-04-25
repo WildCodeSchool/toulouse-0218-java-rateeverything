@@ -99,25 +99,7 @@ public class FollowersActivity extends AppCompatActivity implements NavigationVi
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_follow);
         navigationView.setNavigationItemSelectedListener(this);
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                FollowersModel userProfil = dataSnapshot.getValue(FollowersModel.class);
-                ImageView photoHeader = findViewById(R.id.img_header_user);
-                if(userProfil.getPhotouser() != null){
-                    Glide.with(FollowersActivity.this).load(userProfil.getPhotouser()).into(photoHeader);
-                }
-                TextView nameHeader = findViewById(R.id.textview_name_header);
-                nameHeader.setText(userProfil.getUsername());
-                TextView mailUser = findViewById(R.id.textview_mail_header);
-                mailUser.setText(userProfil.getMail());
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
     }
 
