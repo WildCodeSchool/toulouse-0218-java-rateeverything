@@ -31,7 +31,7 @@ public class FollowersActivity extends AppCompatActivity implements NavigationVi
     private ActionBarDrawerToggle mToggle;
 
     private String mUserID;
-    private Boolean mTestFollow;
+    private long mNbPhotoUser;
 
     private ListView mListViewFollowers;
     private ArrayList<FollowersModel> mFollowers;
@@ -74,8 +74,9 @@ public class FollowersActivity extends AppCompatActivity implements NavigationVi
                 mFollowers.clear();
                 // Affichage de nos follows
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
+                    mNbPhotoUser = ds.child("Photo").getChildrenCount();
                     final String testFollowers = ds.getKey();
-                    mTestFollow = false;
+                    mDatabase.getReference("Users").child(testFollowers).child("Profil").child("nbphoto").setValue(mNbPhotoUser);
                     if (!(ds.getKey()).equals(mUserID)){
                         if(dataSnapshot.child(mUserID).child("Followers").child(testFollowers).exists()){
                             Boolean follow = (Boolean) dataSnapshot.child(mUserID).child("Followers").child(testFollowers).getValue();
@@ -89,7 +90,6 @@ public class FollowersActivity extends AppCompatActivity implements NavigationVi
                 // Affichage de nos anciens follows
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
                     final String testFollowers = ds.getKey();
-                    mTestFollow = false;
                     if (!(ds.getKey()).equals(mUserID)){
                         if(dataSnapshot.child(mUserID).child("Followers").child(testFollowers).exists()){
                             Boolean follow = (Boolean) dataSnapshot.child(mUserID).child("Followers").child(testFollowers).getValue();
@@ -103,7 +103,6 @@ public class FollowersActivity extends AppCompatActivity implements NavigationVi
                 // Affichage des Users non follow
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
                     final String testFollowers = ds.getKey();
-                    mTestFollow = false;
                     if (!(ds.getKey()).equals(mUserID)){
                         if(!dataSnapshot.child(mUserID).child("Followers").child(testFollowers).exists()){
                                 mModel = ds.child("Profil").getValue(FollowersModel.class);
