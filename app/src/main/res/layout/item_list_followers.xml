@@ -20,59 +20,69 @@
 
     <TextView
         android:id="@+id/textview_user_name_followers"
-        android:layout_width="106dp"
-        android:layout_height="23dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
         android:text="@string/user_name"
+        android:textColor="@android:color/background_dark"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@id/imageview_photo_followers"
-        app:layout_constraintStart_toEndOf="@id/imageview_photo_followers" />
+        app:layout_constraintStart_toEndOf="@+id/imageview_photo_followers"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.772" />
 
     <ImageView
         android:id="@+id/imageview_ajout_followers"
         android:layout_width="54dp"
         android:layout_height="47dp"
         android:layout_marginEnd="8dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/imageview_photo_followers"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_add_followers" />
-
-    <ImageView
-        android:id="@+id/imageview_logo_photo_followers"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toTopOf="@id/textview_user_name_followers"
-        app:layout_constraintStart_toStartOf="@id/textview_user_name_followers"
-        app:srcCompat="@drawable/ic_camera" />
 
     <TextView
         android:id="@+id/textview_nb_photo_followers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="24dp"
         android:text="@string/_0"
-        app:layout_constraintBottom_toBottomOf="@+id/imageview_logo_photo_followers"
-        app:layout_constraintStart_toEndOf="@id/imageview_logo_photo_followers"
-        app:layout_constraintTop_toTopOf="@+id/imageview_logo_photo_followers" />
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toEndOf="@+id/textView3"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textview_nb_followers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="24dp"
         android:text="@string/_0"
-        app:layout_constraintBottom_toBottomOf="@+id/imageview_nb_followers"
-        app:layout_constraintStart_toEndOf="@id/imageview_nb_followers"
-        app:layout_constraintTop_toTopOf="@+id/imageview_nb_followers" />
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toEndOf="@+id/textView4"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageview_nb_followers"
+    <TextView
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="@id/imageview_logo_photo_followers"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:text="Publications"
+        app:layout_constraintStart_toEndOf="@+id/imageview_photo_followers"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="Followers"
         app:layout_constraintStart_toEndOf="@+id/textview_nb_photo_followers"
-        app:srcCompat="@drawable/ic_followers" />
+        app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

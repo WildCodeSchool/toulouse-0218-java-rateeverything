@@ -34,68 +34,58 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_launcher_background" />
 
-            <ImageView
-                android:id="@+id/logo_follower"
-                android:layout_width="35dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginTop="24dp"
-                app:layout_constraintEnd_toStartOf="@+id/logo_picture"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_followers" />
-
-            <ImageView
-                android:id="@+id/logo_picture"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="60dp"
-                android:layout_marginTop="24dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_camera" />
-
             <TextView
                 android:id="@+id/item_followers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/nb_followers"
-                app:layout_constraintEnd_toEndOf="@+id/logo_follower"
-                app:layout_constraintStart_toStartOf="@+id/logo_follower"
-                app:layout_constraintTop_toBottomOf="@+id/logo_follower" />
+                android:text="@string/followers"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="@+id/textView2"
+                app:layout_constraintStart_toStartOf="@+id/textView2"
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
             <TextView
                 android:id="@+id/item_pictures"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/nb_photos"
-                app:layout_constraintEnd_toEndOf="@+id/logo_picture"
-                app:layout_constraintStart_toStartOf="@+id/logo_picture"
-                app:layout_constraintTop_toBottomOf="@+id/logo_picture" />
+                android:text="@string/publications"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="@+id/textView"
+                app:layout_constraintStart_toStartOf="@+id/textView"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
 
             <Button
                 android:id="@+id/button_modify_profil"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:text="@string/modifier_profil"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/logo_picture"
-                app:layout_constraintStart_toStartOf="@+id/logo_follower" />
+                app:layout_constraintEnd_toEndOf="@+id/textView"
+                app:layout_constraintStart_toStartOf="@+id/textView2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0" />
 
             <Button
                 android:id="@+id/button_add_followers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="64dp"
+                android:layout_marginTop="128dp"
                 android:text="@string/suivre_cette_personne"
                 android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/profil_photo_user"
-                app:layout_constraintTop_toBottomOf="@+id/logo_follower" />
+                app:layout_constraintEnd_toEndOf="@+id/textView"
+                app:layout_constraintStart_toStartOf="@+id/textView2"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/edit_name_user"
@@ -108,6 +98,30 @@
                 app:layout_constraintEnd_toEndOf="@+id/profil_photo_user"
                 app:layout_constraintStart_toStartOf="@+id/profil_photo_user"
                 app:layout_constraintTop_toBottomOf="@+id/profil_photo_user" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="52dp"
+                android:text="@string/publicationsprofil"
+                android:textColor="@android:color/background_dark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="52dp"
+                android:text="@string/followersprofil"
+                android:textColor="@android:color/background_dark"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/textView"
+                app:layout_constraintStart_toEndOf="@+id/profil_photo_user"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
 
