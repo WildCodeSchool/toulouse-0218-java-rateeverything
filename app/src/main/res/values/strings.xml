@@ -72,5 +72,7 @@
     <string name="publications">publications</string>
     <string name="followersprofil">Followers</string>
     <string name="publicationsprofil">Publications</string>
+    <string name="follow">Publications</string>
+    <string name="followersf">Followers</string>
 
 </resources>

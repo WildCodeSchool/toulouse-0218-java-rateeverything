@@ -71,7 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
-        android:text="Publications"
+        android:text="@string/follow"
         app:layout_constraintStart_toEndOf="@+id/imageview_photo_followers"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -81,7 +81,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:text="Followers"
+        android:text="@string/followersf"
         app:layout_constraintStart_toEndOf="@+id/textview_nb_photo_followers"
         app:layout_constraintTop_toTopOf="parent" />
 
