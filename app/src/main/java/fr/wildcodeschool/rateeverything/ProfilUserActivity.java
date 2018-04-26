@@ -54,8 +54,11 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
     private ImageView mPhoto;
     private TextView mNbFollowers, mNbPhoto, mUserName;
     private String mUserID;
+    private long mNbPhotouser, mNbFollowersUsers;
+
     private Uri mPhotoURI;
     private String mCurrentPhotoPath;
+
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
@@ -87,6 +90,17 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
         if (mUserID.equals(profilId)) {
 
             mProfil = mDatabase.getReference("Users/" + mUserID + "/Profil/");
+
+            // Affichage info user
+            mDatabase.getReference("Users").child(mUserID).child("Photo").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    mNbPhotouser = dataSnapshot.getChildrenCount();
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {}
+            });
+
             mProfil.addValueEventListener(new ValueEventListener() {
 
                 @Override
@@ -101,8 +115,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                         mNbFollowers.setText(stringNbFollowers);
                     }
                     if (dataSnapshot.child("nbphoto").getValue() != null) {
-                        String stringNbPhotos = dataSnapshot.child("nbphoto").getValue().toString();
-                        mNbPhoto.setText(stringNbPhotos);
+                        mNbPhoto.setText(mNbPhotouser + "");
                     }
                     if (dataSnapshot.child("photouser").getValue() != null) {
                         String stringUrl = (String) dataSnapshot.child("photouser").getValue();
@@ -167,6 +180,16 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
 
 
                 // Fonction Follow
+                mDatabase.getReference("Users").child(mUserID).child("Profil").child("nbfollowers").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        mNbFollowersUsers = (long) dataSnapshot.getValue();
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+
                 final DatabaseReference refFollowers = mDatabase.getReference("Users/" + mUserID + "/Followers/" + profilId);
                 refFollowers.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -180,6 +203,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                                     public void onClick(View view) {
                                         refFollowers.setValue(false);
                                         boutonAddFollowers.setText(R.string.suivre_cette_personne);
+                                        mDatabase.getReference("Users").child(mUserID).child("Profil").child("nbfollowers").setValue(mNbFollowersUsers - 1);
                                     }
                                 });
                             }
@@ -189,6 +213,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                                     public void onClick(View view) {
                                         refFollowers.setValue(true);
                                         boutonAddFollowers.setText(R.string.ne_plus_suivre);
+                                        mDatabase.getReference("Users").child(mUserID).child("Profil").child("nbfollowers").setValue(mNbFollowersUsers + 1);
                                     }
                                 });
                             }
@@ -199,6 +224,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                                 public void onClick(View view) {
                                     refFollowers.setValue(true);
                                     boutonAddFollowers.setText(R.string.ne_plus_suivre);
+                                    mDatabase.getReference("Users").child(mUserID).child("Profil").child("nbfollowers").setValue(mNbFollowersUsers + 1);
                                 }
                             });
                         }
@@ -221,6 +247,17 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                     }
                 });
 
+
+                // affichage info user
+                mDatabase.getReference("Users").child(profilId).child("Photo").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        mNbPhotouser = dataSnapshot.getChildrenCount();
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {}
+                });
+
                 mProfil.addValueEventListener(new ValueEventListener() {
                     @Override
 
@@ -235,8 +272,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                             mNbFollowers.setText(stringNbFollowers);
                         }
                         if (dataSnapshot.child("nbphoto").getValue() != null) {
-                            String stringNbPhotos = dataSnapshot.child("nbphoto").getValue().toString();
-                            mNbPhoto.setText(stringNbPhotos);
+                            mNbPhoto.setText(mNbPhotouser + "");
                         }
                         if (dataSnapshot.child("photouser").getValue() != null) {
                             String stringUrl = (String) dataSnapshot.child("photouser").getValue();

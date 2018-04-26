@@ -71,7 +71,6 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
             boutonSupp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                   // mPhotoRef.removeValue();
                     AlertDialog.Builder popup = new AlertDialog.Builder(UserPhoto.this);
                     popup.setTitle(R.string.supprimer_photo);
                     popup.setMessage(R.string.es_tu_sur);
