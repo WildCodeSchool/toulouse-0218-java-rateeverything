@@ -81,6 +81,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        getSupportActionBar().hide();
+
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mStorageRef = FirebaseStorage.getInstance().getReference();
         mRef = mFirebaseDatabase.getReference("Users");
@@ -431,10 +433,10 @@ public class LoginActivity extends AppCompatActivity {
 
         mButtonSignIn.setVisibility(View.GONE);
         mButtonCreateAccount.setVisibility(View.GONE);
-        mTextPseudo.setVisibility(View.VISIBLE);
+        mTextPseudo.setVisibility(View.INVISIBLE);
         mTextMail.setVisibility(View.VISIBLE);
         mTextPassword.setVisibility(View.VISIBLE);
-        mEditPseudo.setVisibility(View.VISIBLE);
+        mEditPseudo.setVisibility(View.INVISIBLE);
         mEditMail.setVisibility(View.VISIBLE);
         mEditPassword.setVisibility(View.VISIBLE);
         mButtonValidLogin.setVisibility(View.VISIBLE);
