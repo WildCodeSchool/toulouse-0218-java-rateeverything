@@ -68,8 +68,11 @@ public class MainPhotoAdapter extends ArrayAdapter<MainPhotoModel> {
             }
         });
 
-        int valeurnote = photoModel.getTotalnote() / photoModel.getNbnote();
-        note.setText("" + valeurnote);
+        float valeurnote = photoModel.getTotalnote() / photoModel.getNbnote();
+        note.setText(valeurnote + " / 5" );
+
+        RatingBar ratingBar = convertView.findViewById(R.id.rating_bar);
+        ratingBar.setRating(valeurnote);
 
         return convertView;
     }

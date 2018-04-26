@@ -36,6 +36,7 @@ import java.util.Date;
 
 public class AddPhotoActivity extends Activity {
     ImageView mImagePhoto;
+    private String mIDUser;
     static final int CAM_REQUEST = 0;
     static final int SELECT_IMAGE = 1;
     private Uri mSelectedImage = null;
@@ -70,9 +71,9 @@ public class AddPhotoActivity extends Activity {
         mDatabase = FirebaseDatabase.getInstance();
         mStorageRef = FirebaseStorage.getInstance().getReference();
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
-        String idUser = mCurrentUser.getUid();
+        mIDUser = mCurrentUser.getUid();
 
-        mRef = mDatabase.getReference("Users/" + idUser + "/Photo/");
+        mRef = mDatabase.getReference("Users/" + mIDUser + "/Photo/");
 
         Button buttonAdd;
         setContentView(R.layout.activity_add_photo);
@@ -175,8 +176,9 @@ public class AddPhotoActivity extends Activity {
                         String url = downloadUrl.toString();
                         long date = new Date().getTime();
                         String keyPhoto = mRef.push().getKey().toString();
-                        MainPhotoModel mainPhotoModel = new MainPhotoModel(descriptionValue, mCurrentUser.getUid(), keyPhoto ,1, url, date, titleValue, Math.round(mNoteBar.getRating()));
+                        MainPhotoModel mainPhotoModel = new MainPhotoModel(descriptionValue, mCurrentUser.getUid(), keyPhoto ,1, url, - date, titleValue, Math.round(mNoteBar.getRating()));
                         mRef.child(keyPhoto).setValue(mainPhotoModel);
+                        mRef.child(keyPhoto).child("idvotant").child(mIDUser).setValue(Math.round(mNoteBar.getRating()));
                         Toast.makeText(AddPhotoActivity.this, R.string.Ok, Toast.LENGTH_SHORT).show();
                         startActivity(mGoToMainActivity);
                     }
