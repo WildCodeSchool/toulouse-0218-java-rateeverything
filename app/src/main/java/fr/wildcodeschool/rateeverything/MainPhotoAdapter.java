@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by wilder on 27/03/18.
@@ -56,7 +57,8 @@ public class MainPhotoAdapter extends ArrayAdapter<MainPhotoModel> {
         textUsername.setText(photoModel.getTitle());
 
         TextView textDatePub = (TextView) convertView.findViewById(R.id.text_date_pub);
-        textDatePub.setText("" + photoModel.getTimestamp());
+        long timestamp = -photoModel.getTimestamp();
+        textDatePub.setText(getDate(timestamp));
 
         // TODO : faire le systeme de notation dans le popup
         TextView note = (TextView) convertView.findViewById(R.id.text_note);
@@ -75,5 +77,17 @@ public class MainPhotoAdapter extends ArrayAdapter<MainPhotoModel> {
         ratingBar.setRating(valeurnote);
 
         return convertView;
+    }
+
+    private String getDate(long timeStamp){
+
+        try{
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+            Date netDate = (new Date(timeStamp));
+            return sdf.format(netDate);
+        }
+        catch(Exception ex){
+            return null;
+        }
     }
 }
