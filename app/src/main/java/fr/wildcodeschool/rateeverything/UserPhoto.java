@@ -129,6 +129,8 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
                             database.getReference("Users").child(profilId).child("Photo").child(idPhoto).child("idvotant").child(mUserID).setValue(note);
                             Toast.makeText(UserPhoto.this, R.string.votre_note_est_prise_en_compte, Toast.LENGTH_SHORT).show();
                             ratingBar.setRating(mLaphoto.getTotalnote()/mLaphoto.getNbnote());
+                            Intent intent = new Intent(UserPhoto.this, MainActivity.class);
+                            startActivity(intent);
                         }
                     });
                 }
