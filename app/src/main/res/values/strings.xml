@@ -75,4 +75,5 @@
     <string name="modifiez_votre_note">Modifiez votre note</string>
     <string name="votre_note_est_modif">Votre note a été modifé</string>
     <string name="votre_note_est_prise_en_compte">votre note a été prise en compte</string>
+    <string name="RateEverything">Rate Everything</string>
 </resources>
