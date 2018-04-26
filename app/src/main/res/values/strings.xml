@@ -69,5 +69,10 @@
     <string name="photo_supprimée">Photo supprimée</string>
     <string name="non">Non</string>
     <string name="_0">0</string>
+    <string name="ajoutez_votre_note">Ajoutez votre note</string>
+    <string name="mettre_votre_note">Mettre votre note :</string>
+    <string name="modifiez_votre_note">Modifiez votre note</string>
+    <string name="votre_note_est_modif">Votre note a été modifé</string>
+    <string name="votre_note_est_prise_en_compte">votre note a été prise en compte</string>
 
 </resources>
