@@ -87,7 +87,7 @@ public class MainPhotoAdapter extends ArrayAdapter<MainPhotoModel> {
             return sdf.format(netDate);
         }
         catch(Exception ex){
-            return "xx";
+            return null;
         }
     }
 }
