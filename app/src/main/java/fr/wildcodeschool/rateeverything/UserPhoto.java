@@ -52,7 +52,6 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
         final TextView tvTitre = findViewById(R.id.text_titre_photo);
         final TextView tvDescription = findViewById(R.id.text_description_photo);
         final ImageView ivPhoto = findViewById(R.id.imageview_photo);
-        final TextView tv_modifnote = findViewById(R.id.text_modif_note);
 
         final RatingBar ratingBar = findViewById(R.id.bar_modif_note);
         final Button validNote = findViewById(R.id.button_valid_new_note);
