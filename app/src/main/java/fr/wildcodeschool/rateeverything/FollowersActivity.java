@@ -65,10 +65,9 @@ public class FollowersActivity extends AppCompatActivity implements NavigationVi
         mFollowers = new ArrayList<>();
         mAdapter = new FollowersAdapter(this, mFollowers);
 
-        // TODO : problème, plante quand on affiche les follow et que un compte est créé, à rectifier
         mListViewFollowers.setAdapter(mAdapter);
         // Affichage Followers
-        refFollowers.addValueEventListener(new ValueEventListener() {
+        refFollowers.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mFollowers.clear();

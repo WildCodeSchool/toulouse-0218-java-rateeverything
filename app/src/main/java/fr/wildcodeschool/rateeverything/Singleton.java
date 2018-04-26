@@ -9,6 +9,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by wilder on 25/04/18.
@@ -47,30 +50,33 @@ public class Singleton {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mListPrincipal.clear();
+                Map <Long, MainPhotoModel> sortedPhotoList = new TreeMap<>();
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                     final String testFollowers = userSnapshot.getKey();
                     mTestFollow = false;
                     if (testFollowers.equals(userId)){
                         for (DataSnapshot photoSnapshot : userSnapshot.child("Photo").getChildren()) {
                             MainPhotoModel mObjetPhoto = photoSnapshot.getValue(MainPhotoModel.class);
-                            mListPrincipal.add(mObjetPhoto);
+                            sortedPhotoList.put(mObjetPhoto.getTimestamp(), mObjetPhoto);
                         }
-                        if (mListener != null) {
-                            mListener.onListUpdate(mListPrincipal);
-                        }
+
                     }
                     if (dataSnapshot.child(userId).child("Followers").child(testFollowers).exists()){
                         mTestFollow = (Boolean) dataSnapshot.child(userId).child("Followers").child(testFollowers).getValue();
                         if(mTestFollow){
                             for (DataSnapshot photoSnapshot : userSnapshot.child("Photo").getChildren()) {
                                 MainPhotoModel mObjetPhoto = photoSnapshot.getValue(MainPhotoModel.class);
-                                mListPrincipal.add(mObjetPhoto);
-                            }
-                            if (mListener != null) {
-                                mListener.onListUpdate(mListPrincipal);
+                                sortedPhotoList.put(mObjetPhoto.getTimestamp(), mObjetPhoto);
                             }
                         }
                     }
+                }
+                for (Map.Entry<Long, MainPhotoModel> entry : sortedPhotoList.entrySet()){
+                    mListPrincipal.add(entry.getValue());
+                }
+
+                if (mListener != null) {
+                    mListener.onListUpdate(mListPrincipal);
                 }
             }
 
