@@ -71,7 +71,6 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
             boutonSupp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                   // mPhotoRef.removeValue();
                     AlertDialog.Builder popup = new AlertDialog.Builder(UserPhoto.this);
                     popup.setTitle(R.string.supprimer_photo);
                     popup.setMessage(R.string.es_tu_sur);
@@ -98,14 +97,43 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
         database.getReference("Users").child(profilId).child("Photo").child(idPhoto)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(final DataSnapshot dataSnapshot) {
                 mLaphoto = (MainPhotoModel) dataSnapshot.getValue(MainPhotoModel.class);
                 if(mLaphoto.getPhoto() != null){
                     Glide.with(UserPhoto.this).load(dataSnapshot.child("photo").getValue()).into(ivPhoto);
                 }
                 tvTitre.setText(mLaphoto.getTitle());
                 tvDescription.setText(mLaphoto.getDescription());
-                ratingBar.setRating(Math.round(mLaphoto.getTotalnote())/Math.round(mLaphoto.getNbnote()));
+                ratingBar.setRating(mLaphoto.getTotalnote()/mLaphoto.getNbnote());
+                if (dataSnapshot.child("idvotant").child(mUserID).exists()){
+                    validNote.setText(R.string.modifiez_votre_note);
+                    validNote.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            long notevotant = (long) dataSnapshot.child("idvotant").child(mUserID).getValue();
+                            int newnote = Math.round(ratingBar.getRating());
+                            database.getReference("Users").child(profilId).child("Photo").child(idPhoto).child("totalnote").setValue(mLaphoto.getTotalnote() - notevotant + newnote);
+                            database.getReference("Users").child(profilId).child("Photo").child(idPhoto).child("idvotant").child(mUserID).setValue(newnote);
+                            Toast.makeText(UserPhoto.this, R.string.votre_note_est_modif, Toast.LENGTH_SHORT).show();
+                            ratingBar.setRating(mLaphoto.getTotalnote()/mLaphoto.getNbnote());
+                        }
+                    });
+                }
+                else{
+                    validNote.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            int note = Math.round(ratingBar.getRating());
+                            database.getReference("Users").child(profilId).child("Photo").child(idPhoto).child("totalnote").setValue(mLaphoto.getTotalnote() + note);
+                            database.getReference("Users").child(profilId).child("Photo").child(idPhoto).child("nbnote").setValue(mLaphoto.getNbnote() + 1);
+                            database.getReference("Users").child(profilId).child("Photo").child(idPhoto).child("idvotant").child(mUserID).setValue(note);
+                            Toast.makeText(UserPhoto.this, R.string.votre_note_est_prise_en_compte, Toast.LENGTH_SHORT).show();
+                            ratingBar.setRating(mLaphoto.getTotalnote()/mLaphoto.getNbnote());
+                            Intent intent = new Intent(UserPhoto.this, MainActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+                }
             }
 
             @Override
@@ -114,11 +142,12 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
             }
         });
 
+        // systeme de note
         validNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                database.getReference("Users").child(profilId).child("Photo").child(idPhoto).child("totalnote").setValue(Math.round(mLaphoto.getTotalnote()) + Math.round(ratingBar.getRating()));
-                database.getReference("Users").child(profilId).child("Photo").child(idPhoto).child("nbnote").setValue(Math.round(mLaphoto.getNbnote()) + 1);
+                database.getReference("Users").child(profilId).child("Photo").child(idPhoto).child("totalnote").setValue(mLaphoto.getTotalnote() + ratingBar.getRating());
+                database.getReference("Users").child(profilId).child("Photo").child(idPhoto).child("nbnote").setValue(mLaphoto.getNbnote() + 1);
             }
         });
 

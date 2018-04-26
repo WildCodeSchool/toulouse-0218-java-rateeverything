@@ -69,10 +69,18 @@
     <string name="photo_supprimée">Photo supprimée</string>
     <string name="non">Non</string>
     <string name="_0">0</string>
+
     <string name="publications">publications</string>
     <string name="followersprofil">Followers</string>
     <string name="publicationsprofil">Publications</string>
     <string name="follow">Publications</string>
     <string name="followersf">Followers</string>
+    <string name="modifier_photo_de_profil">Modifier photo de profil</string>
+    <string name="ajoutez_votre_note">Ajoutez votre note</string>
+    <string name="mettre_votre_note">Mettre votre note :</string>
+    <string name="modifiez_votre_note">Modifiez votre note</string>
+    <string name="votre_note_est_modif">Votre note a été modifé</string>
+    <string name="votre_note_est_prise_en_compte">votre note a été prise en compte</string>
+    <string name="RateEverything">Rate Everything</string>
 
 </resources>
