@@ -1,21 +1,30 @@
 package fr.wildcodeschool.rateeverything;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.FileProvider;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,19 +32,33 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ProfilUserActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
+    final static int SELECT_IMAGE = 1;
+    final static int REQUEST_TAKE_PHOTO = 2;
     private FirebaseDatabase mDatabase;
     private FirebaseUser mUser;
     private DatabaseReference mProfil, mRefUserPhoto, mProfilUser;
+    private StorageReference mStorageRef;
 
     private ImageView mPhoto;
     private TextView mNbFollowers, mNbPhoto, mUserName;
     private String mUserID;
     private long mNbPhotouser, mNbFollowersUsers;
+
+    private Uri mPhotoURI;
+    private String mCurrentPhotoPath;
+
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
@@ -59,6 +82,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
 
         mDatabase = FirebaseDatabase.getInstance();
         mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mStorageRef = FirebaseStorage.getInstance().getReference();
         mUserID = mUser.getUid();
         mProfilUser = mDatabase.getReference("Users/" + mUserID + "/Profil/");
 
@@ -78,6 +102,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
             });
 
             mProfil.addValueEventListener(new ValueEventListener() {
+
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -98,7 +123,6 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                                 .load(stringUrl)
                                 .into(mPhoto);
                     }
-
                 }
 
                 @Override
@@ -223,6 +247,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                     }
                 });
 
+
                 // affichage info user
                 mDatabase.getReference("Users").child(profilId).child("Photo").addValueEventListener(new ValueEventListener() {
                     @Override
@@ -235,6 +260,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
 
                 mProfil.addValueEventListener(new ValueEventListener() {
                     @Override
+
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
                         if (dataSnapshot.child("username").getValue() != null) {
@@ -294,11 +320,11 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
 
             }
 
-            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_user);
-            navigationView.setNavigationItemSelectedListener(this);
 
         // TODO remettre le menu burger
 
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_user);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     // -----------------------MENU BURGER DON'T TOUCH PLEASE !!!--------------------------
@@ -338,4 +364,118 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
         return super.onOptionsItemSelected(item);
     }
 
+
+    //-----------------------------------Button change Image profil---------------------------------
+
+    public void changeImageProfil(View view){
+
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(ProfilUserActivity.this);
+        builderSingle.setTitle("Select One Option");
+
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                ProfilUserActivity.this,
+                android.R.layout.select_dialog_singlechoice);
+        arrayAdapter.add("Gallery");
+        arrayAdapter.add("Camera");
+
+        builderSingle.setNegativeButton(
+                "cancel",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        builderSingle.setAdapter(
+                arrayAdapter,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+                                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                startActivityForResult(pickPhoto, SELECT_IMAGE);
+                                break;
+
+                            case 1:
+                                dispatchTakePictureIntent();
+                                break;
+                        }
+                    }
+                });
+        builderSingle.show();
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                mPhotoURI = FileProvider.getUriForFile(this,
+                        "fr.wildcodeschool.rateeverything.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mPhotoURI);
+                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+            }
+        }
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case SELECT_IMAGE:
+                if(resultCode == RESULT_OK) {
+                    Uri selectedImage = data.getData();
+                    mPhotoURI = selectedImage;
+                    Glide.with(ProfilUserActivity.this).load(mPhotoURI).into(mPhoto);
+                }
+                break;
+            case REQUEST_TAKE_PHOTO:
+                if(resultCode == RESULT_OK) {
+                    Glide.with(ProfilUserActivity.this).load(mPhotoURI).into(mPhoto);
+                }
+                break;
+        }
+
+        mProfil = mDatabase.getReference("Users/" + mUserID + "/Profil/");
+        StorageReference riverRef = mStorageRef.child("PhotoUser").child(mPhotoURI.getLastPathSegment());
+        riverRef.putFile(mPhotoURI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                String url = downloadUrl.toString();
+                mProfil.child("photouser").setValue(url);
+            }
+        });
+
+    }
+
+
+
+    //---------------------------------------------------------------------------------------------
 }
