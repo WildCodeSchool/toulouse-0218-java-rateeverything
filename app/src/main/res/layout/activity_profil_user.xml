@@ -79,7 +79,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                android:text="@string/modifier_profil"
+                android:onClick="changeImageProfil"
+                android:text="@string/modifier_photo_de_profil"
+                android:textSize="10sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/logo_picture"
                 app:layout_constraintStart_toStartOf="@+id/logo_follower" />

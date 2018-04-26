@@ -167,7 +167,7 @@ public class AddPhotoActivity extends Activity {
                 final String titleValue = tvTitle.getText().toString();
                 final String descriptionValue = tvDescription.getText().toString();
 
-                StorageReference riverRef = mStorageRef.child("Image").child(mPhotoURI.getLastPathSegment());;
+                StorageReference riverRef = mStorageRef.child("Image").child(mPhotoURI.getLastPathSegment());
 
                 riverRef.putFile(mPhotoURI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
