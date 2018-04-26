@@ -103,15 +103,24 @@
                 android:id="@+id/edit_name_user"
                 android:layout_width="wrap_content"
                 android:layout_height="18dp"
+                android:layout_marginBottom="16dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/username"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/profil_photo_user"
                 app:layout_constraintStart_toStartOf="@+id/profil_photo_user"
                 app:layout_constraintTop_toBottomOf="@+id/profil_photo_user" />
 
         </android.support.constraint.ConstraintLayout>
+
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="4dp"
+            android:theme="?attr/actionBarTheme" />
 
         <GridView
             android:id="@+id/grid_view_user"
