@@ -2,7 +2,6 @@ package fr.wildcodeschool.rateeverything;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -12,7 +11,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -37,7 +35,6 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -63,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mEditPseudo, mEditPassword, mEditMail;
     private TextView mTextPseudo, mTextMail, mTextPassword, mTextChangeAvatar;
     private ProgressBar mProgressBarLoading;
+    private ImageView mImageLogo;
     private ImageView mImageAvatar;
 
     private String mCurrentPhotoPath;
@@ -373,11 +371,15 @@ public class LoginActivity extends AppCompatActivity {
                 if(resultCode == RESULT_OK) {
                     Uri selectedImage = data.getData();
                     mPhotoURI = selectedImage;
+                    mImageLogo.setVisibility(View.GONE);
+                    mImageAvatar.setVisibility(View.VISIBLE);
                     Glide.with(LoginActivity.this).load(mPhotoURI).into(mImageAvatar);
                 }
                 break;
             case REQUEST_TAKE_PHOTO:
                 if(resultCode == RESULT_OK) {
+                    mImageLogo.setVisibility(View.GONE);
+                    mImageAvatar.setVisibility(View.VISIBLE);
                     Glide.with(LoginActivity.this).load(mPhotoURI).into(mImageAvatar);
                 }
                 break;
@@ -426,7 +428,8 @@ public class LoginActivity extends AppCompatActivity {
         mTextPassword = findViewById(R.id.text_view_password);
         mTextChangeAvatar = findViewById(R.id.text_view_chose_avatar);
         mProgressBarLoading = findViewById(R.id.progress_bar_load);
-        mImageAvatar = findViewById(R.id.image_view_logo);
+        mImageLogo = findViewById(R.id.image_view_logo);
+        mImageAvatar = findViewById(R.id.image_view_avatar);
     }
 
     private void initWidgetSignIn() {
