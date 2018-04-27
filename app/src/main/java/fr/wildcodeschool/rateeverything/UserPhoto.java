@@ -153,10 +153,10 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
 
         // -----------MENU BURGER DON'T TOUCH FOR THE MOMENT------------------
 
-        NavigationView navigationViewPhoto = (NavigationView) findViewById(R.id.nav_view_photo);
+        NavigationView navigationViewPhoto = findViewById(R.id.nav_view_photo);
         navigationViewPhoto.setNavigationItemSelectedListener(this);
-
-        // TODO reglage menu burger
+        Singleton singleton = Singleton.getsIntance();
+        singleton.loadNavigation(navigationViewPhoto);
 
     }
 
