@@ -64,14 +64,13 @@
 
             <Button
                 android:id="@+id/button_modify_profil"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-          
                 android:onClick="changeImageProfil"
                 android:text="@string/modifier_photo_de_profil"
                 android:textSize="10sp"
@@ -83,6 +82,7 @@
 
             <Button
                 android:id="@+id/button_add_followers"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -96,12 +96,14 @@
             <TextView
                 android:id="@+id/edit_name_user"
                 android:layout_width="wrap_content"
-                android:layout_height="18dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/username"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/profil_photo_user"
                 app:layout_constraintStart_toStartOf="@+id/profil_photo_user"
@@ -165,7 +167,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         app:menu="@menu/drawer_menu"
-        android:layout_gravity="start" />
+        android:layout_gravity="start"/>
+
 
 </android.support.v4.widget.DrawerLayout>
 

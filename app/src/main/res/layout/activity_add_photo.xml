@@ -11,7 +11,6 @@
     tools:context="fr.wildcodeschool.rateeverything.AddPhotoActivity"
     android:id="@+id/drawer_layout_add_photo">
 
-
     <ImageButton
         android:id="@+id/iv_photo"
         android:layout_width="353dp"
@@ -25,21 +24,6 @@
     <EditText
         android:id="@+id/et_title_img"
         android:layout_width="240dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@null"
-        android:hint="@string/title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rating_bar_first_note" />
-
-
-    <EditText
-        android:id="@+id/et_title_img"
-        android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginEnd="8dp"
@@ -47,11 +31,11 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/editshape"
         android:padding="10dp"
-        android:hint="@string/titleaddphoto"
+        android:hint="@string/titlephoto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rating_bar_first_note" />
-  
+
     <EditText
         android:id="@+id/et_description_img"
         android:layout_width="240dp"
@@ -66,6 +50,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rating_bar_first_note"
         android:layout_gravity="center"/>
+        </LinearLayout>
+
+  
 
    
     <Button
