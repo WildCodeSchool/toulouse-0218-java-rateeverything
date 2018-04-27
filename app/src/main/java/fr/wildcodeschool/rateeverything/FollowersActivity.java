@@ -133,8 +133,10 @@ public class FollowersActivity extends AppCompatActivity implements NavigationVi
         // -------------------------MENU BURGER DON'T TOUCH--------------------------------
 
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_follow);
+        NavigationView navigationView = findViewById(R.id.nav_follow);
         navigationView.setNavigationItemSelectedListener(this);
+        Singleton singleton = Singleton.getsIntance();
+        singleton.loadNavigation(navigationView);
 
 
     }

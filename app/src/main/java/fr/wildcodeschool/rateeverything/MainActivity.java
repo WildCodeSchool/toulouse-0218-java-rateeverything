@@ -35,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -73,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         mImgViewUserHeader = mDrawerLayout.findViewById(R.id.img_header_user);
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -111,8 +111,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
         // Menu Burger
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        singleton.loadNavigation(navigationView);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
