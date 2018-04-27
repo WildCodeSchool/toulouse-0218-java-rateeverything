@@ -62,16 +62,14 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressBar mProgressBarLoading;
     private ImageView mImageLogo;
     private ImageView mImageAvatar;
-
-    private String mCurrentPhotoPath;
-
+    private TextView mTextChooseConnection;
 
     //Intent
     private Intent mGoToMainActivity;
 
     //Photo
     private Uri mUrlImage;
-
+    private String mCurrentPhotoPath;
     private Uri mPhotoURI;
 
     @Override
@@ -136,6 +134,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick (View view) {
 
                 initWidgetSignIn();
+
             }
         });
 
@@ -158,6 +157,19 @@ public class LoginActivity extends AppCompatActivity {
                 showPickImageDialog();
             }
         });
+
+        //Return
+        mTextChooseConnection.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                initWidgetChoose();
+
+            }
+
+        });
+
 
     }
     /*
@@ -430,6 +442,7 @@ public class LoginActivity extends AppCompatActivity {
         mProgressBarLoading = findViewById(R.id.progress_bar_load);
         mImageLogo = findViewById(R.id.image_view_logo);
         mImageAvatar = findViewById(R.id.image_view_avatar);
+        mTextChooseConnection = findViewById(R.id.text_view_register_signIn);
     }
 
     private void initWidgetSignIn() {
@@ -443,6 +456,7 @@ public class LoginActivity extends AppCompatActivity {
         mEditMail.setVisibility(View.VISIBLE);
         mEditPassword.setVisibility(View.VISIBLE);
         mButtonValidLogin.setVisibility(View.VISIBLE);
+        mTextChooseConnection.setVisibility(View.VISIBLE);
     }
 
     private void initWidgetRegister() {
@@ -457,6 +471,22 @@ public class LoginActivity extends AppCompatActivity {
         mEditPassword.setVisibility(View.VISIBLE);
         mButtonValidCreate.setVisibility(View.VISIBLE);
         mTextChangeAvatar.setVisibility(View.VISIBLE);
+        mTextChooseConnection.setVisibility(View.VISIBLE);
+    }
+
+    private void initWidgetChoose() {
+        mButtonSignIn.setVisibility(View.VISIBLE);
+        mButtonCreateAccount.setVisibility(View.VISIBLE);
+        mTextPseudo.setVisibility(View.GONE);
+        mTextMail.setVisibility(View.GONE);
+        mTextPassword.setVisibility(View.GONE);
+        mEditPseudo.setVisibility(View.GONE);
+        mEditMail.setVisibility(View.GONE);
+        mEditPassword.setVisibility(View.GONE);
+        mButtonValidCreate.setVisibility(View.GONE);
+        mTextChangeAvatar.setVisibility(View.GONE);
+        mButtonValidLogin.setVisibility(View.GONE);
+        mTextChooseConnection.setVisibility(View.GONE);
     }
 
 }
