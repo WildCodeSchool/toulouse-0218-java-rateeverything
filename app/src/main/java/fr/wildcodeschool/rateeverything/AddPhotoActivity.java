@@ -50,26 +50,18 @@ public class AddPhotoActivity extends AppCompatActivity implements NavigationVie
     private FirebaseDatabase mDatabase;
     private DatabaseReference mRef;
     private FirebaseUser mCurrentUser;
-
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
     private ImageView mImgViewUserHeader;
-
     private Intent mGoToMainActivity;
-
     private RatingBar mNoteBar;
-
 
     private static final int REQUEST_TAKE_PHOTO = 11;
 
     //Photo
     private Uri mUrlImage;
-
     private Uri mPhotoURI;
-
     private String mCurrentPhotoPath;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +111,6 @@ public class AddPhotoActivity extends AppCompatActivity implements NavigationVie
         navigationViewAddPhoto.setNavigationItemSelectedListener(this);
         Singleton singleton = Singleton.getsIntance();
         singleton.loadNavigation(navigationViewAddPhoto);
-
     }
 
     private void dispatchTakePictureIntent() {
@@ -223,7 +214,6 @@ public class AddPhotoActivity extends AppCompatActivity implements NavigationVie
         // -------------------------MENU BURGER DON'T TOUCH--------------------------------
 
     }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -247,7 +237,6 @@ public class AddPhotoActivity extends AppCompatActivity implements NavigationVie
             startActivity(goToLoginActivity);
             finish();
         }
-
         return true;
     }
 
@@ -256,7 +245,6 @@ public class AddPhotoActivity extends AppCompatActivity implements NavigationVie
         if (mToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }
