@@ -47,10 +47,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/biblioth_que"
                     />
-
             </LinearLayout>
-
-
 
             <RatingBar
                 android:id="@+id/rating_bar_first_note"
@@ -94,8 +91,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/rating_bar_first_note"
                 android:layout_gravity="center"/>
 
-
-
             <Button
                 android:id="@+id/button_share_img"
                 android:onClick="shareImageButton"
@@ -107,7 +102,6 @@
                 android:text="@string/partager"
                 android:layout_gravity="center"/>
         </LinearLayout>
-
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view_add_photo"
