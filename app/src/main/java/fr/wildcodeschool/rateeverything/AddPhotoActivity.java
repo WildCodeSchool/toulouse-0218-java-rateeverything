@@ -107,7 +107,10 @@ public class AddPhotoActivity extends AppCompatActivity implements NavigationVie
             }
         });
 
-
+        NavigationView navigationViewAddPhoto = findViewById(R.id.nav_view_add_photo);
+        navigationViewAddPhoto.setNavigationItemSelectedListener(this);
+        Singleton singleton = Singleton.getsIntance();
+        singleton.loadNavigation(navigationViewAddPhoto);
 
     }
 
@@ -150,11 +153,6 @@ public class AddPhotoActivity extends AppCompatActivity implements NavigationVie
                     }
                 });
         builderSingle.show();
-
-        NavigationView navigationViewAddPhoto = findViewById(R.id.nav_view_add_photo);
-        navigationViewAddPhoto.setNavigationItemSelectedListener(this);
-        Singleton singleton = Singleton.getsIntance();
-        singleton.loadNavigation(navigationViewAddPhoto);
 
     }
 

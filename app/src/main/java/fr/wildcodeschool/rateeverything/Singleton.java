@@ -78,47 +78,49 @@ public class Singleton {
     public void loadList() {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        final String userId = user.getUid();
-        DatabaseReference listRef = database.getReference("Users/");
-        listRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                mListPrincipal.clear();
-                Map<Long, MainPhotoModel> sortedPhotoList = new TreeMap<>();
-                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                    final String testFollowers = userSnapshot.getKey();
-                    mTestFollow = false;
-                    if (testFollowers.equals(userId)) {
-                        for (DataSnapshot photoSnapshot : userSnapshot.child("Photo").getChildren()) {
-                            MainPhotoModel mObjetPhoto = photoSnapshot.getValue(MainPhotoModel.class);
-                            sortedPhotoList.put(mObjetPhoto.getTimestamp(), mObjetPhoto);
-                        }
-
-                    }
-                    if (dataSnapshot.child(userId).child("Followers").child(testFollowers).exists()) {
-                        mTestFollow = (Boolean) dataSnapshot.child(userId).child("Followers").child(testFollowers).getValue();
-                        if (mTestFollow) {
+        FirebaseUser userFirebase = FirebaseAuth.getInstance().getCurrentUser();
+        if (userFirebase != null) {
+            final String userId = userFirebase.getUid();
+            DatabaseReference listRef = database.getReference("Users/");
+            listRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    mListPrincipal.clear();
+                    Map<Long, MainPhotoModel> sortedPhotoList = new TreeMap<>();
+                    for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                        final String testFollowers = userSnapshot.getKey();
+                        mTestFollow = false;
+                        if (testFollowers.equals(userId)) {
                             for (DataSnapshot photoSnapshot : userSnapshot.child("Photo").getChildren()) {
                                 MainPhotoModel mObjetPhoto = photoSnapshot.getValue(MainPhotoModel.class);
                                 sortedPhotoList.put(mObjetPhoto.getTimestamp(), mObjetPhoto);
                             }
+
+                        }
+                        if (dataSnapshot.child(userId).child("Followers").child(testFollowers).exists()) {
+                            mTestFollow = (Boolean) dataSnapshot.child(userId).child("Followers").child(testFollowers).getValue();
+                            if (mTestFollow) {
+                                for (DataSnapshot photoSnapshot : userSnapshot.child("Photo").getChildren()) {
+                                    MainPhotoModel mObjetPhoto = photoSnapshot.getValue(MainPhotoModel.class);
+                                    sortedPhotoList.put(mObjetPhoto.getTimestamp(), mObjetPhoto);
+                                }
+                            }
                         }
                     }
-                }
-                for (Map.Entry<Long, MainPhotoModel> entry : sortedPhotoList.entrySet()) {
-                    mListPrincipal.add(entry.getValue());
+                    for (Map.Entry<Long, MainPhotoModel> entry : sortedPhotoList.entrySet()) {
+                        mListPrincipal.add(entry.getValue());
+                    }
+
+                    if (mListener != null) {
+                        mListener.onListUpdate(mListPrincipal);
+                    }
                 }
 
-                if (mListener != null) {
-                    mListener.onListUpdate(mListPrincipal);
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
                 }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+            });
+        }
     }
 
     public void setListener(LoadListener listener) {
