@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         mImgViewUserHeader = mDrawerLayout.findViewById(R.id.img_header_user);
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
