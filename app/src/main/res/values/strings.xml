@@ -47,7 +47,6 @@
     <string name="partager">Partager</string>
     <string name="app_photo">App Photo</string>
     <string name="description_photo">Description photo</string>
-    <string name="description">Description</string>
     <string name="fillFields">Please fill all fields !</string>
     <string name="bothValues">Enter both values</string>
     <string name="incorrectUserPassword">Incorrect username or password</string>
@@ -83,5 +82,9 @@
     <string name="votre_note_est_prise_en_compte">votre note a été prise en compte</string>
     <string name="RateEverything">Rate Everything</string>
     <string name="choose">Register / Sign In</string>
+    <string name="description">Description</string>
+    <string name="title">Title</string>
+    <string name="photo_de_ton_objet">Photo de ton objet</string>
+
 
 </resources>

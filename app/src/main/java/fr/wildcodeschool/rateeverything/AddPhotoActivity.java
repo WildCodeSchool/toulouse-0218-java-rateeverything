@@ -1,15 +1,28 @@
 package fr.wildcodeschool.rateeverything;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AlertDialog;
+
+import android.support.design.widget.NavigationView;
+import android.support.v4.content.FileProvider;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,7 +47,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class AddPhotoActivity extends Activity {
+public class AddPhotoActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     ImageView mImagePhoto;
     private String mIDUser;
     static final int CAM_REQUEST = 0;
@@ -45,26 +58,30 @@ public class AddPhotoActivity extends Activity {
     private FirebaseDatabase mDatabase;
     private DatabaseReference mRef;
     private FirebaseUser mCurrentUser;
-
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mToggle;
+    private ImageView mImgViewUserHeader;
     private Intent mGoToMainActivity;
-
     private RatingBar mNoteBar;
-
 
     private static final int REQUEST_TAKE_PHOTO = 11;
 
     //Photo
     private Uri mUrlImage;
-
     private Uri mPhotoURI;
-
     private String mCurrentPhotoPath;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_photo);
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_add_photo);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.Open, R.string.Close);
+        mDrawerLayout.addDrawerListener(mToggle);
+        mToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mImgViewUserHeader = mDrawerLayout.findViewById(R.id.img_header_user);
 
         mGoToMainActivity = new Intent(AddPhotoActivity.this,MainActivity.class);
 
@@ -75,29 +92,69 @@ public class AddPhotoActivity extends Activity {
 
         mRef = mDatabase.getReference("Users/" + mIDUser + "/Photo/");
 
-        Button buttonAdd;
         setContentView(R.layout.activity_add_photo);
-        buttonAdd = (Button) findViewById(R.id.button_add_photo);
+
         mImagePhoto = (ImageView) findViewById(R.id.iv_photo);
         TextView tvTitle = findViewById(R.id.et_title_img);
         TextView tvDescription = findViewById(R.id.et_description_img);
 
         mNoteBar = findViewById(R.id.rating_bar_first_note);
 
-        buttonAdd.setOnClickListener(new View.OnClickListener() {
+        mImagePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                dispatchTakePictureIntent();
+            public void onClick(View v) {
+                showPickImageDialog();
             }
         });
-        Button gallery = findViewById(R.id.button_add_gallery);
-        gallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent, SELECT_IMAGE);
-            }
-        });
+
+
+
+    }
+
+    private void showPickImageDialog() {
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(AddPhotoActivity.this);
+        builderSingle.setTitle("Select One Option");
+
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                AddPhotoActivity.this,
+                android.R.layout.select_dialog_singlechoice);
+        arrayAdapter.add("Gallery");
+        arrayAdapter.add("Camera");
+
+        builderSingle.setNegativeButton(
+                "cancel",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        builderSingle.setAdapter(
+                arrayAdapter,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+                                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                startActivityForResult(pickPhoto, SELECT_IMAGE);
+                                break;
+
+                            case 1:
+                                dispatchTakePictureIntent();
+                                break;
+                        }
+
+                    }
+                });
+        builderSingle.show();
+
+        NavigationView navigationViewAddPhoto = findViewById(R.id.nav_view_add_photo);
+        navigationViewAddPhoto.setNavigationItemSelectedListener(this);
+        Singleton singleton = Singleton.getsIntance();
+        singleton.loadNavigation(navigationViewAddPhoto);
 
     }
 
@@ -145,6 +202,7 @@ public class AddPhotoActivity extends Activity {
         switch(requestCode) {
             case REQUEST_TAKE_PHOTO:
                 if(resultCode == RESULT_OK) {
+                    mImagePhoto.setBackground(ContextCompat.getDrawable(AddPhotoActivity.this, R.drawable.common_google_signin_btn_icon_light_focused));
                     Glide.with(AddPhotoActivity.this).load(mPhotoURI).into(mImagePhoto);
                 }
                 break;
@@ -198,8 +256,43 @@ public class AddPhotoActivity extends Activity {
 
             }
         });
+
+        // -------------------------MENU BURGER DON'T TOUCH--------------------------------
+
+    }
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.home) {
+            Intent intentHome = new Intent(AddPhotoActivity.this, MainActivity.class);
+            startActivity(intentHome);
+        } else if (id == R.id.profil) {
+            Intent intentProfil = new Intent(AddPhotoActivity.this, ProfilUserActivity.class);
+            intentProfil.putExtra("idprofil", mIDUser);
+            startActivity(intentProfil);
+        } else if (id == R.id.followers) {
+            Intent intentFollowers = new Intent(AddPhotoActivity.this, FollowersActivity.class);
+            startActivity(intentFollowers);
+        } else if (id == R.id.disconnect) {
+            FirebaseAuth.getInstance().signOut();
+            SaveSharedPreference.setUserName(AddPhotoActivity.this, "");
+            Intent goToLoginActivity = new Intent(AddPhotoActivity.this,LoginActivity.class);
+            startActivity(goToLoginActivity);
+            finish();
+        }
+        return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
 
 

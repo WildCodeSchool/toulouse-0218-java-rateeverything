@@ -23,6 +23,9 @@ public class SplashScreen extends AppCompatActivity {
         Animation animation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade);
         splashScreen.startAnimation(animation);
 
+        // chargement des infos de l'utilisateur
+        Singleton singleton = Singleton.getsIntance();
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
