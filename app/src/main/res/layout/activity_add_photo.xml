@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+  
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -40,21 +36,54 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rating_bar_first_note" />
 
+
     <EditText
-        android:id="@+id/et_description_img"
+        android:id="@+id/et_title_img"
         android:layout_width="240dp"
-        android:layout_height="62dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@null"
-        android:hint="@string/description"
+        android:background="@drawable/editshape"
+        android:padding="10dp"
+        android:hint="@string/titleaddphoto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rating_bar_first_note" />
+  
+    <EditText
+        android:id="@+id/et_description_img"
+        android:layout_width="240dp"
+        android:layout_height="62dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/editshape"
+        android:padding="10dp"
+        android:hint="@string/description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rating_bar_first_note"
+        android:layout_gravity="center"/>
 
-    <android.support.design.widget.NavigationView
+   
+    <Button
+        android:id="@+id/button_share_img"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="shareImageButton"
+        android:text="@string/partager" />
+
+
+</LinearLayout>
+  
+   <android.support.design.widget.NavigationView
         android:id="@+id/nav_view_add_photo"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -62,20 +91,6 @@
         app:headerLayout="@layout/header"
         app:menu="@menu/drawer_menu" />
 
-
-
-    <Button
-        android:id="@+id/button_share_img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/partager"
-        android:layout_gravity="center"/>
-
-</LinearLayout>
-</ScrollView>
 
 </android.support.v4.widget.DrawerLayout>
 

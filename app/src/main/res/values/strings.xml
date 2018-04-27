@@ -68,7 +68,6 @@
     <string name="photo_supprimée">Photo supprimée</string>
     <string name="non">Non</string>
     <string name="_0">0</string>
-
     <string name="publications">publications</string>
     <string name="followersprofil">Followers</string>
     <string name="publicationsprofil">Publications</string>
@@ -81,10 +80,10 @@
     <string name="votre_note_est_modif">Votre note a été modifé</string>
     <string name="votre_note_est_prise_en_compte">votre note a été prise en compte</string>
     <string name="RateEverything">Rate Everything</string>
+    <string name="titleaddphoto">title</string>
     <string name="choose">Register / Sign In</string>
     <string name="description">Description</string>
     <string name="title">Title</string>
     <string name="photo_de_ton_objet">Photo de ton objet</string>
-
 
 </resources>
