@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,8 +13,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context="fr.wildcodeschool.rateeverything.AddPhotoActivity"
-    android:orientation="vertical"
-    android:layout_gravity="center">
+    android:id="@+id/drawer_layout_add_photo">
+
 
     <ImageButton
         android:id="@+id/iv_photo"
@@ -21,20 +25,6 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/add_image"
         android:contentDescription="@string/photo_de_ton_objet" />
-
-    <RatingBar
-        android:id="@+id/rating_bar_first_note"
-        android:layout_width="wrap_content"
-        android:layout_height="54dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_add_photo"
-        android:layout_gravity="center"
-        android:stepSize="1"
-        android:numStars="5"/>
 
     <EditText
         android:id="@+id/et_title_img"
@@ -64,6 +54,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rating_bar_first_note" />
 
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view_add_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/header"
+        app:menu="@menu/drawer_menu" />
+
 
 
     <Button
@@ -78,3 +76,7 @@
 
 </LinearLayout>
 </ScrollView>
+
+</android.support.v4.widget.DrawerLayout>
+
+
