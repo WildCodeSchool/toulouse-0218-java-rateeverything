@@ -1,13 +1,20 @@
 package fr.wildcodeschool.rateeverything;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
+import android.support.v7.app.AlertDialog;
+
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.FileProvider;
 import android.support.v4.widget.DrawerLayout;
@@ -15,6 +22,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -84,33 +92,70 @@ public class AddPhotoActivity extends AppCompatActivity implements NavigationVie
 
         mRef = mDatabase.getReference("Users/" + mIDUser + "/Photo/");
 
-        Button buttonAdd;
-        buttonAdd = (Button) findViewById(R.id.button_add_photo);
+        setContentView(R.layout.activity_add_photo);
+
         mImagePhoto = (ImageView) findViewById(R.id.iv_photo);
         TextView tvTitle = findViewById(R.id.et_title_img);
         TextView tvDescription = findViewById(R.id.et_description_img);
 
         mNoteBar = findViewById(R.id.rating_bar_first_note);
 
-        buttonAdd.setOnClickListener(new View.OnClickListener() {
+        mImagePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                dispatchTakePictureIntent();
+            public void onClick(View v) {
+                showPickImageDialog();
             }
         });
-        Button gallery = findViewById(R.id.button_add_gallery);
-        gallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent, SELECT_IMAGE);
-            }
-        });
+
+
+
+    }
+
+    private void showPickImageDialog() {
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(AddPhotoActivity.this);
+        builderSingle.setTitle("Select One Option");
+
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                AddPhotoActivity.this,
+                android.R.layout.select_dialog_singlechoice);
+        arrayAdapter.add("Gallery");
+        arrayAdapter.add("Camera");
+
+        builderSingle.setNegativeButton(
+                "cancel",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        builderSingle.setAdapter(
+                arrayAdapter,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+                                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                startActivityForResult(pickPhoto, SELECT_IMAGE);
+                                break;
+
+                            case 1:
+                                dispatchTakePictureIntent();
+                                break;
+                        }
+
+                    }
+                });
+        builderSingle.show();
 
         NavigationView navigationViewAddPhoto = findViewById(R.id.nav_view_add_photo);
         navigationViewAddPhoto.setNavigationItemSelectedListener(this);
         Singleton singleton = Singleton.getsIntance();
         singleton.loadNavigation(navigationViewAddPhoto);
+
     }
 
     private void dispatchTakePictureIntent() {
@@ -157,6 +202,7 @@ public class AddPhotoActivity extends AppCompatActivity implements NavigationVie
         switch(requestCode) {
             case REQUEST_TAKE_PHOTO:
                 if(resultCode == RESULT_OK) {
+                    mImagePhoto.setBackground(ContextCompat.getDrawable(AddPhotoActivity.this, R.drawable.common_google_signin_btn_icon_light_focused));
                     Glide.with(AddPhotoActivity.this).load(mPhotoURI).into(mImagePhoto);
                 }
                 break;
