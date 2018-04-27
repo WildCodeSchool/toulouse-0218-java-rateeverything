@@ -325,6 +325,8 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_user);
         navigationView.setNavigationItemSelectedListener(this);
+        Singleton singleton = Singleton.getsIntance();
+        singleton.loadNavigation(navigationView);
     }
 
     // -----------------------MENU BURGER DON'T TOUCH PLEASE !!!--------------------------
