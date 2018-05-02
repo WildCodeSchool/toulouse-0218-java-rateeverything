@@ -180,7 +180,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
 
 
                 // Fonction Follow
-                mDatabase.getReference("Users").child(mUserID).child("Profil").child("nbfollowers").addValueEventListener(new ValueEventListener() {
+                mDatabase.getReference("Users").child(profilId).child("Profil").child("nbfollowers").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         mNbFollowersUsers = (long) dataSnapshot.getValue();
@@ -203,7 +203,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                                     public void onClick(View view) {
                                         refFollowers.setValue(false);
                                         boutonAddFollowers.setText(R.string.suivre_cette_personne);
-                                        mDatabase.getReference("Users").child(mUserID).child("Profil").child("nbfollowers").setValue(mNbFollowersUsers - 1);
+                                        mDatabase.getReference("Users").child(profilId).child("Profil").child("nbfollowers").setValue(mNbFollowersUsers - 1);
                                     }
                                 });
                             }
@@ -213,7 +213,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                                     public void onClick(View view) {
                                         refFollowers.setValue(true);
                                         boutonAddFollowers.setText(R.string.ne_plus_suivre);
-                                        mDatabase.getReference("Users").child(mUserID).child("Profil").child("nbfollowers").setValue(mNbFollowersUsers + 1);
+                                        mDatabase.getReference("Users").child(profilId).child("Profil").child("nbfollowers").setValue(mNbFollowersUsers + 1);
                                     }
                                 });
                             }
@@ -224,7 +224,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                                 public void onClick(View view) {
                                     refFollowers.setValue(true);
                                     boutonAddFollowers.setText(R.string.ne_plus_suivre);
-                                    mDatabase.getReference("Users").child(mUserID).child("Profil").child("nbfollowers").setValue(mNbFollowersUsers + 1);
+                                    mDatabase.getReference("Users").child(profilId).child("Profil").child("nbfollowers").setValue(mNbFollowersUsers + 1);
                                 }
                             });
                         }
@@ -319,9 +319,6 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
             });
 
             }
-
-
-        // TODO remettre le menu burger
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_user);
         navigationView.setNavigationItemSelectedListener(this);

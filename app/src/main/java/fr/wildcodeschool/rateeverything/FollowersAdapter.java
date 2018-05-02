@@ -52,8 +52,6 @@ public class FollowersAdapter extends ArrayAdapter<FollowersModel> {
             }
         }
 
-        // TODO : problème, plante quand on affiche les follow et que un compte est créé, à rectifier
-
         return convertView;
     }
 
