@@ -119,9 +119,16 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                     }
                     if (dataSnapshot.child("photouser").getValue() != null) {
                         String stringUrl = (String) dataSnapshot.child("photouser").getValue();
-                        Glide.with(ProfilUserActivity.this)
-                                .load(stringUrl)
-                                .into(mPhoto);
+                        if (stringUrl.equals("1")){
+                            Glide.with(ProfilUserActivity.this)
+                                    .load(R.drawable.defaultimageuser)
+                                    .into(mPhoto);
+                        }
+                        else {
+                            Glide.with(ProfilUserActivity.this)
+                                    .load(stringUrl)
+                                    .into(mPhoto);
+                        }
                     }
                 }
 
@@ -276,9 +283,16 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                         }
                         if (dataSnapshot.child("photouser").getValue() != null) {
                             String stringUrl = (String) dataSnapshot.child("photouser").getValue();
-                            Glide.with(ProfilUserActivity.this)
-                                    .load(stringUrl)
-                                    .into(mPhoto);
+                            if (stringUrl.equals("1")){
+                                Glide.with(ProfilUserActivity.this)
+                                        .load(R.drawable.defaultimageuser)
+                                        .into(mPhoto);
+                            }
+                            else {
+                                Glide.with(ProfilUserActivity.this)
+                                        .load(stringUrl)
+                                        .into(mPhoto);
+                            }
                         }
 
                     }

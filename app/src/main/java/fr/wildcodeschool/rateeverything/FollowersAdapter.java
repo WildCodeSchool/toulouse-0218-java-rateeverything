@@ -32,8 +32,13 @@ public class FollowersAdapter extends ArrayAdapter<FollowersModel> {
         if (followers != null) {
 
             if (followers.getPhotouser() != null) {
-                ImageView photo = (ImageView) convertView.findViewById(R.id.imageview_photo_followers);
-                Glide.with(parent.getContext()).load(followers.getPhotouser().toString()).into(photo);
+                if (followers.getPhotouser().equals("1")){
+                    ImageView photo = (ImageView) convertView.findViewById(R.id.imageview_photo_followers);
+                    Glide.with(parent.getContext()).load(R.drawable.defaultimageuser).into(photo);
+                } else {
+                    ImageView photo = (ImageView) convertView.findViewById(R.id.imageview_photo_followers);
+                    Glide.with(parent.getContext()).load(followers.getPhotouser().toString()).into(photo);
+                }
             }
 
             if (followers.getUsername().toString() != null) {
