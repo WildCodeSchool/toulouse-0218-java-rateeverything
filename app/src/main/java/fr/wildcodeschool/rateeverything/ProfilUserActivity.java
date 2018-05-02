@@ -142,7 +142,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
             mUserProfil = new ArrayList<>();
             mUserAdapter = new ProfilUserGridAdapter(this, mUserProfil);
 
-            mRefUserPhoto.addValueEventListener(new ValueEventListener() {
+            mRefUserPhoto.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     mUserProfil.clear();
@@ -301,7 +301,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
             mUserProfil = new ArrayList<>();
             mUserAdapter = new ProfilUserGridAdapter(this, mUserProfil);
 
-            mRefUserPhoto.addValueEventListener(new ValueEventListener() {
+            mRefUserPhoto.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     mUserProfil.clear();
