@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -348,13 +349,11 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showPickImageDialog() {
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(LoginActivity.this);
-        builderSingle.setTitle("Select One Option");
+        builderSingle.setTitle(R.string.choisissez);
 
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                LoginActivity.this,
-                android.R.layout.select_dialog_singlechoice);
-        arrayAdapter.add("Gallery");
-        arrayAdapter.add("Camera");
+        final String [] items = new String[] {"Gallerie", "Appareil photo"};
+        final Integer[] icons = new Integer[] {R.drawable.gallery, R.drawable.camera_moto_icon};
+        ListAdapter adapter = new ArrayAdapterWithIcon(LoginActivity.this, items, icons);
 
         builderSingle.setNegativeButton(
                 "cancel",
@@ -366,7 +365,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
 
         builderSingle.setAdapter(
-                arrayAdapter,
+                adapter,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

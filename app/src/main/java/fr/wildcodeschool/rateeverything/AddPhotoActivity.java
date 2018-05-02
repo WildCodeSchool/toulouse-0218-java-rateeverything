@@ -26,6 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -114,13 +115,11 @@ public class AddPhotoActivity extends AppCompatActivity implements NavigationVie
 
     private void showPickImageDialog() {
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(AddPhotoActivity.this);
-        builderSingle.setTitle("Select One Option");
+        builderSingle.setTitle(R.string.choisissez);
 
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                AddPhotoActivity.this,
-                android.R.layout.select_dialog_singlechoice);
-        arrayAdapter.add("Gallery");
-        arrayAdapter.add("Camera");
+        final String [] items = new String[] {"Gallerie", "Appareil photo"};
+        final Integer[] icons = new Integer[] {R.drawable.gallery, R.drawable.camera_moto_icon};
+        ListAdapter adapter = new ArrayAdapterWithIcon(AddPhotoActivity.this, items, icons);
 
         builderSingle.setNegativeButton(
                 "cancel",
@@ -132,7 +131,7 @@ public class AddPhotoActivity extends AppCompatActivity implements NavigationVie
                 });
 
         builderSingle.setAdapter(
-                arrayAdapter,
+                adapter,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
