@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'rateeverything'
+            keyPassword 'dw^9mt!-Ep77PKD-'
+            storeFile file('Keystore.jks')
+            storePassword 'zKgaup7pU+DgGD+2'
+        }
+    }
     compileSdkVersion 26
     defaultConfig {
         applicationId "fr.wildcodeschool.rateeverything"
@@ -14,7 +22,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
+
     }
     buildToolsVersion '26.0.2'
 }
