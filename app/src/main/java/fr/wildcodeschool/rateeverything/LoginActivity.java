@@ -38,6 +38,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class LoginActivity extends AppCompatActivity {
@@ -48,7 +49,6 @@ public class LoginActivity extends AppCompatActivity {
     private static final String ID_PROFIL = "idprofil";
 
     //Firebase
-    private FirebaseAuth.AuthStateListener mAuthStateListener;
     private FirebaseAuth mAuth;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mRef;
@@ -94,18 +94,6 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
 
-        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
-
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-
-                if (firebaseAuth.getCurrentUser() != null) {
-
-                    startActivity(mGoToMainActivity);
-                    finish();
-                }
-            }
-        };
 
         //Show Widget Create Account
         mButtonCreateAccount.setOnClickListener(new View.OnClickListener() {
@@ -244,7 +232,19 @@ public class LoginActivity extends AppCompatActivity {
                         }
 
                         SaveSharedPreference.setUserName(LoginActivity.this, mail);
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        Singleton singleton = Singleton.getsIntance();
+                        singleton.setListener(new Singleton.LoadListener() {
+                            @Override
+                            public void onListUpdate(ArrayList<MainPhotoModel> photo) {
+                            }
+                            @Override
+                            public void onUserLoading() {
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
+                            }
+                        });
+                        singleton.loadUser();
+
                     }
 
                 }
@@ -280,7 +280,19 @@ public class LoginActivity extends AppCompatActivity {
                         String mail = mEditMail.getText().toString().trim();
                         SaveSharedPreference.setUserName(LoginActivity.this, mail);
 
-                        LoginActivity.this.startActivity(mGoToMainActivity);
+                        Singleton singleton = Singleton.getsIntance();
+                        singleton.setListener(new Singleton.LoadListener() {
+                            @Override
+                            public void onListUpdate(ArrayList<MainPhotoModel> photo) {
+                            }
+                            @Override
+                            public void onUserLoading() {
+                                LoginActivity.this.startActivity(mGoToMainActivity);
+
+                            }
+                        });
+                        singleton.loadUser();
+
 
                     } else {
                         mProgressBarLoading.setVisibility(View.GONE);
@@ -402,12 +414,7 @@ public class LoginActivity extends AppCompatActivity {
     -----------------------------------Firebase-----------------------------------------------------
      */
 
-    @Override
-    public void onStart() {
 
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthStateListener);
-    }
 
     /*
     ------------------------------SharedPreference--------------------------------------------------

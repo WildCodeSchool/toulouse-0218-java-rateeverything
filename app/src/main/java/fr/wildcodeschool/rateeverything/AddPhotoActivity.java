@@ -92,8 +92,6 @@ public class AddPhotoActivity extends AppCompatActivity implements NavigationVie
 
         mRef = mDatabase.getReference("Users/" + mIDUser + "/Photo/");
 
-        setContentView(R.layout.activity_add_photo);
-
         mImagePhoto = (ImageView) findViewById(R.id.iv_photo);
         TextView tvTitle = findViewById(R.id.et_title_img);
         TextView tvDescription = findViewById(R.id.et_description_img);
