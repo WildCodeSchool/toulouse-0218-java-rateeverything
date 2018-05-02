@@ -98,6 +98,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 mPhotoList = photo;
                 adapter.notifyDataSetChanged();
             }
+
+            @Override
+            public void onUserLoading() {
+
+            }
         });
 
 

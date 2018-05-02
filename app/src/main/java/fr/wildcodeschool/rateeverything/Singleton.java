@@ -33,7 +33,6 @@ public class Singleton {
     private FollowersModel mUser = null;
 
     public Singleton() {
-        loadList();
         loadUser();
     }
 
@@ -60,6 +59,10 @@ public class Singleton {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.child("Profil").exists()) {
                         mUser = dataSnapshot.child("Profil").getValue(FollowersModel.class);
+                        loadList();
+                        if (mListener != null){
+                            mListener.onUserLoading();
+                        }
                     }
                 }
 
@@ -78,47 +81,49 @@ public class Singleton {
     public void loadList() {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        final String userId = user.getUid();
-        DatabaseReference listRef = database.getReference("Users/");
-        listRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                mListPrincipal.clear();
-                Map<Long, MainPhotoModel> sortedPhotoList = new TreeMap<>();
-                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                    final String testFollowers = userSnapshot.getKey();
-                    mTestFollow = false;
-                    if (testFollowers.equals(userId)) {
-                        for (DataSnapshot photoSnapshot : userSnapshot.child("Photo").getChildren()) {
-                            MainPhotoModel mObjetPhoto = photoSnapshot.getValue(MainPhotoModel.class);
-                            sortedPhotoList.put(mObjetPhoto.getTimestamp(), mObjetPhoto);
-                        }
-
-                    }
-                    if (dataSnapshot.child(userId).child("Followers").child(testFollowers).exists()) {
-                        mTestFollow = (Boolean) dataSnapshot.child(userId).child("Followers").child(testFollowers).getValue();
-                        if (mTestFollow) {
+        FirebaseUser userFirebase = FirebaseAuth.getInstance().getCurrentUser();
+        if (userFirebase != null) {
+            final String userId = userFirebase.getUid();
+            DatabaseReference listRef = database.getReference("Users/");
+            listRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    mListPrincipal.clear();
+                    Map<Long, MainPhotoModel> sortedPhotoList = new TreeMap<>();
+                    for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                        final String testFollowers = userSnapshot.getKey();
+                        mTestFollow = false;
+                        if (testFollowers.equals(userId)) {
                             for (DataSnapshot photoSnapshot : userSnapshot.child("Photo").getChildren()) {
                                 MainPhotoModel mObjetPhoto = photoSnapshot.getValue(MainPhotoModel.class);
                                 sortedPhotoList.put(mObjetPhoto.getTimestamp(), mObjetPhoto);
                             }
+
+                        }
+                        if (dataSnapshot.child(userId).child("Followers").child(testFollowers).exists()) {
+                            mTestFollow = (Boolean) dataSnapshot.child(userId).child("Followers").child(testFollowers).getValue();
+                            if (mTestFollow) {
+                                for (DataSnapshot photoSnapshot : userSnapshot.child("Photo").getChildren()) {
+                                    MainPhotoModel mObjetPhoto = photoSnapshot.getValue(MainPhotoModel.class);
+                                    sortedPhotoList.put(mObjetPhoto.getTimestamp(), mObjetPhoto);
+                                }
+                            }
                         }
                     }
-                }
-                for (Map.Entry<Long, MainPhotoModel> entry : sortedPhotoList.entrySet()) {
-                    mListPrincipal.add(entry.getValue());
+                    for (Map.Entry<Long, MainPhotoModel> entry : sortedPhotoList.entrySet()) {
+                        mListPrincipal.add(entry.getValue());
+                    }
+
+                    if (mListener != null) {
+                        mListener.onListUpdate(mListPrincipal);
+                    }
                 }
 
-                if (mListener != null) {
-                    mListener.onListUpdate(mListPrincipal);
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
                 }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+            });
+        }
     }
 
     public void setListener(LoadListener listener) {
@@ -127,6 +132,7 @@ public class Singleton {
 
     public interface LoadListener {
         void onListUpdate(ArrayList<MainPhotoModel> photo);
+        void onUserLoading();
     }
 
     public void loadNavigation(NavigationView navigationView) {
@@ -134,12 +140,16 @@ public class Singleton {
         View hView =  navigationView.getHeaderView(0);
         TextView tvUserName = hView.findViewById(R.id.textview_name_header);
         TextView tvuserEmail = hView.findViewById(R.id.textview_mail_header);
-        ImageView ivUserAvatar = hView.findViewById(R.id.img_header_user);
-        tvuserEmail.setText(user.getMail());
-        tvUserName.setText(user.getUsername());
-        Glide.with(hView.getContext())
-                .load(user.getPhotouser())
-                .apply(RequestOptions.circleCropTransform())
-                .into(ivUserAvatar);
+        if (user != null){
+            ImageView ivUserAvatar = hView.findViewById(R.id.img_header_user);
+            tvuserEmail.setText(user.getMail());
+            tvUserName.setText(user.getUsername());
+            Glide.with(hView.getContext())
+                    .load(user.getPhotouser())
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(ivUserAvatar);
+        }
+
     }
+
 }
