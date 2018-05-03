@@ -384,7 +384,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
     public void changeImageProfil(View view){
 
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(ProfilUserActivity.this);
-        builderSingle.setTitle("Choisissez une option");
+        builderSingle.setTitle(R.string.choisissez);
 
         final String [] items = new String[] {"Gallerie", "Appareil photo"};
         final Integer[] icons = new Integer[] {R.drawable.gallery, R.drawable.camera_moto_icon};
