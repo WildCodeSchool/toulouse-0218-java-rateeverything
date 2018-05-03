@@ -91,7 +91,8 @@
     <string name="annuler">Annuler</string>
     <string name="annulerlogin">Annuler</string>
     <string name="name">NAME</string>
-
+    <string name="modifiez_vos_textes">Modifiez vos textes</string>
+    <string name="valider">Valider</string>
 
 
 </resources>
