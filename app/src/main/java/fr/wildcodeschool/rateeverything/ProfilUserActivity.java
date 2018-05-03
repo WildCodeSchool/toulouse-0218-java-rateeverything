@@ -471,20 +471,23 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
             case REQUEST_TAKE_PHOTO:
                 if(resultCode == RESULT_OK) {
                     Glide.with(ProfilUserActivity.this).load(mPhotoURI).into(mPhoto);
+                }else if (resultCode != RESULT_OK){
+                    return;
                 }
                 break;
         }
-
-        mProfil = mDatabase.getReference("Users/" + mUserID + "/Profil/");
-        StorageReference riverRef = mStorageRef.child("PhotoUser").child(mPhotoURI.getLastPathSegment());
-        riverRef.putFile(mPhotoURI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                String url = downloadUrl.toString();
-                mProfil.child("photouser").setValue(url);
-            }
-        });
+        if (resultCode == RESULT_OK) {
+            mProfil = mDatabase.getReference("Users/" + mUserID + "/Profil/");
+            StorageReference riverRef = mStorageRef.child("PhotoUser").child(mPhotoURI.getLastPathSegment());
+            riverRef.putFile(mPhotoURI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                    String url = downloadUrl.toString();
+                    mProfil.child("photouser").setValue(url);
+                }
+            });
+        }
 
     }
 
