@@ -102,7 +102,12 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
             public void onDataChange(DataSnapshot dataSnapshot) {
                 FollowersModel userPhoto = dataSnapshot.getValue(FollowersModel.class);
                 tvUserName.setText(userPhoto.getUsername());
-                Glide.with(UserPhoto.this).load(userPhoto.getPhotouser()).apply(RequestOptions.circleCropTransform()).into(ivUserPhoto);
+                if (userPhoto.getPhotouser().equals("1")){
+                    Glide.with(UserPhoto.this).load(R.drawable.defaultimageuser).apply(RequestOptions.circleCropTransform()).into(ivUserPhoto);
+                }
+                else {
+                    Glide.with(UserPhoto.this).load(userPhoto.getPhotouser()).apply(RequestOptions.circleCropTransform()).into(ivUserPhoto);
+                }
                 tvUserName.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
