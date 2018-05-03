@@ -240,7 +240,9 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             @Override
                             public void onUserLoading() {
+
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                mProgressBarLoading.setVisibility(View.GONE);
 
                             }
                         });
@@ -288,7 +290,9 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             @Override
                             public void onUserLoading() {
+
                                 LoginActivity.this.startActivity(mGoToMainActivity);
+                                mProgressBarLoading.setVisibility(View.GONE);
 
                             }
                         });
@@ -493,6 +497,11 @@ public class LoginActivity extends AppCompatActivity {
         mTextChangeAvatar.setVisibility(View.GONE);
         mButtonValidLogin.setVisibility(View.GONE);
         mTextChooseConnection.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onBackPressed() {
+        return;
     }
 
 }
