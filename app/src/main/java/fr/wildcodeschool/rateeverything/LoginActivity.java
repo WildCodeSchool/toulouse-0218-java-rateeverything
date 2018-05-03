@@ -501,7 +501,8 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        return;
+        finish();
+        System.exit(0);
     }
 
 }
