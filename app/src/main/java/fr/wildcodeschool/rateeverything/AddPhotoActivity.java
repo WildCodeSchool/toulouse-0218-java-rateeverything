@@ -232,14 +232,13 @@ public class AddPhotoActivity extends AppCompatActivity implements NavigationVie
                         MainPhotoModel mainPhotoModel = new MainPhotoModel(descriptionValue, mCurrentUser.getUid(), keyPhoto ,1, url, - date, titleValue, Math.round(mNoteBar.getRating()));
                         mRef.child(keyPhoto).setValue(mainPhotoModel);
                         mRef.child(keyPhoto).child("idvotant").child(mIDUser).setValue(Math.round(mNoteBar.getRating()));
-                        Toast.makeText(AddPhotoActivity.this, R.string.Ok, Toast.LENGTH_SHORT).show();
                         startActivity(mGoToMainActivity);
                     }
                 }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                         long progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-                        Toast.makeText(AddPhotoActivity.this,"Upload is " + progress + "% done", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddPhotoActivity.this,getString(R.string.telechargement) + progress + " %", Toast.LENGTH_SHORT).show();
 
                     }
                 }).addOnFailureListener(new OnFailureListener() {
