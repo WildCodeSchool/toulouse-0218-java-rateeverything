@@ -82,7 +82,7 @@ public class MainPhotoAdapter extends ArrayAdapter<MainPhotoModel> {
     private String getDate(long timeStamp){
 
         try{
-            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             Date netDate = (new Date(timeStamp));
             return sdf.format(netDate);
         }
