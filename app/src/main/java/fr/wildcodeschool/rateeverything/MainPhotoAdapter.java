@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -53,14 +54,21 @@ public class MainPhotoAdapter extends ArrayAdapter<MainPhotoModel> {
             }
         });
 
-        TextView textUsername = (TextView) convertView.findViewById(R.id.text_user_name_pub);
-        textUsername.setText(photoModel.getTitle());
+        FollowersModel user = (FollowersModel) photoModel.getFollowersModel();
+
+        TextView textTitle = (TextView) convertView.findViewById(R.id.text_user_name_pub);
+        textTitle.setText(photoModel.getTitle());
 
         TextView textDatePub = (TextView) convertView.findViewById(R.id.text_date_pub);
         long timestamp = -photoModel.getTimestamp();
         textDatePub.setText(getDate(timestamp));
 
-        // TODO : faire le systeme de notation dans le popup
+        TextView textUserName = convertView.findViewById(R.id.textview_name_user_list);
+        textUserName.setText(user.getUsername());
+
+        ImageView ivPhotoUser = convertView.findViewById(R.id.imageview_photo_user_list);
+        Glide.with(getContext()).load(user.getPhotouser()).apply(RequestOptions.circleCropTransform()).into(ivPhotoUser);
+
         TextView note = (TextView) convertView.findViewById(R.id.text_note);
         note.setOnClickListener(new View.OnClickListener() {
             @Override
