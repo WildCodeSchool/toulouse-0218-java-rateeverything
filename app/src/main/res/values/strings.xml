@@ -89,7 +89,7 @@
     <string name="choisissez">Choisissez une option</string>
     <string name="telechargement">Téléchargement</string>
     <string name="annuler">Annuler</string>
-    <string name="annuler">Annuler</string>
+    <string name="annulerlogin">Annuler</string>
 
 
 </resources>
