@@ -87,6 +87,7 @@
     <string name="title">Title</string>
     <string name="photo_de_ton_objet">Photo de ton objet</string>
     <string name="choisissez">Choisissez une option</string>
+    <string name="annuler">annuler</string>
 
 
 </resources>

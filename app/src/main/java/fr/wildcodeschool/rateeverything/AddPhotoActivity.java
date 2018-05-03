@@ -122,7 +122,7 @@ public class AddPhotoActivity extends AppCompatActivity implements NavigationVie
         ListAdapter adapter = new ArrayAdapterWithIcon(AddPhotoActivity.this, items, icons);
 
         builderSingle.setNegativeButton(
-                "cancel",
+                R.string.annuler,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
