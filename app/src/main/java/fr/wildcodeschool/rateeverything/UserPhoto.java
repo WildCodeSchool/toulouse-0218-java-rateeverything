@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -51,7 +52,9 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
 
         final TextView tvTitre = findViewById(R.id.text_titre_photo);
         final TextView tvDescription = findViewById(R.id.text_description_photo);
+        final TextView tvUserName = findViewById(R.id.textview_user_name_photo);
         final ImageView ivPhoto = findViewById(R.id.imageview_photo);
+        final ImageView ivUserPhoto = findViewById(R.id.imageview_user_photo_photo);
 
         final RatingBar ratingBar = findViewById(R.id.bar_modif_note);
         final Button validNote = findViewById(R.id.button_valid_new_note);
@@ -94,6 +97,29 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
                 }
             });
         }
+        database.getReference("Users").child(profilId).child("Profil").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                FollowersModel userPhoto = dataSnapshot.getValue(FollowersModel.class);
+                tvUserName.setText(userPhoto.getUsername());
+                Glide.with(UserPhoto.this).load(userPhoto.getPhotouser()).apply(RequestOptions.circleCropTransform()).into(ivUserPhoto);
+                tvUserName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(UserPhoto.this, ProfilUserActivity.class);
+                        intent.putExtra("idprofil", profilId);
+                        startActivity(intent);
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
         database.getReference("Users").child(profilId).child("Photo").child(idPhoto)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -116,6 +142,8 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
                             database.getReference("Users").child(profilId).child("Photo").child(idPhoto).child("idvotant").child(mUserID).setValue(newnote);
                             Toast.makeText(UserPhoto.this, R.string.votre_note_est_modif, Toast.LENGTH_SHORT).show();
                             ratingBar.setRating(mLaphoto.getTotalnote()/mLaphoto.getNbnote());
+                            Intent intent = new Intent(UserPhoto.this, MainActivity.class);
+                            startActivity(intent);
                         }
                     });
                 }
