@@ -76,13 +76,6 @@ public class MainPhotoAdapter extends ArrayAdapter<MainPhotoModel> {
 
 
         TextView note = (TextView) convertView.findViewById(R.id.text_note);
-        note.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder popup = new AlertDialog.Builder(parent.getContext());
-                popup.show();
-            }
-        });
 
         float valeurnote = photoModel.getTotalnote() / photoModel.getNbnote();
         note.setText(valeurnote + " / 5" );
