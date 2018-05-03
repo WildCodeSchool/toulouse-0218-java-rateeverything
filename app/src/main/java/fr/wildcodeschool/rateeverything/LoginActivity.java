@@ -240,7 +240,9 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             @Override
                             public void onUserLoading() {
+
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                mProgressBarLoading.setVisibility(View.GONE);
 
                             }
                         });
@@ -288,7 +290,9 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             @Override
                             public void onUserLoading() {
+
                                 LoginActivity.this.startActivity(mGoToMainActivity);
+                                mProgressBarLoading.setVisibility(View.GONE);
 
                             }
                         });
@@ -356,7 +360,7 @@ public class LoginActivity extends AppCompatActivity {
         ListAdapter adapter = new ArrayAdapterWithIcon(LoginActivity.this, items, icons);
 
         builderSingle.setNegativeButton(
-                R.string.annulerlogin,
+                R.string.annuler,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -493,6 +497,11 @@ public class LoginActivity extends AppCompatActivity {
         mTextChangeAvatar.setVisibility(View.GONE);
         mButtonValidLogin.setVisibility(View.GONE);
         mTextChooseConnection.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onBackPressed() {
+        return;
     }
 
 }

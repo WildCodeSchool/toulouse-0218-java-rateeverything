@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -383,16 +384,14 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
     public void changeImageProfil(View view){
 
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(ProfilUserActivity.this);
-        builderSingle.setTitle("Select One Option");
+        builderSingle.setTitle(R.string.choisissez);
 
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                ProfilUserActivity.this,
-                android.R.layout.select_dialog_singlechoice);
-        arrayAdapter.add("Gallery");
-        arrayAdapter.add("Camera");
+        final String [] items = new String[] {"Gallerie", "Appareil photo"};
+        final Integer[] icons = new Integer[] {R.drawable.gallery, R.drawable.camera_moto_icon};
+        ListAdapter adapter = new ArrayAdapterWithIcon(ProfilUserActivity.this, items, icons);
 
         builderSingle.setNegativeButton(
-                "cancel",
+                R.string.annuler,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -401,7 +400,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                 });
 
         builderSingle.setAdapter(
-                arrayAdapter,
+                adapter,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -471,20 +470,23 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
             case REQUEST_TAKE_PHOTO:
                 if(resultCode == RESULT_OK) {
                     Glide.with(ProfilUserActivity.this).load(mPhotoURI).into(mPhoto);
+                }else if (resultCode != RESULT_OK){
+                    return;
                 }
                 break;
         }
-
-        mProfil = mDatabase.getReference("Users/" + mUserID + "/Profil/");
-        StorageReference riverRef = mStorageRef.child("PhotoUser").child(mPhotoURI.getLastPathSegment());
-        riverRef.putFile(mPhotoURI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                String url = downloadUrl.toString();
-                mProfil.child("photouser").setValue(url);
-            }
-        });
+        if (resultCode == RESULT_OK) {
+            mProfil = mDatabase.getReference("Users/" + mUserID + "/Profil/");
+            StorageReference riverRef = mStorageRef.child("PhotoUser").child(mPhotoURI.getLastPathSegment());
+            riverRef.putFile(mPhotoURI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                    String url = downloadUrl.toString();
+                    mProfil.child("photouser").setValue(url);
+                }
+            });
+        }
 
     }
 
