@@ -92,10 +92,13 @@ public class Singleton {
                     Map<Long, MainPhotoModel> sortedPhotoList = new TreeMap<>();
                     for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                         final String testFollowers = userSnapshot.getKey();
+                        DataSnapshot userSnap = userSnapshot.child("Profil");
+                        FollowersModel userPhoto = userSnap.getValue(FollowersModel.class);
                         mTestFollow = false;
                         if (testFollowers.equals(userId)) {
                             for (DataSnapshot photoSnapshot : userSnapshot.child("Photo").getChildren()) {
                                 MainPhotoModel mObjetPhoto = photoSnapshot.getValue(MainPhotoModel.class);
+                                mObjetPhoto.setFollowersModel(userPhoto);
                                 sortedPhotoList.put(mObjetPhoto.getTimestamp(), mObjetPhoto);
                             }
 
@@ -105,6 +108,7 @@ public class Singleton {
                             if (mTestFollow) {
                                 for (DataSnapshot photoSnapshot : userSnapshot.child("Photo").getChildren()) {
                                     MainPhotoModel mObjetPhoto = photoSnapshot.getValue(MainPhotoModel.class);
+                                    mObjetPhoto.setFollowersModel(userPhoto);
                                     sortedPhotoList.put(mObjetPhoto.getTimestamp(), mObjetPhoto);
                                 }
                             }

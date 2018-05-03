@@ -15,6 +15,7 @@ public class MainPhotoModel {
     long timestamp;
     String title;
     int totalnote;
+    FollowersModel followersModel;
 
     public MainPhotoModel() {
     }
@@ -28,6 +29,14 @@ public class MainPhotoModel {
         this.timestamp = timestamp;
         this.title = title;
         this.totalnote = totalnote;
+    }
+
+    public FollowersModel getFollowersModel() {
+        return followersModel;
+    }
+
+    public void setFollowersModel(FollowersModel followersModel) {
+        this.followersModel = followersModel;
     }
 
     public String getDescription() {
