@@ -12,7 +12,7 @@
     <string name="login">Suivant</string>
     <string name="page_login">page Login</string>
 
-    <string name="followers">Abonnements</string>
+    <string name="followers">Utilisateurs</string>
     <string name="textview">TextView</string>
     <string name="nb_followers">nb Followers</string>
 
@@ -90,6 +90,7 @@
     <string name="telechargement">Téléchargement</string>
     <string name="annuler">Annuler</string>
     <string name="annulerlogin">Annuler</string>
+
 
 
 </resources>

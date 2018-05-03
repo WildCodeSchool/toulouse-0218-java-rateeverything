@@ -356,7 +356,7 @@ public class LoginActivity extends AppCompatActivity {
         ListAdapter adapter = new ArrayAdapterWithIcon(LoginActivity.this, items, icons);
 
         builderSingle.setNegativeButton(
-                R.string.annulerlogin,
+                R.string.annuler,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
