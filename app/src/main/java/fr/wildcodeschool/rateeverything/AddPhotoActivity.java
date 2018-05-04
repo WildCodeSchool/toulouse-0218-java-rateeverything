@@ -27,6 +27,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,6 +65,7 @@ public class AddPhotoActivity extends AppCompatActivity implements NavigationVie
     private ImageView mImgViewUserHeader;
     private Intent mGoToMainActivity;
     private RatingBar mNoteBar;
+    private ProgressBar mProgressBar;
 
     private static final int REQUEST_TAKE_PHOTO = 11;
 
@@ -98,6 +100,7 @@ public class AddPhotoActivity extends AppCompatActivity implements NavigationVie
         TextView tvDescription = findViewById(R.id.et_description_img);
 
         mNoteBar = findViewById(R.id.rating_bar_first_note);
+        mProgressBar = findViewById(R.id.progress_bar_photo);
 
         mImagePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -210,7 +213,7 @@ public class AddPhotoActivity extends AppCompatActivity implements NavigationVie
                 break;
         }
 
-        Button addImage = findViewById(R.id.button_share_img);
+        final Button addImage = findViewById(R.id.button_share_img);
         addImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -221,6 +224,7 @@ public class AddPhotoActivity extends AppCompatActivity implements NavigationVie
                 final String descriptionValue = tvDescription.getText().toString();
 
                 StorageReference riverRef = mStorageRef.child("Image").child(mPhotoURI.getLastPathSegment());
+                addImage.setEnabled(false);
 
                 riverRef.putFile(mPhotoURI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -232,13 +236,22 @@ public class AddPhotoActivity extends AppCompatActivity implements NavigationVie
                         MainPhotoModel mainPhotoModel = new MainPhotoModel(descriptionValue, mCurrentUser.getUid(), keyPhoto ,1, url, - date, titleValue, Math.round(mNoteBar.getRating()));
                         mRef.child(keyPhoto).setValue(mainPhotoModel);
                         mRef.child(keyPhoto).child("idvotant").child(mIDUser).setValue(Math.round(mNoteBar.getRating()));
+                        mProgressBar.setVisibility(View.GONE);
                         startActivity(mGoToMainActivity);
+                        addImage.setEnabled(true);
                         Toast.makeText(AddPhotoActivity.this, R.string.photo_ajoutée, Toast.LENGTH_SHORT).show();
                     }
-                }).addOnFailureListener(new OnFailureListener() {
+                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                        mProgressBar.setVisibility(View.VISIBLE);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(AddPhotoActivity.this, R.string.fail, Toast.LENGTH_SHORT).show();
+                        addImage.setEnabled(true);
                     }
                 });
 
