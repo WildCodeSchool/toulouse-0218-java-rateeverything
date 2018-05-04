@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="160dp"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:id="@+id/imgview_background_header"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0.5"
-        android:background="?android:attr/colorSecondary" />
+        android:alpha="0.5" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,8 +22,7 @@
         <ImageView
             android:id="@+id/img_header_user"
             android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:src="@drawable/ic_launcher_foreground" />
+            android:layout_height="75dp" />
 
         <TextView
             android:id="@+id/textview_name_header"
