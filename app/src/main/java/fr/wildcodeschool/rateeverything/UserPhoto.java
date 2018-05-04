@@ -9,9 +9,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -38,6 +38,8 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
     private FirebaseUser mCurrentUser;
     private DatabaseReference mPhotoRef;
 
+    private Boolean mBooleanModif;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +52,8 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        final TextView tvTitre = findViewById(R.id.text_titre_photo);
-        final TextView tvDescription = findViewById(R.id.text_description_photo);
+        final EditText etTitre = findViewById(R.id.edittext_titre_photo);
+        final EditText etDescription = findViewById(R.id.edittext_description_photo);
         final TextView tvUserName = findViewById(R.id.textview_user_name_photo);
         final ImageView ivPhoto = findViewById(R.id.imageview_photo);
         final ImageView ivUserPhoto = findViewById(R.id.imageview_user_photo_photo);
@@ -66,6 +68,7 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         mUserID = mCurrentUser.getUid();
         mPhotoRef = database.getReference("Users/" + profilId + "/Photo/" + idPhoto);
+        mBooleanModif = true;
 
         //Supprimer ses photos
         Button boutonSupp = findViewById(R.id.button_suppression_photo);
@@ -96,13 +99,78 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
                     popup.show();
                 }
             });
+            // Modifier le titre et le text
+            final Button boutonModif = findViewById(R.id.button_modify_description);
+            boutonModif.setVisibility(View.VISIBLE);
+            boutonModif.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mBooleanModif){
+                        etTitre.setText("");
+                        etDescription.setText("");
+                        etTitre.setHint(mLaphoto.getTitle());
+                        etDescription.setHint(mLaphoto.getDescription());
+                        etTitre.setEnabled(true);
+                        etDescription.setEnabled(true);
+                        etTitre.setFocusable(true);
+                        etTitre.setFocusableInTouchMode(true);
+                        etDescription.setFocusable(true);
+                        etDescription.setFocusableInTouchMode(true);
+                        boutonModif.setText(R.string.valider);
+                        mBooleanModif = false;
+                    }
+                    else{
+                        String newTitle = etTitre.getText().toString();
+                        String newDescription = etDescription.getText().toString();
+                        if (newTitle.isEmpty()){
+                            newTitle = mLaphoto.getTitle();
+                        }
+                        if (newDescription.isEmpty()){
+                            newDescription = mLaphoto.getDescription();
+                        }
+                        database.getReference("Users").child(profilId).child("Photo").child(idPhoto).child("title").setValue(newTitle);
+                        database.getReference("Users").child(profilId).child("Photo").child(idPhoto).child("description").setValue(newDescription);
+                        database.getReference("Users").child(profilId).child("Photo").child(idPhoto).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                DataSnapshot leTitle = dataSnapshot.child("title");
+                                DataSnapshot laDescription = dataSnapshot.child("description");
+                                String leNewTitle = leTitle.getValue().toString();
+                                String laNewDescription = laDescription.getValue().toString();
+                                etTitre.setText("" + leNewTitle);
+                                etDescription.setText("" + laNewDescription);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                        etTitre.setEnabled(false);
+                        etDescription.setEnabled(false);
+                        etTitre.setFocusable(false);
+                        etTitre.setFocusableInTouchMode(false);
+                        etDescription.setFocusable(false);
+                        etDescription.setFocusableInTouchMode(false);
+                        boutonModif.setText(R.string.modifiez_vos_textes);
+                        mBooleanModif = true;
+                    }
+                }
+            });
+
+
         }
         database.getReference("Users").child(profilId).child("Profil").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 FollowersModel userPhoto = dataSnapshot.getValue(FollowersModel.class);
                 tvUserName.setText(userPhoto.getUsername());
-                Glide.with(UserPhoto.this).load(userPhoto.getPhotouser()).apply(RequestOptions.circleCropTransform()).into(ivUserPhoto);
+                if (userPhoto.getPhotouser().equals("1")){
+                    Glide.with(UserPhoto.this).load(R.drawable.defaultimageuser).apply(RequestOptions.circleCropTransform()).into(ivUserPhoto);
+                }
+                else {
+                    Glide.with(UserPhoto.this).load(userPhoto.getPhotouser()).apply(RequestOptions.circleCropTransform()).into(ivUserPhoto);
+                }
                 tvUserName.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -121,15 +189,15 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
 
 
         database.getReference("Users").child(profilId).child("Photo").child(idPhoto)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 mLaphoto = (MainPhotoModel) dataSnapshot.getValue(MainPhotoModel.class);
                 if(mLaphoto.getPhoto() != null){
                     Glide.with(UserPhoto.this).load(dataSnapshot.child("photo").getValue()).into(ivPhoto);
                 }
-                tvTitre.setText(mLaphoto.getTitle());
-                tvDescription.setText(mLaphoto.getDescription());
+                etTitre.setText(mLaphoto.getTitle());
+                etDescription.setText(mLaphoto.getDescription());
                 ratingBar.setRating(mLaphoto.getTotalnote()/mLaphoto.getNbnote());
                 if (dataSnapshot.child("idvotant").child(mUserID).exists()){
                     validNote.setText(R.string.modifiez_votre_note);

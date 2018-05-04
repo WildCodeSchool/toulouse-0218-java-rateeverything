@@ -67,16 +67,15 @@ public class MainPhotoAdapter extends ArrayAdapter<MainPhotoModel> {
         textUserName.setText(user.getUsername());
 
         ImageView ivPhotoUser = convertView.findViewById(R.id.imageview_photo_user_list);
-        Glide.with(getContext()).load(user.getPhotouser()).apply(RequestOptions.circleCropTransform()).into(ivPhotoUser);
+
+        if (user.getPhotouser().equals("1")) {
+            Glide.with(getContext()).load(R.drawable.defaultimageuser).apply(RequestOptions.circleCropTransform()).into(ivPhotoUser);
+        } else {
+            Glide.with(getContext()).load(user.getPhotouser()).apply(RequestOptions.circleCropTransform()).into(ivPhotoUser);
+        }
+
 
         TextView note = (TextView) convertView.findViewById(R.id.text_note);
-        note.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder popup = new AlertDialog.Builder(parent.getContext());
-                popup.show();
-            }
-        });
 
         float valeurnote = photoModel.getTotalnote() / photoModel.getNbnote();
         note.setText(valeurnote + " / 5" );
