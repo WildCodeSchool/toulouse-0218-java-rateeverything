@@ -40,6 +40,10 @@ public class FollowersAdapter extends ArrayAdapter<FollowersModel> {
                     Glide.with(parent.getContext()).load(followers.getPhotouser().toString()).into(photo);
                 }
             }
+            else if (followers.getPhotouser() == null) {
+                ImageView photo = (ImageView) convertView.findViewById(R.id.imageview_photo_followers);
+                Glide.with(parent.getContext()).load(R.drawable.defaultimageuser).into(photo);
+            }
 
             if (followers.getUsername().toString() != null) {
                 TextView textName = (TextView) convertView.findViewById(R.id.textview_user_name_followers);
@@ -50,10 +54,18 @@ public class FollowersAdapter extends ArrayAdapter<FollowersModel> {
                 TextView textNbPhoto = (TextView) convertView.findViewById(R.id.textview_nb_photo_followers);
                 textNbPhoto.setText(followers.getNbphoto() + "");
             }
+            else if(followers.getNbphoto() == 0){
+                TextView textNbPhoto = (TextView) convertView.findViewById(R.id.textview_nb_photo_followers);
+                textNbPhoto.setText(0 + "");
+            }
 
             if (followers.getNbfollowers() != 0) {
                 TextView textNbFollowers = (TextView) convertView.findViewById(R.id.textview_nb_followers);
                 textNbFollowers.setText(followers.getNbfollowers() + "");
+            }
+            else if (followers.getNbfollowers() == 0){
+                TextView textNbFollowers = (TextView) convertView.findViewById(R.id.textview_nb_followers);
+                textNbFollowers.setText(0 + "");
             }
         }
 

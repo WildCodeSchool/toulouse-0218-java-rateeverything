@@ -77,7 +77,7 @@ public class MainPhotoAdapter extends ArrayAdapter<MainPhotoModel> {
 
         TextView note = (TextView) convertView.findViewById(R.id.text_note);
 
-        float valeurnote = photoModel.getTotalnote() / photoModel.getNbnote();
+        int valeurnote = photoModel.getTotalnote() / photoModel.getNbnote();
         note.setText(valeurnote + " / 5" );
 
         RatingBar ratingBar = convertView.findViewById(R.id.rating_bar);

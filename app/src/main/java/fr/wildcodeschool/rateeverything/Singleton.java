@@ -144,23 +144,22 @@ public class Singleton {
         View hView =  navigationView.getHeaderView(0);
         TextView tvUserName = hView.findViewById(R.id.textview_name_header);
         TextView tvuserEmail = hView.findViewById(R.id.textview_mail_header);
-        if (user != null){
-            ImageView ivUserAvatar = hView.findViewById(R.id.img_header_user);
-            tvuserEmail.setText(user.getMail());
-            tvUserName.setText(user.getUsername());
-            if (user.getPhotouser().equals("1")){
-                Glide.with(hView.getContext())
+        ImageView ivUserAvatar = hView.findViewById(R.id.img_header_user);
+        tvuserEmail.setText(user.getMail());
+        tvUserName.setText(user.getUsername());
+        if (user.getPhotouser().equals("1")){
+            Glide.with(hView.getContext())
                         .load(R.drawable.defaultimageuser)
                         .apply(RequestOptions.circleCropTransform())
                         .into(ivUserAvatar);
-            }
-            else {
-                Glide.with(hView.getContext())
+        }
+        else {
+            Glide.with(hView.getContext())
                         .load(user.getPhotouser())
                         .apply(RequestOptions.circleCropTransform())
                         .into(ivUserAvatar);
-            }
         }
+
 
     }
 
