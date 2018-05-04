@@ -200,7 +200,7 @@ public class AddPhotoActivity extends AppCompatActivity implements NavigationVie
         switch(requestCode) {
             case REQUEST_TAKE_PHOTO:
                 if(resultCode == RESULT_OK) {
-                    mImagePhoto.setBackground(ContextCompat.getDrawable(AddPhotoActivity.this, R.drawable.common_google_signin_btn_icon_light_focused));
+                    mImagePhoto.setBackgroundResource(android.R.color.transparent);
                     Glide.with(AddPhotoActivity.this).load(mPhotoURI).into(mImagePhoto);
                 }
                 break;
