@@ -89,6 +89,7 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
                             intent.putExtra("idprofil", profilId);
                             startActivity(intent);
                             mPhotoRef.removeValue();
+                            finish();
 
                         }
                     });
