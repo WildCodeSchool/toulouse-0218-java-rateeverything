@@ -49,7 +49,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
     final static int REQUEST_TAKE_PHOTO = 2;
     private FirebaseDatabase mDatabase;
     private FirebaseUser mUser;
-    private DatabaseReference mProfil, mRefUserPhoto, mProfilUser;
+    private DatabaseReference mProfil, mRefUserPhoto, mRefFollowers;
     private StorageReference mStorageRef;
 
     private ImageView mPhoto;
@@ -85,7 +85,6 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         mStorageRef = FirebaseStorage.getInstance().getReference();
         mUserID = mUser.getUid();
-        mProfilUser = mDatabase.getReference("Users/" + mUserID + "/Profil/");
 
         final String profilId = getIntent().getStringExtra("idprofil");
         if (mUserID.equals(profilId)) {
@@ -198,8 +197,8 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                     }
                 });
 
-                final DatabaseReference refFollowers = mDatabase.getReference("Users/" + mUserID + "/Followers/" + profilId);
-                refFollowers.addValueEventListener(new ValueEventListener() {
+                mRefFollowers = mDatabase.getReference("Users/" + mUserID + "/Followers/" + profilId);
+                mRefFollowers.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()){
@@ -209,7 +208,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                                 boutonAddFollowers.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        refFollowers.setValue(false);
+                                        mRefFollowers.setValue(false);
                                         boutonAddFollowers.setText(R.string.suivre_cette_personne);
                                         mDatabase.getReference("Users").child(profilId).child("Profil").child("nbfollowers").setValue(mNbFollowersUsers - 1);
                                     }
@@ -219,7 +218,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                                 boutonAddFollowers.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        refFollowers.setValue(true);
+                                        mRefFollowers.setValue(true);
                                         boutonAddFollowers.setText(R.string.ne_plus_suivre);
                                         mDatabase.getReference("Users").child(profilId).child("Profil").child("nbfollowers").setValue(mNbFollowersUsers + 1);
                                     }
@@ -230,7 +229,7 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                             boutonAddFollowers.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    refFollowers.setValue(true);
+                                    mRefFollowers.setValue(true);
                                     boutonAddFollowers.setText(R.string.ne_plus_suivre);
                                     mDatabase.getReference("Users").child(profilId).child("Profil").child("nbfollowers").setValue(mNbFollowersUsers + 1);
                                 }
@@ -279,21 +278,30 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                             String stringNbFollowers = dataSnapshot.child("nbfollowers").getValue().toString();
                             mNbFollowers.setText(stringNbFollowers);
                         }
+                        else if((dataSnapshot.child("nbfollowers").getValue() == null)) {
+                            mNbFollowers.setText("" + 0);
+                        }
                         if (dataSnapshot.child("nbphoto").getValue() != null) {
                             mNbPhoto.setText(mNbPhotouser + "");
+                        }
+                        else if(dataSnapshot.child("nbphoto").getValue() == null){
+                            mNbPhoto.setText("" + 0);
                         }
                         if (dataSnapshot.child("photouser").getValue() != null) {
                             String stringUrl = (String) dataSnapshot.child("photouser").getValue();
                             if (stringUrl.equals("1")){
-                                Glide.with(ProfilUserActivity.this)
-                                        .load(R.drawable.defaultimageuser)
-                                        .into(mPhoto);
+                                mPhoto.setImageResource(R.drawable.defaultimageuser);
                             }
                             else {
                                 Glide.with(ProfilUserActivity.this)
                                         .load(stringUrl)
                                         .into(mPhoto);
                             }
+                        }
+                        else if(dataSnapshot.child("photouser").getValue() == null){
+                            Glide.with(ProfilUserActivity.this)
+                                    .load(R.drawable.defaultimageuser)
+                                    .into(mPhoto);
                         }
 
                     }
@@ -486,6 +494,9 @@ public class ProfilUserActivity extends AppCompatActivity implements NavigationV
                     mProfil.child("photouser").setValue(url);
                 }
             });
+            Intent intentProfil = new Intent(ProfilUserActivity.this, ProfilUserActivity.class);
+            intentProfil.putExtra("idprofil", mUserID);
+            startActivity(intentProfil);
         }
 
     }

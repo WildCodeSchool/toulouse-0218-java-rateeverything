@@ -2,6 +2,7 @@ package fr.wildcodeschool.rateeverything;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.CountDownTimer;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -83,11 +84,12 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
                     popup.setPositiveButton(R.string.oui, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            mPhotoRef.removeValue();
                             Toast.makeText(UserPhoto.this, R.string.photo_supprimée, Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(UserPhoto.this, ProfilUserActivity.class);
                             intent.putExtra("idprofil", profilId);
                             startActivity(intent);
+                            mPhotoRef.removeValue();
+
                         }
                     });
                     popup.setNegativeButton(R.string.non, new DialogInterface.OnClickListener() {
@@ -164,21 +166,24 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 FollowersModel userPhoto = dataSnapshot.getValue(FollowersModel.class);
-                tvUserName.setText(userPhoto.getUsername());
-                if (userPhoto.getPhotouser().equals("1")){
-                    Glide.with(UserPhoto.this).load(R.drawable.defaultimageuser).apply(RequestOptions.circleCropTransform()).into(ivUserPhoto);
-                }
-                else {
-                    Glide.with(UserPhoto.this).load(userPhoto.getPhotouser()).apply(RequestOptions.circleCropTransform()).into(ivUserPhoto);
-                }
-                tvUserName.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(UserPhoto.this, ProfilUserActivity.class);
-                        intent.putExtra("idprofil", profilId);
-                        startActivity(intent);
+                if (userPhoto != null) {
+                    tvUserName.setText(userPhoto.getUsername());
+                    if (userPhoto.getPhotouser().equals("1")){
+                        Glide.with(UserPhoto.this).load(R.drawable.defaultimageuser).apply(RequestOptions.circleCropTransform()).into(ivUserPhoto);
                     }
-                });
+                    else {
+                        Glide.with(UserPhoto.this).load(userPhoto.getPhotouser()).apply(RequestOptions.circleCropTransform()).into(ivUserPhoto);
+                    }
+                    tvUserName.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(UserPhoto.this, ProfilUserActivity.class);
+                            intent.putExtra("idprofil", profilId);
+                            startActivity(intent);
+                        }
+                    });
+                }
+
             }
 
             @Override
@@ -193,43 +198,46 @@ public class UserPhoto extends AppCompatActivity implements NavigationView.OnNav
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 mLaphoto = (MainPhotoModel) dataSnapshot.getValue(MainPhotoModel.class);
-                if(mLaphoto.getPhoto() != null){
-                    Glide.with(UserPhoto.this).load(dataSnapshot.child("photo").getValue()).into(ivPhoto);
+                if (mLaphoto != null){
+                    if(mLaphoto.getPhoto() != null){
+                        Glide.with(UserPhoto.this).load(dataSnapshot.child("photo").getValue()).into(ivPhoto);
+                    }
+                    etTitre.setText(mLaphoto.getTitle());
+                    etDescription.setText(mLaphoto.getDescription());
+                    ratingBar.setRating(mLaphoto.getTotalnote()/mLaphoto.getNbnote());
+                    if (dataSnapshot.child("idvotant").child(mUserID).exists()){
+                        validNote.setText(R.string.modifiez_votre_note);
+                        validNote.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                long notevotant = (long) dataSnapshot.child("idvotant").child(mUserID).getValue();
+                                int newnote = Math.round(ratingBar.getRating());
+                                database.getReference("Users").child(profilId).child("Photo").child(idPhoto).child("totalnote").setValue(mLaphoto.getTotalnote() - notevotant + newnote);
+                                database.getReference("Users").child(profilId).child("Photo").child(idPhoto).child("idvotant").child(mUserID).setValue(newnote);
+                                Toast.makeText(UserPhoto.this, R.string.votre_note_est_modif, Toast.LENGTH_SHORT).show();
+                                ratingBar.setRating(mLaphoto.getTotalnote()/mLaphoto.getNbnote());
+                                Intent intent = new Intent(UserPhoto.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+                    }
+                    else{
+                        validNote.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                int note = Math.round(ratingBar.getRating());
+                                database.getReference("Users").child(profilId).child("Photo").child(idPhoto).child("totalnote").setValue(mLaphoto.getTotalnote() + note);
+                                database.getReference("Users").child(profilId).child("Photo").child(idPhoto).child("nbnote").setValue(mLaphoto.getNbnote() + 1);
+                                database.getReference("Users").child(profilId).child("Photo").child(idPhoto).child("idvotant").child(mUserID).setValue(note);
+                                Toast.makeText(UserPhoto.this, R.string.votre_note_est_prise_en_compte, Toast.LENGTH_SHORT).show();
+                                ratingBar.setRating(mLaphoto.getTotalnote()/mLaphoto.getNbnote());
+                                Intent intent = new Intent(UserPhoto.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+                    }
                 }
-                etTitre.setText(mLaphoto.getTitle());
-                etDescription.setText(mLaphoto.getDescription());
-                ratingBar.setRating(mLaphoto.getTotalnote()/mLaphoto.getNbnote());
-                if (dataSnapshot.child("idvotant").child(mUserID).exists()){
-                    validNote.setText(R.string.modifiez_votre_note);
-                    validNote.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            long notevotant = (long) dataSnapshot.child("idvotant").child(mUserID).getValue();
-                            int newnote = Math.round(ratingBar.getRating());
-                            database.getReference("Users").child(profilId).child("Photo").child(idPhoto).child("totalnote").setValue(mLaphoto.getTotalnote() - notevotant + newnote);
-                            database.getReference("Users").child(profilId).child("Photo").child(idPhoto).child("idvotant").child(mUserID).setValue(newnote);
-                            Toast.makeText(UserPhoto.this, R.string.votre_note_est_modif, Toast.LENGTH_SHORT).show();
-                            ratingBar.setRating(mLaphoto.getTotalnote()/mLaphoto.getNbnote());
-                            Intent intent = new Intent(UserPhoto.this, MainActivity.class);
-                            startActivity(intent);
-                        }
-                    });
-                }
-                else{
-                    validNote.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            int note = Math.round(ratingBar.getRating());
-                            database.getReference("Users").child(profilId).child("Photo").child(idPhoto).child("totalnote").setValue(mLaphoto.getTotalnote() + note);
-                            database.getReference("Users").child(profilId).child("Photo").child(idPhoto).child("nbnote").setValue(mLaphoto.getNbnote() + 1);
-                            database.getReference("Users").child(profilId).child("Photo").child(idPhoto).child("idvotant").child(mUserID).setValue(note);
-                            Toast.makeText(UserPhoto.this, R.string.votre_note_est_prise_en_compte, Toast.LENGTH_SHORT).show();
-                            ratingBar.setRating(mLaphoto.getTotalnote()/mLaphoto.getNbnote());
-                            Intent intent = new Intent(UserPhoto.this, MainActivity.class);
-                            startActivity(intent);
-                        }
-                    });
-                }
+
             }
 
             @Override
