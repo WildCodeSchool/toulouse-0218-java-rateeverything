@@ -3,6 +3,7 @@ package fr.wildcodeschool.rateeverything;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -247,6 +248,7 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         });
                         singleton.loadUser();
+                        finish();
 
                     }
 
@@ -297,6 +299,7 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         });
                         singleton.loadUser();
+                        finish();
 
 
                     } else {
@@ -337,7 +340,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private File createImageFile() throws IOException {
         // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String timeStamp = new SimpleDateFormat("ddMMyyy_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
@@ -501,8 +504,10 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        finish();
-        System.exit(0);
+
+        Intent goToLoginActivity = new Intent(LoginActivity.this, LoginActivity.class);
+        startActivity(goToLoginActivity);
+
     }
 
 }
