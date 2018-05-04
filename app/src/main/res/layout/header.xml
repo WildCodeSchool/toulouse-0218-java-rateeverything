@@ -5,11 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="160dp">
 
-    <ImageView
-        android:id="@+id/imgview_background_header"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.5" />
 
     <LinearLayout
         android:layout_width="match_parent"

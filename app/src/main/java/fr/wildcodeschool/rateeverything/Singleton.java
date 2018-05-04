@@ -147,11 +147,17 @@ public class Singleton {
         ImageView ivUserAvatar = hView.findViewById(R.id.img_header_user);
         tvuserEmail.setText(user.getMail());
         tvUserName.setText(user.getUsername());
-        if (user.getPhotouser().equals("1")){
+        if (user.getPhotouser() == null){
             Glide.with(hView.getContext())
                         .load(R.drawable.defaultimageuser)
                         .apply(RequestOptions.circleCropTransform())
                         .into(ivUserAvatar);
+        }
+        else if(user.getPhotouser().equals("1")){
+            Glide.with(hView.getContext())
+                    .load(R.drawable.defaultimageuser)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(ivUserAvatar);
         }
         else {
             Glide.with(hView.getContext())
